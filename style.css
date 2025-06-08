@@ -113,28 +113,31 @@ footer {
 /* === Modal (helles Design) === */
 
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3); /* halbtransparent, aber helles Overlay */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  background: rgba(255, 255, 255, 0.6); /* helles halbtransparentes Overlay */
 }
 
 .modal {
-  background-color: #fff;
-  color: #111;
+  background-color: #fefefe;
+  color: #222;
   border-radius: 1rem;
   padding: 2rem;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   position: relative;
   animation: fadeInScale 0.3s ease-in-out;
 }
 
-/* sanfte Animation beim Öffnen */
+
+.hidden {
+  display: none;
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 1.6rem;
+}
+
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -156,11 +159,12 @@ footer {
   padding: 0.6rem 1rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  background: #f2f2f2;
+  background: #fafafa;
+  color: #333;
   cursor: pointer;
   flex: 1;
   margin-right: 0.5rem;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .mode-btn:last-child {
@@ -168,13 +172,13 @@ footer {
 }
 
 .mode-btn.active {
-  background-color: #0077ff;
-  color: white;
-  border-color: #0077ff;
+  background-color: #3399ff;
+  color: #fff;
+  border-color: #3399ff;
 }
 
 .mode-btn:hover {
-  background-color: #e0e0e0;
+  background-color: #eaeaea;
 }
 
 .category-select {
@@ -186,13 +190,14 @@ footer {
 
 .category-select label {
   font-size: 1rem;
+  color: #333;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .start-btn {
-  background-color: #0077ff;
+  background-color: #3399ff;
   color: white;
   padding: 0.8rem 1.2rem;
   border: none;
@@ -204,15 +209,15 @@ footer {
 }
 
 .start-btn:hover {
-  background-color: #005fcc;
+  background-color: #2b89e0;
 }
 
-/* Close-Button Emoji */
 .close-modal {
   position: absolute;
   top: 0.7rem;
   right: 1rem;
   font-size: 1.3rem;
+  color: #444;
   cursor: pointer;
   transition: transform 0.2s ease;
   user-select: none;
