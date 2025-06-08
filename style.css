@@ -14,7 +14,7 @@ body {
 header {
   background-color: #00509e;
   color: white;
-  padding: 1rem 0;
+  padding: 2rem 0;
 }
 
 .header-inner {
@@ -27,7 +27,7 @@ header {
 }
 
 .logo, .icon-right {
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 
 header h1 {
