@@ -109,6 +109,10 @@ footer {
 
 /*_________________________________________________________________________*/
 
+.hidden {
+  display: none;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -137,6 +141,7 @@ footer {
   margin-top: 0;
   font-size: 1.6rem;
 }
+
 
 .mode-select {
   display: flex;
