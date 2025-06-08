@@ -1,4 +1,6 @@
-/* Grundlayout */
+/* =======================
+   Grundlayout / Body
+======================= */
 body {
   display: flex;
   flex-direction: column;
@@ -8,13 +10,17 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background: #f6f6f6;
   color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Header */
+/* =======================
+   Header
+======================= */
 header {
   background-color: #00509e;
   color: white;
   padding: 2.5rem 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .header-inner {
@@ -35,7 +41,9 @@ header h1 {
   margin: 0;
 }
 
-/* Begrüßung */
+/* =======================
+   Begrüßung
+======================= */
 .intro {
   max-width: 800px;
   margin: 2rem auto;
@@ -44,13 +52,16 @@ header h1 {
   border-radius: 1rem;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .intro h2 {
   margin-top: 0;
 }
 
-/* Cards */
+/* =======================
+   Cards
+======================= */
 .grid {
   max-width: 800px;
   margin: 0 auto 3rem auto;
@@ -69,7 +80,7 @@ header h1 {
   text-decoration: none;
   color: #00509e;
   font-weight: bold;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .card:hover {
@@ -85,9 +96,12 @@ header h1 {
 .card p {
   font-weight: normal;
   color: #555;
+  transition: color 0.3s ease;
 }
 
-/* Footer */
+/* =======================
+   Footer
+======================= */
 footer {
   background-color: #333;
   color: #ccc;
@@ -95,9 +109,12 @@ footer {
   padding: 1rem;
   font-size: 0.9rem;
   margin-top: auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Responsive */
+/* =======================
+   Responsive
+======================= */
 @media (max-width: 600px) {
   header h1 {
     font-size: 1.4rem;
@@ -109,5 +126,45 @@ footer {
 
   .card {
     padding: 1rem;
+  }
+}
+
+/* =======================
+   Dark Mode Styles
+======================= */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #12171f;
+    color: #d6d6d6;
+  }
+
+  header {
+    background-color: #003366;
+    color: #e0e0e0;
+  }
+
+  .intro {
+    background-color: #1f283e;
+    color: #d6d6d6;
+    box-shadow: 0 2px 6px rgba(255,255,255,0.05);
+  }
+
+  .card {
+    background-color: #1e2738;
+    color: #76a9f9;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  }
+
+  .card:hover {
+    background-color: #2a3a5a;
+  }
+
+  .card p {
+    color: #a0aec0;
+  }
+
+  footer {
+    background-color: #1a1a1a;
+    color: #999;
   }
 }
