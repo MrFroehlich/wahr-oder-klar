@@ -203,6 +203,22 @@ footer {
 }
 
 
+/* Modal Close Button */
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.close-modal:hover {
+  transform: scale(1.2);
+  color: crimson;
+}
+
+
 /*_________________________________________________________________________*/
 
 
