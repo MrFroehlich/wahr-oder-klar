@@ -43,5 +43,29 @@ const modal = document.getElementById("modal");
     modal.style.display = "none";
   });
 
+
+
+
   // Modal anzeigen (z.B. bei Klick auf Karte)
+
+// Modal-Element
+const modal = document.getElementById("wopModal");
+
+// Die Card, die das Modal öffnen soll
+const wopCard = document.getElementById("wopCard");
+
+// Schließen-Button im Modal (z. B. mit class="close-modal")
+const closeBtn = document.querySelector(".close-modal");
+
+// Öffnen
+wopCard.addEventListener("click", () => {
+  modal.classList.remove("hidden");
+});
+
+// Schließen
+closeBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+
   // modal.style.display = "flex";
