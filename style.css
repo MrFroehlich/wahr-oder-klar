@@ -305,7 +305,6 @@ footer {
     background-color: #1a1a1a;
     color: #999;
   }
-}
 
 
 /* === Modal (dunkles Design) === */
@@ -425,9 +424,10 @@ footer {
   font-size: 1.5rem;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
-}
+   }
 
 .close-modal:hover {
   transform: scale(1.2);
   color: crimson;
+   }
 }
