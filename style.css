@@ -42,7 +42,7 @@ main {
 
 .card:hover {
   background-color: #bfbfbf;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 /* Responsiv */
