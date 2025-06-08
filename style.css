@@ -109,9 +109,6 @@ footer {
 
 /*_________________________________________________________________________*/
 
-.hidden {
-  display: none;
-}
 
 .modal-overlay {
   position: fixed;
@@ -135,6 +132,10 @@ footer {
   width: 90%;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.hidden {
+  display: none;
 }
 
 .modal h2 {
