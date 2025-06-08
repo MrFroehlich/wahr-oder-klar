@@ -60,7 +60,8 @@ main {
 footer {
   background-color: #a3a3a3; /* Dunkelgrau fast schwarz */
   color: #171717; /* Helles Grau für Text */
+  font-weight: bold;
   text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
+  padding: 0.8rem;
+  font-size: 1rem;
 }
