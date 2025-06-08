@@ -2,30 +2,62 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Vollbildhöhe */
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #e6e6e6;
+  background: #f6f6f6;
   color: #333;
 }
 
+/* Header */
 header {
+  background-color: #00509e;
+  color: white;
+  padding: 1rem 0;
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.logo, .icon-right {
+  font-size: 1.8rem;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/* Begrüßung */
+.intro {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fff4e6;
+  border-radius: 1rem;
   text-align: center;
-  padding: 2rem 1rem;
-  background-color: #0077cc;
-  color: black;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-main {
-  flex: 1; /* Nimmt den ganzen verfügbaren Platz ein */
-  padding: 2rem;
+.intro h2 {
+  margin-top: 0;
 }
 
+/* Cards */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+  padding: 0 1rem;
 }
 
 .card {
@@ -33,36 +65,49 @@ main {
   padding: 1.5rem;
   border-radius: 1rem;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   text-decoration: none;
-  color: #0077cc;
+  color: #00509e;
   font-weight: bold;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .card:hover {
-  background-color: #bfbfbf;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  transform: scale(1.05);
+  background-color: #fffcf5;
+  transform: scale(1.03);
 }
 
-/* Responsiv */
+.emoji {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-weight: normal;
+  color: #555;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
   header h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .intro {
+    padding: 1rem;
   }
 
   .card {
-    font-size: 1rem;
     padding: 1rem;
   }
-}
-
-footer {
-  background-color: #a3a3a3; /* Dunkelgrau fast schwarz */
-  color: #171717; /* Helles Grau für Text */
-  font-weight: bold;
-  text-align: center;
-  padding: 0.8rem;
-  font-size: 1rem;
 }
