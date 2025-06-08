@@ -3,230 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MLG-EIL Klasse 8/1 – Startseite</title>
-  <link rel="icon" type="image/png" href="Dein Abschnittstext(4).png">
-  <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>Spielabend – Klassenfahrt</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="header">
-  <div class="header-flex">
-    <img src="Dein Abschnittstext(4).png" class="corner-logo left-logo" alt="Logo links">
-    
-    <div class="title-wrapper">
-    <h1 class="main-title">Klasse 8/1 – Martin-Luther-Gymnasium Eisleben</h1>
-    <h2 class="sub-title">– Webseite –</h2>
-    </div>
+  <header>
+    <h1>🎲 Spielabend auf Klassenfahrt</h1>
+    <p>Wählt einen Spielmodus und habt Spaß!</p>
+  </header>
 
-    <img src="Dein Abschnittstext(4).png" class="corner-logo right-logo" alt="Logo rechts" style="height: 65px; width: 65px; display: block;">
-    
-  </div>
-    
- <nav>
-  <!-- Öffentlich -->
-  <ul class="nav nav-offen fade-in">
-    <li><a href="index.html" class="active">Start</a></li>
-    <li><a href="kontakt.html">Kontakt</a></li>
-  </ul>
-
-  <!-- Für eingeloggte Nutzer -->
-  <ul class="nav nav-intern fade-in" style="display: none;">
-      <li><a href="index.html" class="active">Start</a></li>
-    <li><a href="ankündigungen.html">Ankündigungen</a></li>
-    <li><a href="termine-und-veranstaltungen.html">Termine & Veranstaltungen</a></li>
-    <li><a href="tipps-tricks-pläne.html">Tipps, Tricks, Pläne</a></li>
-    <li><a href="downloads-formulare-protokolle.html">Downloads, Formulare, Protokolle</a></li>
-    <li><a href="planungen-und-infos.html">Planung Sommerfest</a></li>
-    <li><a href="spaß-und-fun.html">Spaß & Fun</a></li>
-    <li><a href="kontakt.html">Kontakt</a></li>
-  </ul>
-
-  <!-- Nur für Klassensprecher -->
-  <ul class="nav nav-klassensprecher fade-in" style="display: none;">
-    <li><a href="interne-infos.html">Interne Infos</a></li>
-    <li><a href="problematische-schüler.html">Problematische Schüler</a></li>
-  </ul>
-</nav>
-
-    <div id="login-status" style="position: absolute; top: 190px; right: 20px; font-weight: bold;">
-    </div>
-
-<!-- LOGIN-BEREICH IM HEADER -->
-<div style="position: absolute; top: 20px; right: 20px; text-align: right;">
-  <input type="password" id="password-input" placeholder="Passwort" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc;">
-  <button onclick="login()" style="padding: 4px 10px; border: none; background-color: #0078D7; color: white; border-radius: 4px;">Login</button>
-  <div id="login-message" style="color: red; font-size: 0.9rem; margin-top: 4px;"></div>
-</div>
-
-      <div id="logout-container" style="display: none; position: absolute; top: 266px; right: 20px;">
-  <button onclick="logout()" style="padding: 4px 10px; border: none; background-color: #cc0000; color: white; border-radius: 4px;">
-    Logout
-  </button>
-</div>
-    
-</header>
-
-
-<section class="hero fade-in">
-        <h1>Willkommen auf der Webseite der Klasse 8/1!</h1>
-        <p style="margin-left: 50px; margin-right: 60px; margin-bottom: 50px;">Willkommen auf der Webseite der Klasse 8/1! Hier findest du alles Wichtige rund um unsere Klasse – von Projekten und Aktionen über Neuigkeiten und Ankündigungen bis hin zu Zitaten und Witzen aus der Klasse und der Planung von Veranstaltungen.</p>
-        <a href="https://www.gym-luther-eisleben.bildung-lsa.de/" class="cta-button">MLG Homepage</a>
-</section>
-  
-
-    <main>
-
-    <section class="welcome-section">
-    <h2>Information!</h2>
-    <p margin-bottom: 25px>Aus Sicherheits- und Datenschutzgründen sind viele Bereiche dieser Webseite passwortgeschützt.<br>
-    Diese Bereiche sind nur Klassenmitgliedern zugänglich; das zugehörige Passwort erhaltet Ihr beim Klassensprecher.<br> <span style="color: red;">Mit diesem Passwort meldet ihr euch bitte im obigen Login-Bereich an!</span></p>
-  </section>
-
-
-  <section class="countdown-section"  margin-bottom: 25px>
-  <h2 align="center">Countdown bis zu den Sommerferien</h2>
-  <div id="countdown" class="fade-in">
-  <div><span class="number" id="days">--</span><div class="label">Tage</div></div>
-  <div><span class="number" id="hours">--</span><div class="label">Stunden</div></div>
-  <div><span class="number" id="minutes">--</span><div class="label">Minuten</div></div>
-  <div><span class="number" id="seconds">--</span><div class="label">Sekunden</div></div>
-  </div>
-  </section>
-
-  <section class="quote-section">
-    <h2>Zitat des Tages</h2>
-    <blockquote>
-      <p id="quote" margin-bottom: 25px>„Bildung ist die mächtigste Waffe, die du verwenden kannst, um die Welt zu verändern.“ – Nelson Mandela</p>
-    </blockquote>
-  </section>
-
-
-  <section class="overview-section">
-    <h2>Was dich hier erwartet</h2>
-    <ul>
-      <li><a href="ankündigungen.html">Ankündigungen</a></li>
-      <li><a href="termine-und-veranstaltungen.html">Termine & Veranstaltungen</a></li>
-      <li><a href="tipps-tricks-pläne.html">Tipps, Tricks, Pläne</a></li>
-      <li><a href="downloads-formulare-protokolle.html">Downloads, Formulare, Protokolle</a></li>
-      <li><a href="planungen-und-infos.html">Planung Sommerfest</a></li>
-      <li><a href="spaß-und-fun.html">Spaß & Fun</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
-    </ul>
-  </section>
+  <main>
+    <section class="grid">
+      <a href="#" class="card">Wahrheit oder Pflicht</a>
+      <a href="#" class="card">Wer würde eher…?</a>
+      <a href="#" class="card">Ich hab noch nie…</a>
+      <a href="#" class="card">Entweder / Oder</a>
+      <a href="#" class="card">Lügendetektor</a>
+    </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2025 Julian Kaiser | Alle Rechte vorbehalten</p>
-    </div>
+  <footer>
+    <p>© Klassenfahrt 2025 – Spaß garantiert 😄</p>
   </footer>
-
-<script>
-  function login() {
-    const input = document.getElementById("password-input").value;
-    const messageBox = document.getElementById("login-message");
-
-    const passwortNormal = "mlg8klasse";
-    const passwortSprecher = "mlg8sprecher";
-
-    if (input === passwortSprecher) {
-      sessionStorage.setItem("rolle", "sprecher");
-      sessionStorage.setItem("eingeloggt", "true");
-      messageBox.style.color = "green";
-      messageBox.innerHTML = "Erfolgreich als <strong>Klassensprecher</strong> eingeloggt!<br>Du hast Zugriff auf alle Seiten.";
-    } else if (input === passwortNormal) {
-      sessionStorage.setItem("rolle", "normal");
-      sessionStorage.setItem("eingeloggt", "true");
-      messageBox.style.color = "green";
-      messageBox.innerHTML = "Erfolgreich eingeloggt!<br>Du hast Zugriff auf alle normalen Seiten.";
-    } else {
-      sessionStorage.removeItem("rolle");
-      sessionStorage.setItem("eingeloggt", "false");
-      messageBox.style.color = "red";
-      messageBox.textContent = "Falsches Passwort!";
-      document.getElementById("password-input").value = "";
-      return;
-    }
-
-    setTimeout(() => {
-      messageBox.textContent = "";
-      location.reload(); // Seite neu laden, um Inhalte sichtbar zu machen
-    }, 3000);
-  }
-
-  function logout() {
-    sessionStorage.removeItem("eingeloggt");
-    sessionStorage.removeItem("rolle");
-    window.location.href = "index.html"; // Automatische Weiterleitung zur Startseite
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const statusBox = document.getElementById("login-status");
-    const logoutContainer = document.getElementById("logout-container");
-    const istEingeloggt = sessionStorage.getItem("eingeloggt") === "true";
-    const rolle = sessionStorage.getItem("rolle");
-
-    const navOffen = document.querySelector(".nav-offen");
-    const navIntern = document.querySelector(".nav-intern");
-    const navKlassensprecher = document.querySelector(".nav-klassensprecher");
-
-    if (istEingeloggt) {
-      if (navOffen) navOffen.style.display = "none";
-      if (navIntern) navIntern.style.display = "flex";
-
-      if (rolle === "sprecher") {
-        if (navKlassensprecher) navKlassensprecher.style.display = "flex";
-        statusBox.textContent = "🔓 Eingeloggt als Klassensprecher";
-      } else {
-        if (navKlassensprecher) navKlassensprecher.style.display = "none";
-        statusBox.textContent = "🔓 Eingeloggt";
-      }
-
-      statusBox.style.color = "green";
-      if (logoutContainer) logoutContainer.style.display = "block";
-    } else {
-      if (navOffen) navOffen.style.display = "flex";
-      if (navIntern) navIntern.style.display = "none";
-      if (navKlassensprecher) navKlassensprecher.style.display = "none";
-
-      statusBox.textContent = "🔒 Ausgeloggt";
-      statusBox.style.color = "red";
-      if (logoutContainer) logoutContainer.style.display = "none";
-    }
-  });
-</script>
-
-  
 </body>
 </html>
-
-
-<script>
-  // Datum, bis zu dem runtergezählt wird (JJJJ, MM-1, TT, hh, mm, ss)
-  // Beispiel: Sommerfest am 15. Juli 2025 um 15:00 Uhr
-  const countdownDate = new Date(2025, 5, 28, 0, 0, 1).getTime();
-
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = countdownDate - now;
-
-    if (distance < 0) {
-      document.getElementById("countdown").innerHTML = "<p>Die Sommerferien haben begonnen!</p>";
-      clearInterval(interval);
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = hours;
-    document.getElementById("minutes").textContent = minutes;
-    document.getElementById("seconds").textContent = seconds;
-  }
-
-  updateCountdown(); // sofort ausführen
-  const interval = setInterval(updateCountdown, 1000);
-</script>
