@@ -1,0 +1,18 @@
+{
+  "kategorien": {
+    "funny": {
+      "label": "Locker & Lustig",
+      "fragen": [
+        "Ich hab noch nie meine Hausaufgaben vergessen.",
+        "Ich hab noch nie laut in der Öffentlichkeit gesungen."
+      ]
+    },
+    "flirty": {
+      "label": "Flirty & Romantisch",
+      "fragen": [
+        "Ich hab noch nie jemanden heimlich bewundert.",
+        "Ich hab noch nie einen Liebesbrief geschrieben."
+      ]
+    }
+  }
+}
