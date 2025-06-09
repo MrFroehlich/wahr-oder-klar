@@ -188,11 +188,11 @@ footer {
 
 /* Kategorien Auswahl */
 .category-select {
+  display: flex;
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   text-align: left;
-  display: none; /* wird durch JS umgeschaltet */
 }
 
 .category-select label {
@@ -310,158 +310,99 @@ footer {
 /* === Modal (dunkles Design) === */
 
 .modal-overlay {
-
   position: fixed;
-
   top: 0;
-
   left: 0;
-
   width: 100%;
-
   height: 100%;
-
   background: rgba(0,0,0,0.7);
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   z-index: 1000;
-
 }
 
 
 
 .modal {
-
-
   position: relative;
-
   background-color: #222;
-
   color: #fff;
-
   padding: 2rem;
-
   border-radius: 1rem;
-
   max-width: 500px;
-
   width: 90%;
-
   text-align: center;
-
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
-
 }
 
 
 
 .hidden {
-
   display: none;
-
 }
 
 
 
 .modal h2 {
-
   margin-top: 0;
-
   font-size: 1.6rem;
-
 }
-
 
 
 
 
 .mode-select {
-
   display: flex;
-
   justify-content: center;
-
   gap: 1rem;
-
   margin: 1.5rem 0;
-
 }
 
 
 
 .mode-btn {
-
   background-color: #444;
-
   color: #fff;
-
   border: none;
-
   padding: 0.8rem 1.2rem;
-
   border-radius: 0.6rem;
-
   cursor: pointer;
-
   font-size: 1rem;
-
   transition: background 0.2s;
-
 }
 
 
 
 .mode-btn.active {
-
   background-color: #0077cc;
-
 }
 
 
 
 .category-select {
-
   display: none;
-
   flex-direction: column;
-
   gap: 0.6rem;
-
   margin-bottom: 1.5rem;
-
   text-align: left;
-
 }
 
 
 
 .category-select label {
-
   background: #333;
-
   padding: 0.5rem 1rem;
-
   border-radius: 0.5rem;
-
   display: flex;
-
   align-items: center;
-
   gap: 0.6rem;
-
 }
 
 
 
 .category-select input[type="checkbox"] {
-
   accent-color: #0077cc;
-
 }
 
 
@@ -485,8 +426,6 @@ footer {
 
 
 
-
-
 /* Modal Close Button */
 
 .close-modal {
@@ -496,7 +435,6 @@ footer {
   font-size: 1.5rem;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
-
 }
 
 
@@ -504,5 +442,5 @@ footer {
 .close-modal:hover {
   transform: scale(1.2);
   color: crimson;
-
+}
 }
