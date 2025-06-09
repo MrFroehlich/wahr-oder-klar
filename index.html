@@ -47,7 +47,7 @@
       <h3>Ich hab noch nie...</h3>
       <p>Geständnisse und Spaß garantiert.</p>
     </a>
-    <a class="card" href="#">
+    <a class="card" href="#" id="ewodCard">
       <div class="emoji">⚖️</div>
       <h3>Entweder/Oder</h3>
       <p>Pizza oder Pommes? Entscheide dich!</p>
@@ -119,7 +119,7 @@
 </div>
 
 
-  <!-- Modal "Wer würde eher...?" -->
+  <!-- Modal "Ich hab noch nie..." -->
 <div class="modal-overlay hidden" id="ihnnModal">
   <div class="modal">
     <span class="close-modal" id="closeIhnnModal">❌</span>
@@ -141,6 +141,30 @@
     </div>
 
     <button class="start-btn" id="ihnnStartBtn">Los geht’s!</button>
+  </div>
+</div>
+
+
+    <!-- Modal "Entweder / oder" -->
+<div class="modal-overlay hidden" id="ewodModal">
+  <div class="modal">
+    <span class="close-modal" id="closeEwodModal">❌</span>
+    <h2>Entweder/oder – Kategorien</h2>
+
+    <div class="mode-select">
+      <button id="ewodBtnMixed" class="mode-btn active">🎨 Gemischt</button>
+      <button id="ewodBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
+    </div>
+
+    <div class="category-select" id="ewodCategoryOptions" style="display: none;">
+      <label><input type="checkbox" value="funny"> 😂 Spaß & Albern</label>
+      <label><input type="checkbox" value="life"> 🌍 Alltag & Leben</label>
+      <label><input type="checkbox" value="flirty"> 💌 Romantik & Flirt</label>
+      <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
+    </div>
+
+    <button class="start-btn" id="ewodStartBtn">Los geht’s!</button>
   </div>
 </div>
   
