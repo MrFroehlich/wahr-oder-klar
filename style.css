@@ -506,12 +506,3 @@ footer {
   color: crimson;
 
 }
-
-.modal-overlay {
-  background: rgba(255, 255, 255, 0.6) !important;
-}
-
-.modal {
-  background-color: #fefefe !important;
-  color: #222 !important;
-}
