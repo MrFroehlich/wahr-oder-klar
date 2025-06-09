@@ -1,132 +1,118 @@
-const modal = document.getElementById("wopModal");
-const btnMixed = document.getElementById("btn-mixed");
-const btnCustom = document.getElementById("btn-custom");
-const categoryOptions = document.getElementById("category-options");
-const startBtn = document.querySelector(".start-btn");
-const wopCard = document.getElementById("wopCard");
-const closeBtn = document.querySelector(".close-modal");
+// Wahrheit oder Pflicht
+const wopModal = document.getElementById("wopModal");
+const closeWopModal = document.getElementById("closeWopModal");
+const wopBtnMixed = document.getElementById("wopBtnMixed");
+const wopBtnCustom = document.getElementById("wopBtnCustom");
+const wopCategoryOptions = document.getElementById("wopCategoryOptions");
+const wopStartBtn = document.getElementById("wopStartBtn");
+const wopCard = document.getElementById("wopCard"); // muss im HTML existieren
 
-let selectedMode = "mixed";
-let selectedCategories = [];
+let wopSelectedMode = "mixed";
+let wopSelectedCategories = [];
 
-// Modus-Umschaltung
-btnMixed.addEventListener("click", () => {
-  selectedMode = "mixed";
-  btnMixed.classList.add("active");
-  btnCustom.classList.remove("active");
-  categoryOptions.style.display = "none";
+wopBtnMixed.addEventListener("click", () => {
+  wopSelectedMode = "mixed";
+  wopBtnMixed.classList.add("active");
+  wopBtnCustom.classList.remove("active");
+  wopCategoryOptions.style.display = "none";
+  wopCategoryOptions.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
 });
 
-btnCustom.addEventListener("click", () => {
-  selectedMode = "custom";
-  btnCustom.classList.add("active");
-  btnMixed.classList.remove("active");
-  categoryOptions.style.display = "flex";
+wopBtnCustom.addEventListener("click", () => {
+  wopSelectedMode = "custom";
+  wopBtnCustom.classList.add("active");
+  wopBtnMixed.classList.remove("active");
+  wopCategoryOptions.style.display = "flex";
 });
 
-// Start-Button
-startBtn.addEventListener("click", () => {
-  if (selectedMode === "custom") {
-    selectedCategories = Array.from(
-      categoryOptions.querySelectorAll("input:checked")
+wopStartBtn.addEventListener("click", () => {
+  if (wopSelectedMode === "custom") {
+    wopSelectedCategories = Array.from(
+      wopCategoryOptions.querySelectorAll("input:checked")
     ).map(cb => cb.value);
 
-    if (selectedCategories.length === 0) {
+    if (wopSelectedCategories.length === 0) {
       alert("Bitte wähle mindestens eine Kategorie aus!");
       return;
     }
   }
 
-  console.log("Modus:", selectedMode);
-  console.log("Kategorien:", selectedCategories);
-
-  modal.classList.add("hidden");
+  console.log("WOP-Modus:", wopSelectedMode);
+  console.log("WOP-Kategorien:", wopSelectedCategories);
+  wopModal.classList.add("hidden");
 });
 
-// Modal öffnen
 wopCard.addEventListener("click", (e) => {
   e.preventDefault();
-  modal.classList.remove("hidden");
+  wopModal.classList.remove("hidden");
 });
 
-// Modal schließen über Button
-closeBtn.addEventListener("click", () => {
-  modal.classList.add("hidden");
+closeWopModal.addEventListener("click", () => {
+  wopModal.classList.add("hidden");
 });
 
-// Modal schließen über Klick außerhalb (Bonus)
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.classList.add("hidden");
+wopModal.addEventListener("click", (e) => {
+  if (e.target === wopModal) {
+    wopModal.classList.add("hidden");
   }
 });
 
 
-
-//____________________________________________________________________________________________________________________________________________
-
-
-
-// Modal für "Wer würde eher...?"
-
+// Wer würde eher
 const wdeModal = document.getElementById("wdeModal");
-const wdeCloseBtn = document.getElementById("closeWdeModal");
-const btnMixed = document.getElementById("btn-mixed");
-const btnCustom = document.getElementById("btn-custom");
-const categoryOptions = document.getElementById("category-options");
+const closeWdeModal = document.getElementById("closeWdeModal");
+const wdeBtnMixed = document.getElementById("wdeBtnMixed");
+const wdeBtnCustom = document.getElementById("wdeBtnCustom");
+const wdeCategoryOptions = document.getElementById("wdeCategoryOptions");
 const wdeStartBtn = document.getElementById("wdeStartBtn");
+const wdeCard = document.getElementById("wdeCard"); // muss im HTML existieren
 
-// Modus: "mixed" oder "custom"
-let currentMode = "mixed";
+let wdeSelectedMode = "mixed";
+let wdeSelectedCategories = [];
 
-// Modus-Umschaltung
-btnMixed.addEventListener("click", () => {
-  currentMode = "mixed";
-  btnMixed.classList.add("active");
-  btnCustom.classList.remove("active");
-  categoryOptions.style.display = "none";
-
-  // Checkboxen zurücksetzen (alles aus)
-  categoryOptions.querySelectorAll("input[type=checkbox]").forEach(cb => {
-    cb.checked = false;
-  });
+wdeBtnMixed.addEventListener("click", () => {
+  wdeSelectedMode = "mixed";
+  wdeBtnMixed.classList.add("active");
+  wdeBtnCustom.classList.remove("active");
+  wdeCategoryOptions.style.display = "none";
+  wdeCategoryOptions.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
 });
 
-btnCustom.addEventListener("click", () => {
-  currentMode = "custom";
-  btnCustom.classList.add("active");
-  btnMixed.classList.remove("active");
-  categoryOptions.style.display = "flex";
+wdeBtnCustom.addEventListener("click", () => {
+  wdeSelectedMode = "custom";
+  wdeBtnCustom.classList.add("active");
+  wdeBtnMixed.classList.remove("active");
+  wdeCategoryOptions.style.display = "flex";
 });
 
-// Modal schließen
-wdeCloseBtn.addEventListener("click", () => {
-  wdeModal.classList.add("hidden");
-});
-
-// Start-Button-Logik
 wdeStartBtn.addEventListener("click", () => {
-  let selectedCategories = [];
-
-  if (currentMode === "mixed") {
-    // Gemischter Modus: alle Kategorien möglich
-    selectedCategories = ["mixed"];
-  } else {
-    // Custom: nur die ausgewählten Kategorien nehmen
-    selectedCategories = Array.from(
-      categoryOptions.querySelectorAll("input[type=checkbox]:checked")
+  if (wdeSelectedMode === "custom") {
+    wdeSelectedCategories = Array.from(
+      wdeCategoryOptions.querySelectorAll("input:checked")
     ).map(cb => cb.value);
 
-    if (selectedCategories.length === 0) {
+    if (wdeSelectedCategories.length === 0) {
       alert("Bitte wähle mindestens eine Kategorie aus!");
       return;
     }
   }
 
-  console.log("Modus Wer würde eher...:", currentMode);
-  console.log("Ausgewählte Kategorien:", selectedCategories);
-
+  console.log("WDE-Modus:", wdeSelectedMode);
+  console.log("WDE-Kategorien:", wdeSelectedCategories);
   wdeModal.classList.add("hidden");
+});
 
-  // Hier kannst du dann mit den Kategorien weitermachen (Fragen filtern usw.)
+wdeCard.addEventListener("click", (e) => {
+  e.preventDefault();
+  wdeModal.classList.remove("hidden");
+});
+
+closeWdeModal.addEventListener("click", () => {
+  wdeModal.classList.add("hidden");
+});
+
+wdeModal.addEventListener("click", (e) => {
+  if (e.target === wdeModal) {
+    wdeModal.classList.add("hidden");
+  }
 });
