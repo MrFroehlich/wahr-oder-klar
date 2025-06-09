@@ -1,0 +1,26 @@
+{
+  "kategorien": {
+    "funny": {
+      "label": "Locker & Lustig",
+      "wahrheit": [
+        "Was war dein peinlichster Lachanfall?",
+        "Wovor hast du als Kind Angst gehabt?"
+      ],
+      "pflicht": [
+        "Sprich 30 Sekunden lang in einer Fantasiesprache.",
+        "Zieh dir Socken über die Hände und tu so, als wären es Puppen."
+      ]
+    },
+    "daring": {
+      "label": "Vertrauensbasis",
+      "wahrheit": [
+        "In wen warst du mal heimlich verliebt?",
+        "Was würdest du nie deinen Eltern erzählen?"
+      ],
+      "pflicht": [
+        "Zeig den letzten Chatverlauf mit deinem Crush.",
+        "Ruf jemanden an und sing ihm etwas vor."
+      ]
+    }
+  }
+}
