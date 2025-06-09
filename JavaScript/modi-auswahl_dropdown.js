@@ -120,6 +120,7 @@ wdeModal.addEventListener("click", (e) => {
 
 
 
+
 // Ich hab noch nie...
 const ihnnModal = document.getElementById("ihnnModal");
 const closeIhnnModal = document.getElementById("closeIhnnModal");
@@ -176,5 +177,68 @@ closeIhnnModal.addEventListener("click", () => {
 ihnnModal.addEventListener("click", (e) => {
   if (e.target === ihnnModal) {
     ihnnModal.classList.add("hidden");
+  }
+});
+
+
+
+
+
+// Entweder/oder
+const ewodModal = document.getElementById("ewodModal");
+const closeEwodModal = document.getElementById("closeEwodModal");
+const ewodBtnMixed = document.getElementById("ewodBtnMixed");
+const ewodBtnCustom = document.getElementById("ewodBtnCustom");
+const ewodCategoryOptions = document.getElementById("ewodCategoryOptions");
+const ewodStartBtn = document.getElementById("ewodStartBtn");
+const ewodCard = document.getElementById("ewodCard"); // Stelle sicher, dass das im HTML vorhanden ist!
+
+let ewodSelectedMode = "mixed";
+let ewodSelectedCategories = [];
+
+ewodBtnMixed.addEventListener("click", () => {
+  ewodSelectedMode = "mixed";
+  ewodBtnMixed.classList.add("active");
+  ewodBtnCustom.classList.remove("active");
+  ewodCategoryOptions.style.display = "none";
+  ewodCategoryOptions.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+});
+
+ewodBtnCustom.addEventListener("click", () => {
+  ewodSelectedMode = "custom";
+  ewodBtnCustom.classList.add("active");
+  ewodBtnMixed.classList.remove("active");
+  ewodCategoryOptions.style.display = "flex";
+});
+
+ewodStartBtn.addEventListener("click", () => {
+  if (ewodSelectedMode === "custom") {
+    ewodSelectedCategories = Array.from(
+      ewodCategoryOptions.querySelectorAll("input:checked")
+    ).map(cb => cb.value);
+
+    if (ewodSelectedCategories.length === 0) {
+      alert("Bitte wähle mindestens eine Kategorie aus!");
+      return;
+    }
+  }
+
+  console.log("EWOD-Modus:", ewodSelectedMode);
+  console.log("EWOD-Kategorien:", ewodSelectedCategories);
+  ewodModal.classList.add("hidden");
+});
+
+ewodCard.addEventListener("click", (e) => {
+  e.preventDefault();
+  ewodModal.classList.remove("hidden");
+});
+
+closeEwodModal.addEventListener("click", () => {
+  ewodModal.classList.add("hidden");
+});
+
+ewodModal.addEventListener("click", (e) => {
+  if (e.target === ewodModal) {
+    ewodModal.classList.add("hidden");
   }
 });
