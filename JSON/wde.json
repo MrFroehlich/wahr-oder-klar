@@ -1,0 +1,18 @@
+{
+  "kategorien": {
+    "funny": {
+      "label": "Locker & Lustig",
+      "fragen": [
+        "Wer würde eher in einer TV-Show mitmachen?",
+        "Wer hat am meisten Pech in der Liebe?"
+      ]
+    },
+    "extreme": {
+      "label": "Extrem & Provokant",
+      "fragen": [
+        "Wer würde eher jemanden anlügen, um Ärger zu vermeiden?",
+        "Wer würde eher auf einer einsamen Insel überleben?"
+      ]
+    }
+  }
+}
