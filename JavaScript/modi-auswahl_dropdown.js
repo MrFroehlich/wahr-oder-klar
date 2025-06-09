@@ -58,6 +58,7 @@ wopModal.addEventListener("click", (e) => {
 });
 
 
+
 // Wer würde eher
 const wdeModal = document.getElementById("wdeModal");
 const closeWdeModal = document.getElementById("closeWdeModal");
@@ -114,5 +115,66 @@ closeWdeModal.addEventListener("click", () => {
 wdeModal.addEventListener("click", (e) => {
   if (e.target === wdeModal) {
     wdeModal.classList.add("hidden");
+  }
+});
+
+
+
+// Ich hab noch nie...
+const ihnnModal = document.getElementById("ihnnModal");
+const closeIhnnModal = document.getElementById("closeIhnnModal");
+const ihnnBtnMixed = document.getElementById("ihnnBtnMixed");
+const ihnnBtnCustom = document.getElementById("ihnnBtnCustom");
+const ihnnCategoryOptions = document.getElementById("ihnnCategoryOptions");
+const ihnnStartBtn = document.getElementById("ihnnStartBtn");
+const ihnnCard = document.getElementById("ihnnCard"); // muss im HTML existieren
+
+let ihnnSelectedMode = "mixed";
+let ihnnSelectedCategories = [];
+
+ihnnBtnMixed.addEventListener("click", () => {
+  ihnnSelectedMode = "mixed";
+  ihnnBtnMixed.classList.add("active");
+  ihnnBtnCustom.classList.remove("active");
+  ihnnCategoryOptions.style.display = "none";
+  ihnnCategoryOptions.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+});
+
+ihnnBtnCustom.addEventListener("click", () => {
+  ihnnSelectedMode = "custom";
+  ihnnBtnCustom.classList.add("active");
+  ihnnBtnMixed.classList.remove("active");
+  ihnnCategoryOptions.style.display = "flex";
+});
+
+ihnnStartBtn.addEventListener("click", () => {
+  if (ihnnSelectedMode === "custom") {
+    ihnnSelectedCategories = Array.from(
+      ihnnCategoryOptions.querySelectorAll("input:checked")
+    ).map(cb => cb.value);
+
+    if (ihnnSelectedCategories.length === 0) {
+      alert("Bitte wähle mindestens eine Kategorie aus!");
+      return;
+    }
+  }
+
+  console.log("Ich hab noch nie-Modus:", ihnnSelectedMode);
+  console.log("Ich hab noch nie-Kategorien:", ihnnSelectedCategories);
+  ihnnModal.classList.add("hidden");
+});
+
+ihnnCard.addEventListener("click", (e) => {
+  e.preventDefault();
+  ihnnModal.classList.remove("hidden");
+});
+
+closeIhnnModal.addEventListener("click", () => {
+  ihnnModal.classList.add("hidden");
+});
+
+ihnnModal.addEventListener("click", (e) => {
+  if (e.target === ihnnModal) {
+    ihnnModal.classList.add("hidden");
   }
 });
