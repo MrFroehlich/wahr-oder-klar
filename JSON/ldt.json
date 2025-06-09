@@ -1,0 +1,18 @@
+{
+  "kategorien": {
+    "leicht": {
+      "label": "Locker & Lustig",
+      "fragen": [
+        "Hast du jemals so getan, als würdest du arbeiten?",
+        "Hast du schon mal heimlich in der Schule geschummelt?"
+      ]
+    },
+    "tiefgründig": {
+      "label": "Tiefgründig & Ehrlich",
+      "fragen": [
+        "Wann hast du das letzte Mal etwas bereut?",
+        "Was war dein größtes Geheimnis?"
+      ]
+    }
+  }
+}
