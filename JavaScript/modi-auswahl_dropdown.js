@@ -242,3 +242,66 @@ ewodModal.addEventListener("click", (e) => {
     ewodModal.classList.add("hidden");
   }
 });
+
+
+
+
+
+// Lügendetektor
+const ldtModal = document.getElementById("ldtModal");
+const closeLdtModal = document.getElementById("closeLdtModal");
+const ldtBtnMixed = document.getElementById("ldtBtnMixed");
+const ldtBtnCustom = document.getElementById("ldtBtnCustom");
+const ldtCategoryOptions = document.getElementById("ldtCategoryOptions");
+const ldtStartBtn = document.getElementById("ldtStartBtn");
+const ldtCard = document.getElementById("ldtCard"); // Stelle sicher, dass das im HTML vorhanden ist!
+
+let ldtSelectedMode = "mixed";
+let ldtSelectedCategories = [];
+
+ldtBtnMixed.addEventListener("click", () => {
+  ldtSelectedMode = "mixed";
+  ldtBtnMixed.classList.add("active");
+  ldtBtnCustom.classList.remove("active");
+  ldtCategoryOptions.style.display = "none";
+  ldtCategoryOptions.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+});
+
+ldtBtnCustom.addEventListener("click", () => {
+  ldtSelectedMode = "custom";
+  ldtBtnCustom.classList.add("active");
+  ldtBtnMixed.classList.remove("active");
+  ldtCategoryOptions.style.display = "flex";
+});
+
+ldtStartBtn.addEventListener("click", () => {
+  if (ldtSelectedMode === "custom") {
+    ldtSelectedCategories = Array.from(
+      ldtCategoryOptions.querySelectorAll("input:checked")
+    ).map(cb => cb.value);
+
+    if (ldtSelectedCategories.length === 0) {
+      alert("Bitte wähle mindestens eine Kategorie aus!");
+      return;
+    }
+  }
+
+  console.log("LDT-Modus:", ldtSelectedMode);
+  console.log("LDT-Kategorien:", ldtSelectedCategories);
+  ldtModal.classList.add("hidden");
+});
+
+ldtCard.addEventListener("click", (e) => {
+  e.preventDefault();
+  ldtModal.classList.remove("hidden");
+});
+
+closeLdtModal.addEventListener("click", () => {
+  ldtModal.classList.add("hidden");
+});
+
+ldtModal.addEventListener("click", (e) => {
+  if (e.target === ldtModal) {
+    ldtModal.classList.add("hidden");
+  }
+});
