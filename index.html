@@ -86,9 +86,9 @@
 
 
 <!-- Modal "Wer würde eher...?" -->
-<div class="modal-overlay hidden" id="wopModal">
+<div class="modal-overlay hidden" id="wdeModal">
   <div class="modal">
-    <span class="close-modal">❌</span>
+    <span class="close-modal" id="closeWdeModal">❌</span>
     <h2>Wer würde eher...? – Kategorien</h2>
 
     <div class="mode-select">
@@ -96,17 +96,17 @@
       <button id="btn-custom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="category-options">
+    <div class="category-select" id="category-options" style="display: none;">
       <label><input type="checkbox" value="funny"> 😂 Locker und Lustig</label>
       <label><input type="checkbox" value="daring"> 🫱 Vertrauensbasis</label>
       <label><input type="checkbox" value="personal"> 🔥 Wagemutig & Freizügig</label>
-      <label><input type="checkbox" value="flirty"> 🔒 Privat & Intim<</label>
-      <label><input type="checkbox" value="extreme"> 🧠 Persönlich & Tiefgründig</label>
+      <label><input type="checkbox" value="flirty"> 🔒 Privat & Intim</label>
+      <label><input type="checkbox" value="deep"> 🧠 Persönlich & Tiefgründig</label>
       <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant</label>
-      <label><input type="checkbox" value="extreme"> ⁉️ Zufall & Überraschung bevorzugen</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
     </div>
 
-    <button class="start-btn">Los geht’s!</button>
+    <button class="start-btn" id="wdeStartBtn">Los geht’s!</button>
   </div>
 </div>
   
