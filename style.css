@@ -188,11 +188,11 @@ footer {
 
 /* Kategorien Auswahl */
 .category-select {
-  display: flex;
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   text-align: left;
+  display: none; /* wird durch JS umgeschaltet */
 }
 
 .category-select label {
