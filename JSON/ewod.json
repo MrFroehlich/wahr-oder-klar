@@ -1,0 +1,30 @@
+{
+  "kategorien": {
+    "funny": {
+      "label": "Spaß & Albern",
+      "fragen": [
+        {
+          "option1": "Pizza",
+          "option2": "Pommes"
+        },
+        {
+          "option1": "Strandurlaub",
+          "option2": "Städtetrip"
+        }
+      ]
+    },
+    "flirty": {
+      "label": "Romantik & Flirt",
+      "fragen": [
+        {
+          "option1": "Erstes Date im Kino",
+          "option2": "Erstes Date im Café"
+        },
+        {
+          "option1": "Liebesbrief schreiben",
+          "option2": "Lied singen"
+        }
+      ]
+    }
+  }
+}
