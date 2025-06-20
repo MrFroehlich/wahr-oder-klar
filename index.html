@@ -52,10 +52,10 @@
       <h3>Entweder/Oder</h3>
       <p>Pizza oder Pommes? Entscheide dich!</p>
     </a>
-    <a class="card" href="#" id="ldtCard">
-      <div class="emoji">🕵️</div>
-      <h3>Lügendetektor</h3>
-      <p>Ehrlich sein oder gut bluffen?</p>
+    <a class="card" href="#" id="votingCard">
+      <div class="emoji">📊</div>
+      <h3>Voting</h3>
+      <p>Wie denkt die Runde wirklich?</p>
     </a>
   </section>
 </main>
@@ -169,26 +169,27 @@
 </div>
 
 
-      <!-- Modal "Lügendetektor" -->
-<div class="modal-overlay hidden" id="ldtModal">
+<!-- Modal "Voting" -->
+<div class="modal-overlay hidden" id="votingModal">
   <div class="modal">
-    <span class="close-modal" id="closeLdtModal">❌</span>
-    <h2>Lügendetektor – Kategorien</h2>
+    <span class="close-modal" id="closeVotingModal">❌</span>
+    <h2>Voting – Kategorien</h2>
 
     <div class="mode-select">
-      <button id="ldtBtnMixed" class="mode-btn active">🎨 Gemischt</button>
-      <button id="ldtBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
+      <button id="votingBtnMixed" class="mode-btn active">🎨 Gemischt</button>
+      <button id="votingBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="ldtCategoryOptions" style="display: none;">
-      <label><input type="checkbox" value="light"> 😊 Locker & Lustig</label>
-      <label><input type="checkbox" value="deep"> 🧠 Tiefgründig & Ehrlich</label>
-      <label><input type="checkbox" value="personal"> 🔥 Persönlich & Intim</label>
-      <label><input type="checkbox" value="extreme"> ⚡ Herausfordernd & Provokant</label>
-      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
+    <div class="category-select" id="votingCategoryOptions" style="display: none;">
+      <label><input type="checkbox" value="funny"> 😂 Spaß & Albern</label>
+      <label><input type="checkbox" value="secrets"> 🤐 Heimliche Wahrheiten</label>
+      <label><input type="checkbox" value="personal"> 💘 Freundschaft & Flirts</label>
+      <label><input type="checkbox" value="identity"> 🎭 Wer bist du wirklich?</label>
+      <label><input type="checkbox" value="opinion"> 💡 Meinungssache</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Mix</label>
     </div>
 
-    <button class="start-btn" id="ldtStartBtn">Los geht’s!</button>
+    <button class="start-btn" id="votingStartBtn">Los geht’s!</button>
   </div>
 </div>
   
