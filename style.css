@@ -253,6 +253,46 @@ footer {
 }
 
 
+
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  max-width: 260px;
+  background-color: #111;
+  color: #fff;
+  text-align: left;
+  border-radius: 8px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 10;
+  bottom: 100%; /* oberhalb anzeigen */
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+/* Tooltip anzeigen */
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-12px);
+}
+
+
 /*_________________________________________________________________________*/
 
 
@@ -441,4 +481,22 @@ footer {
   transform: scale(1.2);
   color: crimson;
 }
+}
+
+
+
+/* Tooltip für kleine Bildschirme optimieren */
+@media screen and (max-width: 600px) {
+  .tooltip {
+    font-size: 0.9rem;
+    max-width: 90vw;
+    word-break: break-word;
+    bottom: auto;
+    top: 100%;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  .tooltip-container:hover .tooltip {
+    transform: translateX(-50%) translateY(12px);
+  }
 }
