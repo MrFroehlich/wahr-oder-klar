@@ -253,6 +253,45 @@ footer {
 }
 
 
+
+
+.tooltip-container {
+  position: relative;
+  display: inline-flex; /* wichtig für flexbasiertes Layout */
+  align-items: center;
+  cursor: pointer;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  max-width: 260px;
+  background-color: #111;
+  color: #fff;
+  text-align: left;
+  border-radius: 8px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 10;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+/* Tooltip anzeigen */
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-12px);
+}
+
+
 /*_________________________________________________________________________*/
 
 
