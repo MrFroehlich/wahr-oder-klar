@@ -67,11 +67,7 @@
 
 
   
-<!-- ===================== MODALS NEU ===================== -->
-
-<!-- Hinweis: Dieses HTML setzt voraus, dass die CSS-Klasse "mobile-only" und das JavaScript korrekt eingebunden sind. -->
-
-<!-- Modal: Wahrheit oder Pflicht -->
+<!-- Modal "Wahrheit oder Pflicht" -->
 <div class="modal-overlay hidden" id="wopModal">
   <div class="modal">
     <span class="close-modal" id="closeWopModal">❌</span>
@@ -82,21 +78,22 @@
       <button id="wopBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="wopCategoryOptions">
-      <label><input type="checkbox" value="funny"> 🧃 Locker & Lustig <span class="info-icon mobile-only" data-info="Unbeschwerte, witzige Aufgaben ohne viel Nachdenken.">ℹ️</span></label>
-      <label><input type="checkbox" value="daring"> 🫱 Vertrauensbasis <span class="info-icon mobile-only" data-info="Fragen oder Aufgaben, die Vertrauen erfordern.">ℹ️</span></label>
-      <label><input type="checkbox" value="mind"> 🧠 Kopfkino <span class="info-icon mobile-only" data-info="Regt zum Nachdenken, Träumen oder Fantasieren an.">ℹ️</span></label>
-      <label><input type="checkbox" value="deep"> 💌 Deep Talk <span class="info-icon mobile-only" data-info="Ernstere Fragen mit Tiefgang und Bedeutung.">ℹ️</span></label>
-      <label><input type="checkbox" value="bold"> 🫣 Mut & Grenzen <span class="info-icon mobile-only" data-info="Kitzelt deine Komfortzone – nicht für jeden was.">ℹ️</span></label>
-      <label><input type="checkbox" value="taboo"> 🚫 Tabuzone <span class="info-icon mobile-only" data-info="Provokant oder bewusst grenzüberschreitend.">ℹ️</span></label>
-      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen <span class="info-icon mobile-only" data-info="Mischung aus allem – total zufällig.">ℹ️</span></label>
+    <div class="category-select" id="wopCategoryOptions" style="display: none;">
+      <label><input type="checkbox" value="funny"> 🧃 Locker & Lustig</label>
+      <label><input type="checkbox" value="daring"> 🫱 Vertrauensbasis</label>
+      <label><input type="checkbox" value="mind"> 🧠 Kopfkino</label>
+      <label><input type="checkbox" value="deep"> 💌 Deep Talk</label>
+      <label><input type="checkbox" value="bold"> 🫣 Mut & Grenzen</label>
+      <label><input type="checkbox" value="taboo"> 🚫 Tabuzone</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
     </div>
 
     <button class="start-btn" id="wopStartBtn">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal: Wer würde eher...? -->
+
+<!-- Modal "Wer würde eher...?" -->
 <div class="modal-overlay hidden" id="wdeModal">
   <div class="modal">
     <span class="close-modal" id="closeWdeModal">❌</span>
@@ -107,21 +104,22 @@
       <button id="wdeBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="wdeCategoryOptions">
-      <label><input type="checkbox" value="funny"> 😂 Locker & Lustig <span class="info-icon mobile-only" data-info="Witzige, leichte Einschätzungen über andere.">ℹ️</span></label>
-      <label><input type="checkbox" value="daring"> 🫱 Vertrauensbasis <span class="info-icon mobile-only" data-info="Schätzt, wem man was anvertrauen würde.">ℹ️</span></label>
-      <label><input type="checkbox" value="personal"> 🧠 Persönlich & Tiefgründig <span class="info-icon mobile-only" data-info="Intime, ehrliche Einschätzungen über die Gruppe.">ℹ️</span></label>
-      <label><input type="checkbox" value="bold"> 🔥 Wagemutig & Freizügig <span class="info-icon mobile-only" data-info="Wer traut sich was oder zeigt sich offen?"></span>ℹ️</label>
-      <label><input type="checkbox" value="intimate"> 🔒 Privat & Intim <span class="info-icon mobile-only" data-info="Wer verbirgt was oder hat geheime Seiten?"></span>ℹ️</label>
-      <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant <span class="info-icon mobile-only" data-info="Krasse oder ungewöhnliche Aussagen – mit Lacherpotenzial.">ℹ️</span></label>
-      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen <span class="info-icon mobile-only" data-info="Bunter Mix – für spontane Runden.">ℹ️</span></label>
+    <div class="category-select" id="wdeCategoryOptions" style="display: none;">
+      <label><input type="checkbox" value="funny"> 😂 Locker und Lustig</label>
+      <label><input type="checkbox" value="daring"> 🫱 Vertrauensbasis</label>
+      <label><input type="checkbox" value="personal"> 🧠 Persönlich & Tiefgründig</label>
+      <label><input type="checkbox" value="bold"> 🔥 Wagemutig & Freizügig</label>
+      <label><input type="checkbox" value="intimate"> 🔒 Privat & Intim</label>
+      <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
     </div>
 
     <button class="start-btn" id="wdeStartBtn">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal: Ich hab noch nie... -->
+
+  <!-- Modal "Ich hab noch nie..." -->
 <div class="modal-overlay hidden" id="ihnnModal">
   <div class="modal">
     <span class="close-modal" id="closeIhnnModal">❌</span>
@@ -132,21 +130,22 @@
       <button id="ihnnBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="ihnnCategoryOptions">
-      <label><input type="checkbox" value="funny"> 😂 Locker & Lustig <span class="info-icon mobile-only" data-info="Kleine Lacher, harmlose Geständnisse.">ℹ️</span></label>
-      <label><input type="checkbox" value="casual"> 😎 Alltag & Erlebnisse <span class="info-icon mobile-only" data-info="Erfahrungen, die viele kennen – oder eben nicht.">ℹ️</span></label>
-      <label><input type="checkbox" value="daring"> 🫱 Vertrauensbasis <span class="info-icon mobile-only" data-info="Peinlich oder unangenehm? Nur wer sich traut.">ℹ️</span></label>
-      <label><input type="checkbox" value="personal"> 🔥 Persönlich & Freizügig <span class="info-icon mobile-only" data-info="Offenheit ist gefragt – kann knistern.">ℹ️</span></label>
-      <label><input type="checkbox" value="flirty"> 💋 Flirty & Romantisch <span class="info-icon mobile-only" data-info="Liebe, Flirt und Herzklopfen – mit Augenzwinkern.">ℹ️</span></label>
-      <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant <span class="info-icon mobile-only" data-info="Abgefahren oder schräg – zum Staunen oder Lachen.">ℹ️</span></label>
-      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen <span class="info-icon mobile-only" data-info="Alles kann, nichts muss – Hauptsache bunt.">ℹ️</span></label>
+    <div class="category-select" id="ihnnCategoryOptions" style="display: none;">
+      <label><input type="checkbox" value="funny"> 😂 Locker und Lustig</label>
+      <label><input type="checkbox" value="casual"> 😎 Alltag & Erlebnisse</label>
+      <label><input type="checkbox" value="daring"> 🫱 Vertrauensbasis</label>
+      <label><input type="checkbox" value="personal"> 🔥 Persönlich & Freizügig</label>
+      <label><input type="checkbox" value="flirty"> 💋 Flirty & Romantisch</label>
+      <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
     </div>
 
     <button class="start-btn" id="ihnnStartBtn">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal: Entweder / Oder -->
+
+    <!-- Modal "Entweder / oder" -->
 <div class="modal-overlay hidden" id="ewodModal">
   <div class="modal">
     <span class="close-modal" id="closeEwodModal">❌</span>
@@ -157,19 +156,20 @@
       <button id="ewodBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="ewodCategoryOptions">
-      <label><input type="checkbox" value="funny"> 😂 Spaß & Albern <span class="info-icon mobile-only" data-info="Skurrile Entscheidungen, die zum Lachen bringen.">ℹ️</span></label>
-      <label><input type="checkbox" value="life"> 🌍 Alltag & Leben <span class="info-icon mobile-only" data-info="Typische Lebensentscheidungen, die jeder kennt.">ℹ️</span></label>
-      <label><input type="checkbox" value="flirty"> 💌 Romantik & Flirt <span class="info-icon mobile-only" data-info="Eindeutige Wahl oder romantisches Dilemma.">ℹ️</span></label>
-      <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant <span class="info-icon mobile-only" data-info="Unmögliche Entscheidungen – mit Spaßfaktor.">ℹ️</span></label>
-      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen <span class="info-icon mobile-only" data-info="Querbeet und unvorhersehbar.">ℹ️</span></label>
+    <div class="category-select" id="ewodCategoryOptions" style="display: none;">
+      <label><input type="checkbox" value="funny"> 😂 Spaß & Albern</label>
+      <label><input type="checkbox" value="life"> 🌍 Alltag & Leben</label>
+      <label><input type="checkbox" value="flirty"> 💌 Romantik & Flirt</label>
+      <label><input type="checkbox" value="extreme"> ⚡ Extrem & Provokant</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
     </div>
 
     <button class="start-btn" id="ewodStartBtn">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal: Voting / Lügendetektor -->
+
+    <!-- Modal "Voting" -->
 <div class="modal-overlay hidden" id="ldtModal">
   <div class="modal">
     <span class="close-modal" id="closeLdtModal">❌</span>
@@ -180,59 +180,18 @@
       <button id="ldtBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="ldtCategoryOptions">
-      <label><input type="checkbox" value="funny"> 😂 Spaß & Albern <span class="info-icon mobile-only" data-info="Humorvolle, spontane Entscheidungen.">ℹ️</span></label>
-      <label><input type="checkbox" value="secrets"> 🤐 Heimliche Wahrheiten <span class="info-icon mobile-only" data-info="Geheime Gedanken – aber anonym abgestimmt.">ℹ️</span></label>
-      <label><input type="checkbox" value="personal"> 💘 Freundschaft & Romantik <span class="info-icon mobile-only" data-info="Wer liebt wen? Wer passt zu wem?">ℹ️</span></label>
-      <label><input type="checkbox" value="identity"> 🎭 Wer bist du wirklich? <span class="info-icon mobile-only" data-info="Erkennst du dich selbst – oder andere?">ℹ️</span></label>
-      <label><input type="checkbox" value="opinion"> 💡 Meinungssache <span class="info-icon mobile-only" data-info="Was denkt die Runde zu echten Themen?">ℹ️</span></label>
-      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen <span class="info-icon mobile-only" data-info="Überraschungswahl ohne feste Richtung.">ℹ️</span></label>
+    <div class="category-select" id="ldtCategoryOptions" style="display: none;">
+      <label><input type="checkbox" value="funny"> 😂 Spaß & Albern</label>
+      <label><input type="checkbox" value="secrets"> 🤐 Heimliche Wahrheiten</label>
+      <label><input type="checkbox" value="personal"> 💘 Freundschaft & Romantik</label>
+      <label><input type="checkbox" value="identity"> 🎭 Wer bist du wirklich?</label>
+      <label><input type="checkbox" value="opinion"> 💡 Meinungssache</label>
+      <label><input type="checkbox" value="random"> ⁉️ Zufall & Überraschung bevorzugen</label>
     </div>
 
     <button class="start-btn" id="ldtStartBtn">Los geht’s!</button>
   </div>
 </div>
-
-
-  
-
-<script>
-// Funktion für das Anzeigen mobiler Tooltips
-function setupMobileInfoTooltips() {
-  const infoIcons = document.querySelectorAll(".info-icon");
-
-  infoIcons.forEach(icon => {
-    icon.addEventListener("click", (e) => {
-      e.stopPropagation();
-      // Prüfen, ob bereits ein Tooltip aktiv ist
-      const activeTooltip = document.querySelector(".tooltip-popup");
-      if (activeTooltip) activeTooltip.remove();
-
-      // Tooltip erzeugen
-      const tooltip = document.createElement("div");
-      tooltip.className = "tooltip-popup";
-      tooltip.textContent = icon.getAttribute("data-info");
-      document.body.appendChild(tooltip);
-
-      // Positionieren
-      const rect = icon.getBoundingClientRect();
-      tooltip.style.left = `${rect.left + window.scrollX}px`;
-      tooltip.style.top = `${rect.bottom + 6 + window.scrollY}px`;
-
-      // Tooltip schließen bei Klick außerhalb
-      document.addEventListener("click", function handler(e) {
-        if (!tooltip.contains(e.target)) {
-          tooltip.remove();
-          document.removeEventListener("click", handler);
-        }
-      });
-    });
-  });
-}
-
-document.addEventListener("DOMContentLoaded", setupMobileInfoTooltips);
-</script>
-
   
 
 <script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
