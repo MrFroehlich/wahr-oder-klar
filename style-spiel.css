@@ -1,4 +1,4 @@
-/* === Bestehende Styles (wie gehabt) === */
+/* style-spiel.css */
 
 body {
   background: #f2f5fa;
@@ -47,43 +47,44 @@ header h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   transition: background-color 0.3s ease;
 }
 
-/* === Auswahl-Phase === */
-
 .mode-selection {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
   animation: fadeIn 0.3s ease forwards;
+  width: 100%;
 }
 
 .mode-selection button {
   background-color: #3399ff;
   color: white;
   border: none;
-  padding: 0.9rem 1.6rem;
-  border-radius: 0.7rem;
+  padding: 1.2rem 2.2rem;
+  border-radius: 0.8rem;
   cursor: pointer;
-  font-size: 1.2rem;
-  transition: background-color 0.3s ease;
+  font-size: 1.3rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   user-select: none;
+  flex: 1;
+  max-width: 200px;
 }
 
 .mode-selection button:hover {
   background-color: #2b89e0;
+  transform: scale(1.05);
 }
-
-/* === Frage-Anzeige === */
 
 .question-view {
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.5rem;
   animation: fadeIn 0.3s ease forwards;
   width: 100%;
 }
@@ -92,18 +93,18 @@ header h1 {
   font-size: 0.9rem;
   font-weight: bold;
   color: #666;
-  margin-top: -0.5rem;
   opacity: 0.8;
+  text-align: center;
 }
 
 .question-box {
   min-height: 120px;
   width: 100%;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #222;
   background: #e0f1ff;
   border-radius: 0.8rem;
-  padding: 1.5rem;
+  padding: 1.8rem;
   box-shadow: inset 0 0 10px rgba(51,153,255,0.2);
   display: flex;
   align-items: center;
@@ -111,36 +112,54 @@ header h1 {
   text-align: center;
   user-select: none;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .action-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 }
 
 .action-buttons button {
-  padding: 0.9rem 1.6rem;
+  padding: 1rem 2rem;
   border: none;
   background-color: #3399ff;
   color: white;
   border-radius: 0.6rem;
   cursor: pointer;
-  font-size: 1.05rem;
-  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   user-select: none;
 }
 
 .action-buttons button:hover {
   background-color: #2b89e0;
+  transform: scale(1.05);
 }
 
-/* === Animationen === */
+.back-button {
+  margin-top: 2rem;
+  background-color: #999;
+  color: white;
+  padding: 0.9rem 1.6rem;
+  border: none;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #777;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -148,7 +167,6 @@ header h1 {
   }
 }
 
-/* === Dark Mode === */
 @media (prefers-color-scheme: dark) {
   body {
     background: #12171f;
@@ -184,5 +202,14 @@ header h1 {
 
   .category-label {
     color: #ccc;
+  }
+
+  .back-button {
+    background-color: #555;
+    color: #eee;
+  }
+
+  .back-button:hover {
+    background-color: #444;
   }
 }
