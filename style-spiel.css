@@ -116,12 +116,9 @@ header h1 {
     color: #d6d6d6;
   }
 
-  header h1 {
-    color: #76a9f9;
-  }
-
-  header .subtitle {
-    color: #a0a0a0;
+  header {
+    background-color: #003366;
+    color: #e0e0e0;
   }
 
   .container {
