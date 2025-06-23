@@ -382,32 +382,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById('wopStartBtn').addEventListener('click', () => {
-  const checkedBoxes = document.querySelectorAll('.kategorie-checkbox:checked');
-  const ausgewaehlt = Array.from(checkedBoxes).map(cb => cb.value);
+  const mixedBtn = document.getElementById('wopBtnMixed');
+  const isMixed = mixedBtn.classList.contains('active');
 
-  if (ausgewaehlt.length === 0) {
-    alert("Bitte wähle mindestens eine Kategorie aus.");
+  const selectedCheckboxes = Array.from(document.querySelectorAll('#wopCategoryOptions input[type="checkbox"]:checked'));
+  const selectedValues = selectedCheckboxes.map(cb => cb.value);
+
+  let kategorien = [];
+
+  if (isMixed) {
+    // Nur zum Test: Immer nur "funny" laden, wenn "Gemischt" aktiv ist
+    kategorien = ['funny'];
+  } else if (selectedValues.length > 0) {
+    kategorien = selectedValues;
+  } else {
+    alert('Bitte wähle mindestens eine Kategorie aus.');
     return;
   }
 
   fetch('JSON/wop.json')
     .then(res => res.json())
     .then(data => {
-      let wahrheit = [];
-      let pflicht = [];
+      const fragen = { wahrheit: [], pflicht: [] };
 
-      ausgewaehlt.forEach(cat => {
+      kategorien.forEach(cat => {
         if (data[cat]) {
-          wahrheit = wahrheit.concat(data[cat].wahrheit);
-          pflicht = pflicht.concat(data[cat].pflicht);
+          fragen.wahrheit.push(...data[cat].wahrheit);
+          fragen.pflicht.push(...data[cat].pflicht);
         }
       });
 
-      sessionStorage.setItem('wopFragen', JSON.stringify({ wahrheit, pflicht }));
+      sessionStorage.setItem('wopFragen', JSON.stringify(fragen));
       window.location.href = 'spiel-wop.html';
-    })
-    .catch(err => {
-      console.error("Fehler beim Laden der Fragen:", err);
-      alert("Fragen konnten nicht geladen werden.");
     });
 });
