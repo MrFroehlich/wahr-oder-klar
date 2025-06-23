@@ -75,6 +75,12 @@
     .then(res => res.json())
     .then(data => {
       fragenKategorien = data;
+
+      // Event-Listener erst aktivieren, wenn Daten geladen sind
+      truthBtn.addEventListener("click", () => startRound("wahrheit"));
+      dareBtn.addEventListener("click", () => startRound("pflicht"));
+      doneBtn.addEventListener("click", nextRound);
+      penaltyBtn.addEventListener("click", showStrafaufgabe);
     });
 
   const auswahl = sessionStorage.getItem("wopKategorien");
@@ -161,13 +167,10 @@
     penaltyBtn.style.display = "none";
   }
 
-  truthBtn.addEventListener("click", () => startRound("wahrheit"));
-  dareBtn.addEventListener("click", () => startRound("pflicht"));
-  doneBtn.addEventListener("click", nextRound);
-  penaltyBtn.addEventListener("click", showStrafaufgabe);
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
   });
 </script>
+
 </body>
 </html>
