@@ -170,6 +170,53 @@
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
   });
+
+
+
+  // Annahme: Arrays wahrheitFragen, pflichtAufgaben sind schon definiert
+
+const modeSelection = document.querySelector('.mode-selection');
+const questionView = document.querySelector('.question-view');
+const categoryLabel = document.querySelector('.category-label');
+const questionBox = document.querySelector('.question-box');
+const actionButtons = document.querySelector('.action-buttons');
+
+const btnErledigt = document.createElement('button');
+btnErledigt.textContent = 'Erledigt';
+btnErledigt.classList.add('action-btn');
+
+const btnStrafaufgabe = document.createElement('button');
+btnStrafaufgabe.textContent = 'Strafaufgabe';
+btnStrafaufgabe.classList.add('action-btn');
+
+// Fügt die Buttons in actionButtons-Container ein
+actionButtons.appendChild(btnErledigt);
+actionButtons.appendChild(btnStrafaufgabe);
+
+// Funktion, um eine Pflichtaufgabe anzuzeigen (für Strafaufgabe)
+function showStrafaufgabe() {
+  categoryLabel.textContent = 'Strafaufgabe';
+  const zufallIndex = Math.floor(Math.random() * pflichtAufgaben.length);
+  questionBox.textContent = pflichtAufgaben[zufallIndex];
+  questionView.style.display = 'flex';
+  modeSelection.style.display = 'none';
+}
+
+// Event-Listener Strafaufgabe Button
+btnStrafaufgabe.addEventListener('click', () => {
+  showStrafaufgabe();
+});
+
+// Event-Listener Erledigt Button
+btnErledigt.addEventListener('click', () => {
+  // Zurück zum Modus Auswahl
+  questionView.style.display = 'none';
+  modeSelection.style.display = 'flex';
+  categoryLabel.textContent = '';
+  questionBox.textContent = '';
+});
+
+  
 </script>
 
 </body>
