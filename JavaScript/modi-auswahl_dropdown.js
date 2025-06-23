@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById('wopStartBtn').addEventListener('click', () => {
-  fetch('fragen/wop.json') // oder dein Pfad zur Datei
+  fetch('JSON/wop.json') // oder dein Pfad zur Datei
     .then(res => res.json())
     .then(data => {
       const funny = data.funny;
