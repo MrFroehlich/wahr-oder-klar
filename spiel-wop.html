@@ -1,101 +1,87 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wahrheit oder Pflicht</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .spielbereich {
-      max-width: 600px;
-      margin: 3rem auto;
-      background: #ffffff;
-      border-radius: 1rem;
-      padding: 2rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    .spielbereich h2 {
-      margin-bottom: 1rem;
-    }
-
-    .auswahl-buttons button {
-      margin: 0.5rem;
-      padding: 0.8rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 0.6rem;
-      border: none;
-      cursor: pointer;
-      background-color: #3399ff;
-      color: white;
-      transition: background 0.2s;
-    }
-
-    .auswahl-buttons button:hover {
-      background-color: #2b89e0;
-    }
-
-    .frage-box {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: #e0f1ff;
-      border-radius: 0.8rem;
-      min-height: 100px;
-      display: none;
-    }
-
-    .weiter-btn {
-      margin-top: 2rem;
-      display: none;
-      background-color: #0077cc;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wahrheit oder Pflicht – Spiel</title>
+  <link rel="stylesheet" href="style-spiel.css" />
+  <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
 </head>
 <body>
-  <section class="spielbereich">
-    <h2>Wahrheit oder Pflicht?</h2>
 
-    <div class="auswahl-buttons">
-      <button id="btnWahrheit">🙊 Wahrheit</button>
-      <button id="btnPflicht">🤐 Pflicht</button>
+<header>
+  <h1>Wahrheit oder Pflicht</h1>
+  <p class="subtitle">Wähle Wahrheit oder Pflicht und lass dich überraschen!</p>
+</header>
+
+<main>
+  <div class="container">
+    <div class="choice-buttons">
+      <button id="truthBtn" class="active">Wahrheit</button>
+      <button id="dareBtn">Pflicht</button>
     </div>
 
-    <div class="frage-box" id="frageBox"></div>
+    <div id="questionBox" class="question-box">
+      <!-- Hier erscheint die Frage/Aufgabe -->
+      <p>Drücke "Neue Frage" um zu starten.</p>
+    </div>
 
-    <button class="auswahl-buttons weiter-btn" id="btnWeiter">Nächste Runde</button>
-  </section>
+    <button id="newQuestionBtn">Neue Frage</button>
+    <button id="backBtn">Zurück zur Startseite</button>
+  </div>
+</main>
 
-  <script>
-    let fragen = JSON.parse(sessionStorage.getItem('wopFragen')) || { wahrheit: [], pflicht: [] };
+<script>
+  // Beispiel-Daten (später aus JSON oder API)
+  const wahrheitFragen = [
+    "Was war dein peinlichstes Erlebnis?",
+    "Hast du jemals etwas Wichtiges verheimlicht?",
+    "Wer ist dein heimlicher Schwarm?",
+  ];
 
-    const frageBox = document.getElementById('frageBox');
-    const btnWahrheit = document.getElementById('btnWahrheit');
-    const btnPflicht = document.getElementById('btnPflicht');
-    const btnWeiter = document.getElementById('btnWeiter');
+  const pflichtAufgaben = [
+    "Tanze 30 Sekunden lang wie ein Huhn.",
+    "Erzähle einen Witz, der alle zum Lachen bringt.",
+    "Mach 10 Liegestütze.",
+  ];
 
-    function zufall(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
+  // Aktueller Modus: 'truth' oder 'dare'
+  let currentMode = 'truth';
+
+  const truthBtn = document.getElementById('truthBtn');
+  const dareBtn = document.getElementById('dareBtn');
+  const questionBox = document.getElementById('questionBox');
+  const newQuestionBtn = document.getElementById('newQuestionBtn');
+  const backBtn = document.getElementById('backBtn');
+
+  truthBtn.addEventListener('click', () => {
+    currentMode = 'truth';
+    truthBtn.classList.add('active');
+    dareBtn.classList.remove('active');
+    questionBox.innerHTML = '<p>Drücke "Neue Frage" um zu starten.</p>';
+  });
+
+  dareBtn.addEventListener('click', () => {
+    currentMode = 'dare';
+    dareBtn.classList.add('active');
+    truthBtn.classList.remove('active');
+    questionBox.innerHTML = '<p>Drücke "Neue Frage" um zu starten.</p>';
+  });
+
+  newQuestionBtn.addEventListener('click', () => {
+    let text = '';
+    if (currentMode === 'truth') {
+      text = wahrheitFragen[Math.floor(Math.random() * wahrheitFragen.length)];
+    } else {
+      text = pflichtAufgaben[Math.floor(Math.random() * pflichtAufgaben.length)];
     }
+    questionBox.innerHTML = `<p>${text}</p>`;
+  });
 
-    btnWahrheit.addEventListener('click', () => {
-      const frage = zufall(fragen.wahrheit);
-      frageBox.textContent = frage;
-      frageBox.style.display = 'block';
-      btnWeiter.style.display = 'inline-block';
-    });
+  backBtn.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+</script>
 
-    btnPflicht.addEventListener('click', () => {
-      const aufgabe = zufall(fragen.pflicht);
-      frageBox.textContent = aufgabe;
-      frageBox.style.display = 'block';
-      btnWeiter.style.display = 'inline-block';
-    });
-
-    btnWeiter.addEventListener('click', () => {
-      frageBox.style.display = 'none';
-      btnWeiter.style.display = 'none';
-    });
-  </script>
 </body>
 </html>
