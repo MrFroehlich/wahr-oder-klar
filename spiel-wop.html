@@ -110,6 +110,45 @@
   function getRandomQuestion(modus) {
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
     const catKey = pool[Math.floor(Math.random() * pool.length)];
+<script>
+  let fragenKategorien = {};
+  let aktiveKategorien = [];
+
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const truthBtn = document.getElementById("truthBtn");
+  const dareBtn = document.getElementById("dareBtn");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const questionBox = document.getElementById("questionBox");
+  const doneBtn = document.getElementById("doneBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
+  const backBtn = document.getElementById("backBtn");
+
+  let aktuelleKategorie = "";
+  let aktuelleFrage = "";
+  let aktuellerModus = "";
+  let istStrafaufgabeAktiv = false;
+  let datenGeladen = false;
+
+  fetch("JSON/wop.json")
+    .then(res => res.json())
+    .then(data => {
+      fragenKategorien = data;
+      datenGeladen = true;
+    });
+
+  const auswahl = sessionStorage.getItem("wopKategorien");
+  if (auswahl) {
+    try {
+      aktiveKategorien = JSON.parse(auswahl);
+    } catch (e) {
+      aktiveKategorien = [];
+    }
+  }
+
+  function getRandomQuestion(modus) {
+    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
+    const catKey = pool[Math.floor(Math.random() * pool.length)];
     const cat = fragenKategorien[catKey];
     const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
     const frage = fragenArray[Math.floor(Math.random() * fragenArray.length)];
@@ -139,15 +178,20 @@
   }
 
   async function startRound(modus) {
+    if (!datenGeladen) return;
     aktuellerModus = modus;
     istStrafaufgabeAktiv = false;
     penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
+
     await fadeOut(modeSelection);
+
     const { label, frage } = getRandomQuestion(modus);
     aktuelleKategorie = label;
     aktuelleFrage = frage;
+
     categoryLabel.textContent = label;
     questionBox.textContent = frage;
+
     await fadeIn(questionView);
   }
 
@@ -160,17 +204,22 @@
   function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
     categoryLabel.textContent = "Strafaufgabe";
+
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
     const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
     const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
+
     questionBox.textContent = randomPflicht;
     penaltyBtn.style.display = "none";
   }
 
+  // 🎯 Event-Listener direkt setzen
+  truthBtn.addEventListener("click", () => startRound("wahrheit"));
+  dareBtn.addEventListener("click", () => startRound("pflicht"));
+  doneBtn.addEventListener("click", nextRound);
+  penaltyBtn.addEventListener("click", showStrafaufgabe);
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
   });
 </script>
-
-</body>
 </html>
