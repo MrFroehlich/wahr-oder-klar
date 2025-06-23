@@ -380,39 +380,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+document.addEventListener('DOMContentLoaded', () => {
+  const wopStartBtn = document.getElementById('wopStartBtn');
+  const wopCategoryOptions = document.getElementById('wopCategoryOptions');
 
-document.getElementById('wopStartBtn').addEventListener('click', () => {
-  const mixedBtn = document.getElementById('wopBtnMixed');
-  const isMixed = mixedBtn.classList.contains('active');
+  wopStartBtn.addEventListener('click', () => {
+    // Kategorien aus den Checkboxen auslesen, falls Kategorieauswahl sichtbar
+    let selectedCategories = [];
 
-  const selectedCheckboxes = Array.from(document.querySelectorAll('#wopCategoryOptions input[type="checkbox"]:checked'));
-  const selectedValues = selectedCheckboxes.map(cb => cb.value);
+    if (wopCategoryOptions.style.display !== 'none') {
+      // Nur Checkboxen, die checked sind, sammeln
+      const checkboxes = wopCategoryOptions.querySelectorAll('input[type="checkbox"]:checked');
+      checkboxes.forEach(cb => selectedCategories.push(cb.value));
+    } else {
+      // Wenn Kategorieauswahl ausgeblendet (z.B. Gemischt-Modus), dann speichern wir "gemischt"
+      selectedCategories = ['gemischt'];
+    }
 
-  let kategorien = [];
+    // Speichern in localStorage
+    localStorage.setItem('wopCategories', JSON.stringify(selectedCategories));
 
-  if (isMixed) {
-    // Nur zum Test: Immer nur "funny" laden, wenn "Gemischt" aktiv ist
-    kategorien = ['funny'];
-  } else if (selectedValues.length > 0) {
-    kategorien = selectedValues;
-  } else {
-    alert('Bitte wähle mindestens eine Kategorie aus.');
-    return;
-  }
-
-  fetch('JSON/wop.json')
-    .then(res => res.json())
-    .then(data => {
-      const fragen = { wahrheit: [], pflicht: [] };
-
-      kategorien.forEach(cat => {
-        if (data[cat]) {
-          fragen.wahrheit.push(...data[cat].wahrheit);
-          fragen.pflicht.push(...data[cat].pflicht);
-        }
-      });
-
-      sessionStorage.setItem('wopFragen', JSON.stringify(fragen));
-      window.location.href = 'spiel-wop.html';
-    });
+    // Weiterleitung zur Spieleseite
+    window.location.href = 'spiel-wop.html';
+  });
 });
