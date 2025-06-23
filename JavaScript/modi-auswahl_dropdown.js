@@ -373,3 +373,23 @@ document.addEventListener('DOMContentLoaded', () => {
     tip.addEventListener('click', e => e.stopPropagation());
   });
 });
+
+
+
+
+
+
+
+
+document.getElementById('wopStartBtn').addEventListener('click', () => {
+  fetch('fragen/wop.json') // oder dein Pfad zur Datei
+    .then(res => res.json())
+    .then(data => {
+      const funny = data.funny;
+      sessionStorage.setItem('wopFragen', JSON.stringify({
+        wahrheit: funny.wahrheit,
+        pflicht: funny.pflicht
+      }));
+      window.location.href = 'spiel-wop.html';
+    });
+});
