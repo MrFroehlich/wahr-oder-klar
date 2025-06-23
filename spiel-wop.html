@@ -68,30 +68,23 @@
   </div>
 </main>
 <script>
-  const fragenKategorien = {
-    funny: {
-      label: "🧃 Locker & Lustig",
-      wahrheit: [
-        "Was war dein peinlichstes Erlebnis?",
-        "Hast du jemals laut gelacht, obwohl es unangebracht war?"
-      ],
-      pflicht: [
-        "Tanze 30 Sekunden wie ein Huhn.",
-        "Erzähle einen Witz, der alle zum Lachen bringt."
-      ]
-    },
-    daring: {
-      label: "🫱 Vertrauensbasis",
-      wahrheit: [
-        "Wovor hast du am meisten Angst?",
-        "Hast du jemals etwas getan, das du bereut hast?"
-      ],
-      pflicht: [
-        "Mach 10 Liegestütze.",
-        "Singe ein Lied laut vor allen."
-      ]
+  let fragenKategorien = {};
+  let aktiveKategorien = [];
+
+  fetch("JSON/wop.json")
+    .then(res => res.json())
+    .then(data => {
+      fragenKategorien = data;
+    });
+
+  const auswahl = sessionStorage.getItem("wopKategorien");
+  if (auswahl) {
+    try {
+      aktiveKategorien = JSON.parse(auswahl);
+    } catch (e) {
+      aktiveKategorien = [];
     }
-  };
+  }
 
   let aktuelleKategorie = "";
   let aktuelleFrage = "";
@@ -109,8 +102,8 @@
   const backBtn = document.getElementById("backBtn");
 
   function getRandomQuestion(modus) {
-    const categories = Object.keys(fragenKategorien);
-    const catKey = categories[Math.floor(Math.random() * categories.length)];
+    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
+    const catKey = pool[Math.floor(Math.random() * pool.length)];
     const cat = fragenKategorien[catKey];
     const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
     const frage = fragenArray[Math.floor(Math.random() * fragenArray.length)];
@@ -118,7 +111,7 @@
   }
 
   function fadeOut(element) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       element.classList.remove("fade-in");
       element.classList.add("fade-out");
       setTimeout(() => {
@@ -129,7 +122,7 @@
   }
 
   function fadeIn(element) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       element.style.display = "flex";
       setTimeout(() => {
         element.classList.remove("fade-out");
@@ -161,7 +154,8 @@
   function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
     categoryLabel.textContent = "Strafaufgabe";
-    const allPflicht = Object.values(fragenKategorien).flatMap(k => k.pflicht);
+    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
+    const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
     const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
     questionBox.textContent = randomPflicht;
     penaltyBtn.style.display = "none";
