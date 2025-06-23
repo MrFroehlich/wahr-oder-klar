@@ -382,14 +382,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.getElementById('wopStartBtn').addEventListener('click', () => {
-  fetch('JSON/wop.json') // oder dein Pfad zur Datei
+  const checkedBoxes = document.querySelectorAll('.kategorie-checkbox:checked');
+  const ausgewaehlt = Array.from(checkedBoxes).map(cb => cb.value);
+
+  if (ausgewaehlt.length === 0) {
+    alert("Bitte wähle mindestens eine Kategorie aus.");
+    return;
+  }
+
+  fetch('JSON/wop.json')
     .then(res => res.json())
     .then(data => {
-      const funny = data.funny;
-      sessionStorage.setItem('wopFragen', JSON.stringify({
-        wahrheit: funny.wahrheit,
-        pflicht: funny.pflicht
-      }));
+      let wahrheit = [];
+      let pflicht = [];
+
+      ausgewaehlt.forEach(cat => {
+        if (data[cat]) {
+          wahrheit = wahrheit.concat(data[cat].wahrheit);
+          pflicht = pflicht.concat(data[cat].pflicht);
+        }
+      });
+
+      sessionStorage.setItem('wopFragen', JSON.stringify({ wahrheit, pflicht }));
       window.location.href = 'spiel-wop.html';
+    })
+    .catch(err => {
+      console.error("Fehler beim Laden der Fragen:", err);
+      alert("Fragen konnten nicht geladen werden.");
     });
 });
