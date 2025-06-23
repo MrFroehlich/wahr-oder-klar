@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wahrheit oder Pflicht</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .spielbereich {
+      max-width: 600px;
+      margin: 3rem auto;
+      background: #ffffff;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .spielbereich h2 {
+      margin-bottom: 1rem;
+    }
+
+    .auswahl-buttons button {
+      margin: 0.5rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 0.6rem;
+      border: none;
+      cursor: pointer;
+      background-color: #3399ff;
+      color: white;
+      transition: background 0.2s;
+    }
+
+    .auswahl-buttons button:hover {
+      background-color: #2b89e0;
+    }
+
+    .frage-box {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #e0f1ff;
+      border-radius: 0.8rem;
+      min-height: 100px;
+      display: none;
+    }
+
+    .weiter-btn {
+      margin-top: 2rem;
+      display: none;
+      background-color: #0077cc;
+    }
+  </style>
+</head>
+<body>
+  <section class="spielbereich">
+    <h2>Wahrheit oder Pflicht?</h2>
+
+    <div class="auswahl-buttons">
+      <button id="btnWahrheit">🙊 Wahrheit</button>
+      <button id="btnPflicht">🤐 Pflicht</button>
+    </div>
+
+    <div class="frage-box" id="frageBox"></div>
+
+    <button class="auswahl-buttons weiter-btn" id="btnWeiter">Nächste Runde</button>
+  </section>
+
+  <script>
+    let fragen = JSON.parse(sessionStorage.getItem('wopFragen')) || { wahrheit: [], pflicht: [] };
+
+    const frageBox = document.getElementById('frageBox');
+    const btnWahrheit = document.getElementById('btnWahrheit');
+    const btnPflicht = document.getElementById('btnPflicht');
+    const btnWeiter = document.getElementById('btnWeiter');
+
+    function zufall(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    btnWahrheit.addEventListener('click', () => {
+      const frage = zufall(fragen.wahrheit);
+      frageBox.textContent = frage;
+      frageBox.style.display = 'block';
+      btnWeiter.style.display = 'inline-block';
+    });
+
+    btnPflicht.addEventListener('click', () => {
+      const aufgabe = zufall(fragen.pflicht);
+      frageBox.textContent = aufgabe;
+      frageBox.style.display = 'block';
+      btnWeiter.style.display = 'inline-block';
+    });
+
+    btnWeiter.addEventListener('click', () => {
+      frageBox.style.display = 'none';
+      btnWeiter.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
