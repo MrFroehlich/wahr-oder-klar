@@ -98,21 +98,6 @@
   const categoryLabel = document.getElementById("categoryLabel");
   const questionBox = document.getElementById("questionBox");
   const doneBtn = document.getElementById("doneBtn");
-  const backBtn = document.getElementById("backBtn");
-
-  // Hilfsfunktion: zufällige Frage aus allen Kategorien je nach Modus
-  function getRandomQuestion(modus) {
-    const categories = Object.keys(fragenKategorien);
-    // zufällige Kategorie wählen
-    const catKey = categories[Math.floor(Math.random() * categories.length)];
-    const cat = fragenKategorien[catKey];
-
-    // zufällige Frage aus der Kategorie im jeweiligen Modus
-    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
-    const frage = fragenArray[Math.floor(Math.random() * fragenArray.length)];
-
-    return { label: cat.label, frage };
-  }
 
   // Animation Helper: fade out ein Element (returns Promise)
   function fadeOut(element) {
@@ -120,7 +105,7 @@
       element.classList.remove("fade-in");
       element.classList.add("fade-out");
       setTimeout(() => {
-        if(element.style.display !== "none") element.style.display = "none";
+        element.style.display = "none";
         resolve();
       }, 400);
     });
@@ -130,7 +115,6 @@
   function fadeIn(element) {
     return new Promise((resolve) => {
       element.style.display = "flex";
-      // Kleine Timeout damit CSS Transition greifen kann
       setTimeout(() => {
         element.classList.remove("fade-out");
         element.classList.add("fade-in");
@@ -139,85 +123,94 @@
     });
   }
 
-  // Klick auf Wahrheit oder Pflicht Button
+  // Zufällige Frage aus allen Kategorien je nach Modus holen
+  function getRandomQuestion(modus) {
+    const categories = Object.keys(fragenKategorien);
+    const catKey = categories[Math.floor(Math.random() * categories.length)];
+    const cat = fragenKategorien[catKey];
+    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
+    const frage = fragenArray[Math.floor(Math.random() * fragenArray.length)];
+    return { label: cat.label, frage };
+  }
+
+  // Alle Pflichtaufgaben aus allen Kategorien sammeln
+  function getAllPflichtAufgaben() {
+    let allePflichten = [];
+    for (const key in fragenKategorien) {
+      allePflichten = allePflichten.concat(fragenKategorien[key].pflicht);
+    }
+    return allePflichten;
+  }
+
+  // Runde starten (Wahrheit oder Pflicht)
   async function startRound(modus) {
     aktuellerModus = modus;
-    // Buttons fade out
     await fadeOut(modeSelection);
 
-    // Frage holen
     const { label, frage } = getRandomQuestion(modus);
     aktuelleKategorie = label;
     aktuelleFrage = frage;
 
-    // Frage anzeigen
     categoryLabel.textContent = label;
     questionBox.textContent = frage;
 
-    // Frage-View einblenden
     await fadeIn(questionView);
   }
 
-  // Klick auf Erledigt / Nächste Frage
+  // Strafaufgabe anzeigen
+  async function zeigeStrafaufgabe() {
+    aktuelleKategorie = "Strafaufgabe";
+    categoryLabel.textContent = "Strafaufgabe";
+
+    const allePflichten = getAllPflichtAufgaben();
+    const zufallIndex = Math.floor(Math.random() * allePflichten.length);
+    aktuelleFrage = allePflichten[zufallIndex];
+    questionBox.textContent = aktuelleFrage;
+
+    await fadeOut(modeSelection);
+    await fadeIn(questionView);
+  }
+
+  // Nächste Runde starten: zurück zur Modus-Auswahl
   async function nextRound() {
     await fadeOut(questionView);
+    categoryLabel.textContent = "";
+    questionBox.textContent = "";
     await fadeIn(modeSelection);
   }
 
+  // Event-Listener für Buttons
   truthBtn.addEventListener("click", () => startRound("wahrheit"));
   dareBtn.addEventListener("click", () => startRound("pflicht"));
   doneBtn.addEventListener("click", nextRound);
-  backBtn.addEventListener("click", () => {
-    window.location.href = "index.html";
-  });
 
+  // Strafaufgabe-Button dynamisch erstellen und anhängen
+  const strafBtn = document.createElement("button");
+  strafBtn.textContent = "Strafaufgabe";
+  strafBtn.className = "action-btn";
+  strafBtn.style.marginTop = "0.8rem";
+  strafBtn.style.backgroundColor = "#e03e2f";
+  strafBtn.style.border = "none";
+  strafBtn.style.color = "white";
+  strafBtn.style.padding = "0.8rem 1.6rem";
+  strafBtn.style.borderRadius = "0.6rem";
+  strafBtn.style.cursor = "pointer";
+  strafBtn.style.fontSize = "1.1rem";
 
+  // Strafaufgabe-Button direkt unter "Erledigt" Button einfügen
+  doneBtn.parentNode.appendChild(strafBtn);
 
-  // Annahme: Arrays wahrheitFragen, pflichtAufgaben sind schon definiert
+  strafBtn.addEventListener("click", () => zeigeStrafaufgabe());
 
-const modeSelection = document.querySelector('.mode-selection');
-const questionView = document.querySelector('.question-view');
-const categoryLabel = document.querySelector('.category-label');
-const questionBox = document.querySelector('.question-box');
-const actionButtons = document.querySelector('.action-buttons');
-
-const btnErledigt = document.createElement('button');
-btnErledigt.textContent = 'Erledigt';
-btnErledigt.classList.add('action-btn');
-
-const btnStrafaufgabe = document.createElement('button');
-btnStrafaufgabe.textContent = 'Strafaufgabe';
-btnStrafaufgabe.classList.add('action-btn');
-
-// Fügt die Buttons in actionButtons-Container ein
-actionButtons.appendChild(btnErledigt);
-actionButtons.appendChild(btnStrafaufgabe);
-
-// Funktion, um eine Pflichtaufgabe anzuzeigen (für Strafaufgabe)
-function showStrafaufgabe() {
-  categoryLabel.textContent = 'Strafaufgabe';
-  const zufallIndex = Math.floor(Math.random() * pflichtAufgaben.length);
-  questionBox.textContent = pflichtAufgaben[zufallIndex];
-  questionView.style.display = 'flex';
-  modeSelection.style.display = 'none';
-}
-
-// Event-Listener Strafaufgabe Button
-btnStrafaufgabe.addEventListener('click', () => {
-  showStrafaufgabe();
-});
-
-// Event-Listener Erledigt Button
-btnErledigt.addEventListener('click', () => {
-  // Zurück zum Modus Auswahl
-  questionView.style.display = 'none';
-  modeSelection.style.display = 'flex';
-  categoryLabel.textContent = '';
-  questionBox.textContent = '';
-});
-
-  
+  // Button Zurück zur Startseite (wenn vorhanden)
+  const backBtn = document.getElementById("backBtn");
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  }
 </script>
+
 
 </body>
 </html>
