@@ -68,25 +68,15 @@
   </div>
 </main>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const modeSelection = document.getElementById("modeSelection");
-  const questionView = document.getElementById("questionView");
-  const truthBtn = document.getElementById("truthBtn");
-  const dareBtn = document.getElementById("dareBtn");
-  const categoryLabel = document.getElementById("categoryLabel");
-  const questionBox = document.getElementById("questionBox");
-  const doneBtn = document.getElementById("doneBtn");
-  const penaltyBtn = document.getElementById("penaltyBtn");
-  const backBtn = document.getElementById("backBtn");
-
   let fragenKategorien = {};
   let aktiveKategorien = [];
-  let aktuelleKategorie = "";
-  let aktuelleFrage = "";
-  let aktuellerModus = "";
-  let istStrafaufgabeAktiv = false;
 
-  // Kategorien-Auswahl laden
+  fetch("JSON/wop.json")
+    .then(res => res.json())
+    .then(data => {
+      fragenKategorien = data;
+    });
+
   const auswahl = sessionStorage.getItem("wopKategorien");
   if (auswahl) {
     try {
@@ -96,64 +86,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // JSON laden
-  fetch("JSON/wop.json")
-    .then(res => res.json())
-    .then(data => {
-      fragenKategorien = data;
+  let aktuelleKategorie = "";
+  let aktuelleFrage = "";
+  let aktuellerModus = "";
+  let istStrafaufgabeAktiv = false;
 
-      // Event-Listener NACH erfolgreichem Laden setzen
-      truthBtn.addEventListener("click", () => startRound("wahrheit"));
-      dareBtn.addEventListener("click", () => startRound("pflicht"));
-      doneBtn.addEventListener("click", nextRound);
-      penaltyBtn.addEventListener("click", showStrafaufgabe);
-      backBtn.addEventListener("click", () => {
-        window.location.href = "index.html";
-      });
-    });
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const truthBtn = document.getElementById("truthBtn");
+  const dareBtn = document.getElementById("dareBtn");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const questionBox = document.getElementById("questionBox");
+  const doneBtn = document.getElementById("doneBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
+  const backBtn = document.getElementById("backBtn");
 
   function getRandomQuestion(modus) {
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
     const catKey = pool[Math.floor(Math.random() * pool.length)];
-<script>
-  let fragenKategorien = {};
-  let aktiveKategorien = [];
-
-  // JSON laden
-  fetch("JSON/wop.json")
-    .then(res => res.json())
-    .then(data => {
-      fragenKategorien = data;
-    });
-
-  // Kategorien aus SessionStorage holen (vom Modal)
-  const auswahl = sessionStorage.getItem("wopKategorien");
-  if (auswahl) {
-    try {
-      aktiveKategorien = JSON.parse(auswahl);
-    } catch (e) {
-      aktiveKategorien = [];
-    }
+    const cat = fragenKategorien[catKey];
+    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
+    const frage = fragenArray[Math.floor(Math.random() * fragenArray.length)];
+    return { label: cat.label, frage };
   }
 
-  // Globale Variablen
-  let aktuelleKategorie = "";
-  let aktuelleFrage = "";
-  let aktuellerModus = "";
-  let istStrafaufgabeAktiv = false;
-
-  // DOM-Elemente
-  const modeSelection = document.getElementById("modeSelection");
-  const questionView = document.getElementById("questionView");
-  const truthBtn = document.getElementById("truthBtn");
-  const dareBtn = document.getElementById("dareBtn");
-  const categoryLabel = document.getElementById("categoryLabel");
-  const questionBox = document.getElementById("questionBox");
-  const doneBtn = document.getElementById("doneBtn");
-  const penaltyBtn = document.getElementById("penaltyBtn");
-  const backBtn = document.getElementById("backBtn");
-
-  // Fade-Funktionen
   function fadeOut(element) {
     return new Promise(resolve => {
       element.classList.remove("fade-in");
@@ -176,17 +132,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Frage ziehen
-  function getRandomQuestion(modus) {
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const catKey = pool[Math.floor(Math.random() * pool.length)];
-    const cat = fragenKategorien[catKey];
-    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
-    const frage = fragenArray[Math.floor(Math.random() * fragenArray.length)];
-    return { label: cat.label, frage };
+  async function startRound(modus) {
+    aktuellerModus = modus;
+    istStrafaufgabeAktiv = false;
+    penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
+    await fadeOut(modeSelection);
+    const { label, frage } = getRandomQuestion(modus);
+    aktuelleKategorie = label;
+    aktuelleFrage = frage;
+    categoryLabel.textContent = label;
+    questionBox.textContent = frage;
+    await fadeIn(questionView);
   }
 
-  // Strafaufgabe ziehen
+  async function nextRound() {
+    istStrafaufgabeAktiv = false;
+    await fadeOut(questionView);
+    await fadeIn(modeSelection);
+  }
+
   function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
     categoryLabel.textContent = "Strafaufgabe";
@@ -197,38 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
     penaltyBtn.style.display = "none";
   }
 
-  // Neue Runde starten (Wahrheit oder Pflicht)
-  async function startRound(modus) {
-    aktuellerModus = modus;
-    istStrafaufgabeAktiv = false;
-
-    await fadeOut(modeSelection);
-
-    const { label, frage } = getRandomQuestion(modus);
-    aktuelleKategorie = label;
-    aktuelleFrage = frage;
-
-    categoryLabel.textContent = label;
-    questionBox.textContent = frage;
-
-    // Nur bei Wahrheit soll der Strafaufgaben-Button angezeigt werden
-    if (modus === "wahrheit") {
-      penaltyBtn.style.display = "inline-block";
-    } else {
-      penaltyBtn.style.display = "none";
-    }
-
-    await fadeIn(questionView);
-  }
-
-  // Runde beenden
-  async function nextRound() {
-    istStrafaufgabeAktiv = false;
-    await fadeOut(questionView);
-    await fadeIn(modeSelection);
-  }
-
-  // Event-Listener
   truthBtn.addEventListener("click", () => startRound("wahrheit"));
   dareBtn.addEventListener("click", () => startRound("pflicht"));
   doneBtn.addEventListener("click", nextRound);
@@ -237,3 +169,5 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 </script>
+</body>
+</html>
