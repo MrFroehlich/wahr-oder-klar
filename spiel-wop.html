@@ -71,12 +71,14 @@
   let fragenKategorien = {};
   let aktiveKategorien = [];
 
+  // Daten aus JSON laden
   fetch("JSON/wop.json")
     .then(res => res.json())
     .then(data => {
       fragenKategorien = data;
     });
 
+  // Kategorien aus SessionStorage auslesen
   const auswahl = sessionStorage.getItem("wopKategorien");
   if (auswahl) {
     try {
@@ -96,6 +98,7 @@
   const truthBtn = document.getElementById("truthBtn");
   const dareBtn = document.getElementById("dareBtn");
   const categoryLabel = document.getElementById("categoryLabel");
+  const penaltyHeading = document.getElementById("penaltyHeading");
   const questionBox = document.getElementById("questionBox");
   const doneBtn = document.getElementById("doneBtn");
   const penaltyBtn = document.getElementById("penaltyBtn");
@@ -106,9 +109,13 @@
     const catKey = pool[Math.floor(Math.random() * pool.length)];
     const cat = fragenKategorien[catKey];
     const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
-    const eintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
-    const text = modus === "wahrheit" ? eintrag.frage : eintrag.text;
-    return { label: cat.label, frage: text };
+
+    if (!fragenArray || fragenArray.length === 0) return { label: cat.label, frage: "Keine Frage gefunden." };
+
+    const zufallsEintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
+    const frageText = modus === "wahrheit" ? zufallsEintrag.frage : zufallsEintrag.text;
+
+    return { label: cat.label, frage: frageText };
   }
 
   function fadeOut(element) {
@@ -122,20 +129,23 @@
     });
   }
 
-  function fadeIn(element) {
+  function fadeIn(element, extraClass = "") {
     return new Promise(resolve => {
       element.style.display = "flex";
-      setTimeout(() => {
-        element.classList.remove("fade-out");
-        element.classList.add("fade-in");
-        resolve();
-      }, 10);
+      element.classList.remove("fade-out");
+      if (extraClass) {
+        element.classList.add(extraClass);
+        setTimeout(() => element.classList.remove(extraClass), 1200);
+      }
+      element.classList.add("fade-in");
+      resolve();
     });
   }
 
   async function startRound(modus) {
     aktuellerModus = modus;
     istStrafaufgabeAktiv = false;
+    penaltyHeading.style.display = "none";
     penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
     await fadeOut(modeSelection);
     const { label, frage } = getRandomQuestion(modus);
@@ -152,14 +162,18 @@
     await fadeIn(modeSelection);
   }
 
-  function showStrafaufgabe() {
+  async function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
-    categoryLabel.textContent = "Strafaufgabe";
+    await fadeOut(questionView);
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
-    const random = allPflicht[Math.floor(Math.random() * allPflicht.length)];
-    questionBox.textContent = random.text;
+    const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht || []);
+    const randomAufgabe = allPflicht[Math.floor(Math.random() * allPflicht.length)];
+    const aufgabeText = randomAufgabe.text || "Keine Aufgabe gefunden.";
+    categoryLabel.textContent = "";
+    penaltyHeading.style.display = "block";
+    questionBox.textContent = aufgabeText;
     penaltyBtn.style.display = "none";
+    await fadeIn(questionView, "mystery");
   }
 
   truthBtn.addEventListener("click", () => startRound("wahrheit"));
