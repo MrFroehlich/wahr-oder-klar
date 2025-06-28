@@ -9,42 +9,16 @@
   <style>
     .fade-in {
       opacity: 1;
-      transform: none;
-      transition: opacity 0.4s ease;
+      transform: translateY(0);
+      transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: auto;
     }
     .fade-out {
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: none;
       user-select: none;
-    }
-    .mystery {
-      animation: mysteryFade 1.2s ease forwards;
-    }
-    @keyframes mysteryFade {
-      0% {
-        opacity: 0;
-        transform: scale(0.8);
-        filter: blur(8px);
-      }
-      50% {
-        opacity: 0.5;
-        transform: scale(1.04);
-        filter: blur(2px);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0);
-      }
-    }
-    .straf-label {
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      font-weight: bold;
-      color: red;
-      text-align: center;
-      margin-bottom: 0.5rem;
     }
     .action-btn.strafaufgabe {
       background-color: transparent;
@@ -84,7 +58,6 @@
     </div>
     <div id="questionView" class="question-view fade-out" style="display:none;">
       <div class="category-label" id="categoryLabel"></div>
-      <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
       <div class="question-box" id="questionBox">Frage erscheint hier...</div>
       <div class="action-buttons">
         <button id="doneBtn">Erledigt / Nächste Frage</button>
@@ -94,11 +67,25 @@
     <button id="backBtn" class="back-button">Zurück zur Startseite</button>
   </div>
 </main>
-
-  
 <script>
   let fragenKategorien = {};
   let aktiveKategorien = [];
+
+  fetch("JSON/wop.json")
+    .then(res => res.json())
+    .then(data => {
+      fragenKategorien = data;
+    });
+
+  const auswahl = sessionStorage.getItem("wopKategorien");
+  if (auswahl) {
+    try {
+      aktiveKategorien = JSON.parse(auswahl);
+    } catch (e) {
+      aktiveKategorien = [];
+    }
+  }
+
   let aktuelleKategorie = "";
   let aktuelleFrage = "";
   let aktuellerModus = "";
@@ -113,6 +100,16 @@
   const doneBtn = document.getElementById("doneBtn");
   const penaltyBtn = document.getElementById("penaltyBtn");
   const backBtn = document.getElementById("backBtn");
+
+  function getRandomQuestion(modus) {
+    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
+    const catKey = pool[Math.floor(Math.random() * pool.length)];
+    const cat = fragenKategorien[catKey];
+    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
+    const eintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
+    const text = modus === "wahrheit" ? eintrag.frage : eintrag.text;
+    return { label: cat.label, frage: text };
+  }
 
   function fadeOut(element) {
     return new Promise(resolve => {
@@ -136,20 +133,7 @@
     });
   }
 
-  function getRandomQuestion(modus) {
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const catKey = pool[Math.floor(Math.random() * pool.length)];
-    const cat = fragenKategorien[catKey];
-    if (!cat) return { label: "", frage: "Keine Fragen verfügbar." };
-    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
-    if (!fragenArray || fragenArray.length === 0) return { label: cat.label, frage: "Keine Einträge vorhanden." };
-    const eintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
-    const text = modus === "wahrheit" ? eintrag.frage : eintrag.text;
-    return { label: cat.label, frage: text };
-  }
-
   async function startRound(modus) {
-    if (Object.keys(fragenKategorien).length === 0) return; // Warten, bis Daten da sind
     aktuellerModus = modus;
     istStrafaufgabeAktiv = false;
     penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
@@ -172,48 +156,19 @@
     istStrafaufgabeAktiv = true;
     categoryLabel.textContent = "Strafaufgabe";
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const allPflicht = pool.flatMap(k => (fragenKategorien[k]?.pflicht || []).map(p => p.text));
-    if (allPflicht.length === 0) {
-      questionBox.textContent = "Keine Strafaufgaben verfügbar.";
-    } else {
-      const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
-      questionBox.textContent = randomPflicht;
-    }
+    const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
+    const random = allPflicht[Math.floor(Math.random() * allPflicht.length)];
+    questionBox.textContent = random.text;
     penaltyBtn.style.display = "none";
   }
 
-  // Initialisierung
-  async function init() {
-    try {
-      const res = await fetch("JSON/wop.json");
-      fragenKategorien = await res.json();
-    } catch (e) {
-      console.error("Fehler beim Laden der wop.json:", e);
-      return;
-    }
-
-    // Kategorien aus sessionStorage lesen
-    const auswahl = sessionStorage.getItem("wopKategorien");
-    if (auswahl) {
-      try {
-        aktiveKategorien = JSON.parse(auswahl);
-      } catch (e) {
-        aktiveKategorien = [];
-      }
-    }
-
-    // Event Listener erst aktivieren, wenn Daten geladen
-    truthBtn.addEventListener("click", () => startRound("wahrheit"));
-    dareBtn.addEventListener("click", () => startRound("pflicht"));
-    doneBtn.addEventListener("click", nextRound);
-    penaltyBtn.addEventListener("click", showStrafaufgabe);
-    backBtn.addEventListener("click", () => {
-      window.location.href = "index.html";
-    });
-  }
-
-  init(); // starte das Laden
+  truthBtn.addEventListener("click", () => startRound("wahrheit"));
+  dareBtn.addEventListener("click", () => startRound("pflicht"));
+  doneBtn.addEventListener("click", nextRound);
+  penaltyBtn.addEventListener("click", showStrafaufgabe);
+  backBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
 </script>
-
 </body>
 </html>
