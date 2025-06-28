@@ -68,120 +68,159 @@
   </div>
 </main>
 <script>
-  let fragenKategorien = {};
-  let aktiveKategorien = [];
+let fragenKategorien = {};
+let aktiveKategorien = [];
 
-  // Daten aus JSON laden
-  fetch("JSON/wop.json")
-    .then(res => res.json())
-    .then(data => {
-      fragenKategorien = data;
-    });
+let aktuelleKategorie = "";
+let aktuelleFrage = "";
+let aktuellerModus = "";
+let istStrafaufgabeAktiv = false;
 
-  // Kategorien aus SessionStorage auslesen
-  const auswahl = sessionStorage.getItem("wopKategorien");
-  if (auswahl) {
+const modeSelection = document.getElementById("modeSelection");
+const questionView = document.getElementById("questionView");
+const truthBtn = document.getElementById("truthBtn");
+const dareBtn = document.getElementById("dareBtn");
+const categoryLabel = document.getElementById("categoryLabel");
+const penaltyHeading = document.getElementById("penaltyHeading");
+const questionBox = document.getElementById("questionBox");
+const doneBtn = document.getElementById("doneBtn");
+const penaltyBtn = document.getElementById("penaltyBtn");
+const backBtn = document.getElementById("backBtn");
+
+// Lade Kategorien aus sessionStorage
+function ladeAktiveKategorien() {
+  const gespeicherteKategorien = sessionStorage.getItem("wopKategorien");
+  if (gespeicherteKategorien) {
     try {
-      aktiveKategorien = JSON.parse(auswahl);
-    } catch (e) {
+      aktiveKategorien = JSON.parse(gespeicherteKategorien);
+    } catch {
       aktiveKategorien = [];
     }
+  } else {
+    aktiveKategorien = [];
   }
+}
 
-  let aktuelleKategorie = "";
-  let aktuelleFrage = "";
-  let aktuellerModus = "";
-  let istStrafaufgabeAktiv = false;
-
-  const modeSelection = document.getElementById("modeSelection");
-  const questionView = document.getElementById("questionView");
-  const truthBtn = document.getElementById("truthBtn");
-  const dareBtn = document.getElementById("dareBtn");
-  const categoryLabel = document.getElementById("categoryLabel");
-  const penaltyHeading = document.getElementById("penaltyHeading");
-  const questionBox = document.getElementById("questionBox");
-  const doneBtn = document.getElementById("doneBtn");
-  const penaltyBtn = document.getElementById("penaltyBtn");
-  const backBtn = document.getElementById("backBtn");
-
-  function getRandomQuestion(modus) {
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const catKey = pool[Math.floor(Math.random() * pool.length)];
-    const cat = fragenKategorien[catKey];
-    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
-
-    if (!fragenArray || fragenArray.length === 0) return { label: cat.label, frage: "Keine Frage gefunden." };
-
-    const zufallsEintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
-    const frageText = modus === "wahrheit" ? zufallsEintrag.frage : zufallsEintrag.text;
-
-    return { label: cat.label, frage: frageText };
-  }
-
-  function fadeOut(element) {
-    return new Promise(resolve => {
-      element.classList.remove("fade-in");
-      element.classList.add("fade-out");
-      setTimeout(() => {
-        element.style.display = "none";
-        resolve();
-      }, 400);
-    });
-  }
-
-  function fadeIn(element, extraClass = "") {
-    return new Promise(resolve => {
-      element.style.display = "flex";
-      element.classList.remove("fade-out");
-      if (extraClass) {
-        element.classList.add(extraClass);
-        setTimeout(() => element.classList.remove(extraClass), 1200);
-      }
-      element.classList.add("fade-in");
+// Hilfsfunktion zum FadeIn / FadeOut
+function fadeOut(element) {
+  return new Promise(resolve => {
+    element.classList.remove("fade-in");
+    element.classList.add("fade-out");
+    setTimeout(() => {
+      element.style.display = "none";
       resolve();
-    });
+    }, 400);
+  });
+}
+function fadeIn(element, extraClass = "") {
+  return new Promise(resolve => {
+    element.style.display = "flex";
+    element.classList.remove("fade-out");
+    if (extraClass) {
+      element.classList.add(extraClass);
+      setTimeout(() => element.classList.remove(extraClass), 1200);
+    }
+    element.classList.add("fade-in");
+    resolve();
+  });
+}
+
+// Frage aus den aktiven Kategorien holen
+function getRandomQuestion(modus) {
+  // Wenn keine aktive Kategorie, nimm alle Kategorien
+  const pool = aktiveKategorien.length === 0 ? Object.keys(fragenKategorien) : aktiveKategorien;
+
+  // Wähle zufällige Kategorie aus Pool
+  const catKey = pool[Math.floor(Math.random() * pool.length)];
+  const cat = fragenKategorien[catKey];
+
+  if (!cat) {
+    return { label: "", frage: "Keine Fragen verfügbar." };
   }
 
-  async function startRound(modus) {
-    aktuellerModus = modus;
-    istStrafaufgabeAktiv = false;
-    penaltyHeading.style.display = "none";
-    penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
-    await fadeOut(modeSelection);
-    const { label, frage } = getRandomQuestion(modus);
-    aktuelleKategorie = label;
-    aktuelleFrage = frage;
-    categoryLabel.textContent = label;
-    questionBox.textContent = frage;
-    await fadeIn(questionView);
+  const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
+  if (!fragenArray || fragenArray.length === 0) {
+    return { label: cat.label, frage: "Keine Fragen in dieser Kategorie." };
   }
+  const frage = fragenArray[Math.floor(Math.random() * fragenArray.length)];
+  return { label: cat.label, frage };
+}
 
-  async function nextRound() {
-    istStrafaufgabeAktiv = false;
-    await fadeOut(questionView);
-    await fadeIn(modeSelection);
-  }
+// Spiel starten
+async function startRound(modus) {
+  aktuellerModus = modus;
+  istStrafaufgabeAktiv = false;
+  penaltyHeading.style.display = "none";
+  penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
 
-  async function showStrafaufgabe() {
-    istStrafaufgabeAktiv = true;
-    await fadeOut(questionView);
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht || []);
-    const randomAufgabe = allPflicht[Math.floor(Math.random() * allPflicht.length)];
-    const aufgabeText = randomAufgabe.text || "Keine Aufgabe gefunden.";
-    categoryLabel.textContent = "";
-    penaltyHeading.style.display = "block";
-    questionBox.textContent = aufgabeText;
-    penaltyBtn.style.display = "none";
-    await fadeIn(questionView, "mystery");
-  }
+  await fadeOut(modeSelection);
 
+  const { label, frage } = getRandomQuestion(modus);
+  aktuelleKategorie = label;
+  aktuelleFrage = frage;
+  categoryLabel.textContent = label;
+  questionBox.textContent = frage;
+
+  await fadeIn(questionView);
+
+  doneBtn.style.display = "inline-block";
+  backBtn.style.display = "inline-block";
+}
+
+// Nächste Frage
+async function nextRound() {
+  istStrafaufgabeAktiv = false;
+  await fadeOut(questionView);
+  await fadeIn(modeSelection);
+  backBtn.style.display = "none";
+}
+
+// Strafaufgabe zeigen
+async function showStrafaufgabe() {
+  istStrafaufgabeAktiv = true;
+  await fadeOut(questionView);
+
+  // Strafaufgaben aus allen Pflicht-Fragen aller Kategorien (ungeachtet aktiver Kategorien)
+  const allPflicht = Object.values(fragenKategorien).flatMap(cat => cat.pflicht);
+  const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
+
+  categoryLabel.textContent = "";
+  penaltyHeading.style.display = "block";
+  questionBox.textContent = randomPflicht;
+  penaltyBtn.style.display = "none";
+
+  await fadeIn(questionView, "mystery");
+
+  doneBtn.style.display = "inline-block";
+  backBtn.style.display = "inline-block";
+}
+
+// EventListener Setup nach JSON laden
+function setupEventListeners() {
   truthBtn.addEventListener("click", () => startRound("wahrheit"));
   dareBtn.addEventListener("click", () => startRound("pflicht"));
   doneBtn.addEventListener("click", nextRound);
   penaltyBtn.addEventListener("click", showStrafaufgabe);
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
+  });
+}
+
+// JSON laden und Setup starten
+fetch("JSON/wop.json")
+  .then(response => response.json())
+  .then(data => {
+    fragenKategorien = data;
+    ladeAktiveKategorien();
+    modeSelection.style.display = "flex";
+    backBtn.style.display = "none";
+    setupEventListeners();
+  })
+  .catch(err => {
+    console.error("Fehler beim Laden der Fragen JSON:", err);
+    modeSelection.style.display = "flex";
+    backBtn.style.display = "none";
+    setupEventListeners();
   });
 </script>
 </body>
