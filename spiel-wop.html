@@ -68,7 +68,6 @@
   </div>
 </main>
 <script>
-  // Testdaten direkt hier eingebunden
   let fragenKategorien = {
     funny: {
       label: "🧃 Locker & Lustig",
@@ -83,7 +82,6 @@
   };
 
   let aktiveKategorien = ["funny", "daring"];
-
   let aktuelleKategorie = "";
   let aktuelleFrage = "";
   let aktuellerModus = "";
@@ -149,14 +147,16 @@
     await fadeIn(modeSelection);
   }
 
-  function showStrafaufgabe() {
+  async function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
+    await fadeOut(questionView);
     categoryLabel.textContent = "Strafaufgabe";
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
     const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
     const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
     questionBox.textContent = randomPflicht;
     penaltyBtn.style.display = "none";
+    await fadeIn(questionView);
   }
 
   truthBtn.addEventListener("click", () => startRound("wahrheit"));
