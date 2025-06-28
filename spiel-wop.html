@@ -97,9 +97,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let istStrafaufgabeAktiv = false;
 
   function getRandomQuestion(modus) {
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const catKey = pool[Math.floor(Math.random() * pool.length)];
-    const cat = fragenKategorien[catKey];
+    const eintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
+    const frage = modus === "wahrheit" ? eintrag.frage : eintrag.text;
+    return { label: cat.label, frage };
 
     if (!cat) {
       console.warn("Kategorie nicht gefunden:", catKey);
