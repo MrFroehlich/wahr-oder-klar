@@ -20,6 +20,26 @@
       pointer-events: none;
       user-select: none;
     }
+    .mystery {
+      animation: mysteryFade 0.6s ease forwards;
+    }
+    @keyframes mysteryFade {
+      0% {
+        opacity: 0;
+        transform: scale(0.95) rotate(-2deg);
+        filter: blur(4px);
+      }
+      60% {
+        opacity: 0.5;
+        transform: scale(1.02) rotate(1deg);
+        filter: blur(2px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+        filter: blur(0);
+      }
+    }
     .action-btn.strafaufgabe {
       background-color: transparent;
       color: #555;
@@ -117,14 +137,16 @@
     });
   }
 
-  function fadeIn(element) {
+  function fadeIn(element, extraClass = "") {
     return new Promise(resolve => {
       element.style.display = "flex";
-      setTimeout(() => {
-        element.classList.remove("fade-out");
-        element.classList.add("fade-in");
-        resolve();
-      }, 10);
+      element.classList.remove("fade-out");
+      if (extraClass) {
+        element.classList.add(extraClass);
+        setTimeout(() => element.classList.remove(extraClass), 700);
+      }
+      element.classList.add("fade-in");
+      resolve();
     });
   }
 
@@ -156,7 +178,7 @@
     const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
     questionBox.textContent = randomPflicht;
     penaltyBtn.style.display = "none";
-    await fadeIn(questionView);
+    await fadeIn(questionView, "mystery");
   }
 
   truthBtn.addEventListener("click", () => startRound("wahrheit"));
