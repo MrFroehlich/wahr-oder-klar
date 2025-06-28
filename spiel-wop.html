@@ -77,10 +77,16 @@
       fragenKategorien = data;
     });
 
-  const auswahl = sessionStorage.getItem("wopKategorien");
+  const auswahl = sessionStorage.getItem("wopKategorien") || sessionStorage.getItem("wopFragen");
   if (auswahl) {
     try {
-      aktiveKategorien = JSON.parse(auswahl);
+      const parsed = JSON.parse(auswahl);
+      if (Array.isArray(parsed)) {
+        aktiveKategorien = parsed;
+      } else {
+        fragenKategorien = parsed;
+        aktiveKategorien = Object.keys(fragenKategorien);
+      }
     } catch (e) {
       aktiveKategorien = [];
     }
