@@ -94,27 +94,11 @@
     <button id="backBtn" class="back-button">Zurück zur Startseite</button>
   </div>
 </main>
+
+  
 <script>
   let fragenKategorien = {};
   let aktiveKategorien = [];
-
-  // JSON laden
-  fetch("JSON/wop.json")
-    .then(res => res.json())
-    .then(data => {
-      fragenKategorien = data;
-    });
-
-  // Ausgewählte Kategorien aus sessionStorage laden
-  const auswahl = sessionStorage.getItem("wopKategorien");
-  if (auswahl) {
-    try {
-      aktiveKategorien = JSON.parse(auswahl);
-    } catch (e) {
-      aktiveKategorien = [];
-    }
-  }
-
   let aktuelleKategorie = "";
   let aktuelleFrage = "";
   let aktuellerModus = "";
@@ -129,17 +113,6 @@
   const doneBtn = document.getElementById("doneBtn");
   const penaltyBtn = document.getElementById("penaltyBtn");
   const backBtn = document.getElementById("backBtn");
-
-  // Funktion: Zufällige Frage/Aufgabe aus den aktiven Kategorien holen
-  function getRandomQuestion(modus) {
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const catKey = pool[Math.floor(Math.random() * pool.length)];
-    const cat = fragenKategorien[catKey];
-    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
-    const eintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
-    const text = modus === "wahrheit" ? eintrag.frage : eintrag.text;
-    return { label: cat.label, frage: text };
-  }
 
   function fadeOut(element) {
     return new Promise(resolve => {
@@ -163,7 +136,20 @@
     });
   }
 
+  function getRandomQuestion(modus) {
+    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
+    const catKey = pool[Math.floor(Math.random() * pool.length)];
+    const cat = fragenKategorien[catKey];
+    if (!cat) return { label: "", frage: "Keine Fragen verfügbar." };
+    const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
+    if (!fragenArray || fragenArray.length === 0) return { label: cat.label, frage: "Keine Einträge vorhanden." };
+    const eintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
+    const text = modus === "wahrheit" ? eintrag.frage : eintrag.text;
+    return { label: cat.label, frage: text };
+  }
+
   async function startRound(modus) {
+    if (Object.keys(fragenKategorien).length === 0) return; // Warten, bis Daten da sind
     aktuellerModus = modus;
     istStrafaufgabeAktiv = false;
     penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
@@ -186,19 +172,48 @@
     istStrafaufgabeAktiv = true;
     categoryLabel.textContent = "Strafaufgabe";
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht.map(p => p.text));
-    const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
-    questionBox.textContent = randomPflicht;
+    const allPflicht = pool.flatMap(k => (fragenKategorien[k]?.pflicht || []).map(p => p.text));
+    if (allPflicht.length === 0) {
+      questionBox.textContent = "Keine Strafaufgaben verfügbar.";
+    } else {
+      const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
+      questionBox.textContent = randomPflicht;
+    }
     penaltyBtn.style.display = "none";
   }
 
-  truthBtn.addEventListener("click", () => startRound("wahrheit"));
-  dareBtn.addEventListener("click", () => startRound("pflicht"));
-  doneBtn.addEventListener("click", nextRound);
-  penaltyBtn.addEventListener("click", showStrafaufgabe);
-  backBtn.addEventListener("click", () => {
-    window.location.href = "index.html";
-  });
+  // Initialisierung
+  async function init() {
+    try {
+      const res = await fetch("JSON/wop.json");
+      fragenKategorien = await res.json();
+    } catch (e) {
+      console.error("Fehler beim Laden der wop.json:", e);
+      return;
+    }
+
+    // Kategorien aus sessionStorage lesen
+    const auswahl = sessionStorage.getItem("wopKategorien");
+    if (auswahl) {
+      try {
+        aktiveKategorien = JSON.parse(auswahl);
+      } catch (e) {
+        aktiveKategorien = [];
+      }
+    }
+
+    // Event Listener erst aktivieren, wenn Daten geladen
+    truthBtn.addEventListener("click", () => startRound("wahrheit"));
+    dareBtn.addEventListener("click", () => startRound("pflicht"));
+    doneBtn.addEventListener("click", nextRound);
+    penaltyBtn.addEventListener("click", showStrafaufgabe);
+    backBtn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  }
+
+  init(); // starte das Laden
 </script>
+
 </body>
 </html>
