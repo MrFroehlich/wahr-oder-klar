@@ -20,7 +20,7 @@
       user-select: none;
     }
     .mystery {
-      animation: mysteryFade 0.9s ease forwards;
+      animation: mysteryFade 1.2s ease forwards;
     }
     @keyframes mysteryFade {
       0% {
@@ -38,6 +38,13 @@
         transform: scale(1);
         filter: blur(0);
       }
+    }
+    .straf-label {
+      font-size: clamp(1.5rem, 5vw, 3rem);
+      font-weight: bold;
+      color: red;
+      text-align: center;
+      margin-bottom: 0.5rem;
     }
     .action-btn.strafaufgabe {
       background-color: transparent;
@@ -77,6 +84,7 @@
     </div>
     <div id="questionView" class="question-view fade-out" style="display:none;">
       <div class="category-label" id="categoryLabel"></div>
+      <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
       <div class="question-box" id="questionBox">Frage erscheint hier...</div>
       <div class="action-buttons">
         <button id="doneBtn">Erledigt / Nächste Frage</button>
@@ -111,6 +119,7 @@
   const truthBtn = document.getElementById("truthBtn");
   const dareBtn = document.getElementById("dareBtn");
   const categoryLabel = document.getElementById("categoryLabel");
+  const penaltyHeading = document.getElementById("penaltyHeading");
   const questionBox = document.getElementById("questionBox");
   const doneBtn = document.getElementById("doneBtn");
   const penaltyBtn = document.getElementById("penaltyBtn");
@@ -142,7 +151,7 @@
       element.classList.remove("fade-out");
       if (extraClass) {
         element.classList.add(extraClass);
-        setTimeout(() => element.classList.remove(extraClass), 1000);
+        setTimeout(() => element.classList.remove(extraClass), 1200);
       }
       element.classList.add("fade-in");
       resolve();
@@ -152,6 +161,7 @@
   async function startRound(modus) {
     aktuellerModus = modus;
     istStrafaufgabeAktiv = false;
+    penaltyHeading.style.display = "none";
     penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
     await fadeOut(modeSelection);
     const { label, frage } = getRandomQuestion(modus);
@@ -171,10 +181,11 @@
   async function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
     await fadeOut(questionView);
-    categoryLabel.textContent = "Strafaufgabe";
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
     const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
     const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
+    categoryLabel.textContent = "";
+    penaltyHeading.style.display = "block";
     questionBox.textContent = randomPflicht;
     penaltyBtn.style.display = "none";
     await fadeIn(questionView, "mystery");
