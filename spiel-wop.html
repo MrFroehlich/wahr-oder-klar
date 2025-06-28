@@ -21,22 +21,22 @@
       user-select: none;
     }
     .mystery {
-      animation: mysteryFade 0.9s ease forwards;
+      animation: mysteryFade 0.6s ease forwards;
     }
     @keyframes mysteryFade {
       0% {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.95) rotate(-2deg);
         filter: blur(4px);
       }
       60% {
-        opacity: 0.6;
-        transform: scale(1.02);
+        opacity: 0.5;
+        transform: scale(1.02) rotate(1deg);
         filter: blur(2px);
       }
       100% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) rotate(0);
         filter: blur(0);
       }
     }
@@ -143,7 +143,7 @@
       element.classList.remove("fade-out");
       if (extraClass) {
         element.classList.add(extraClass);
-        setTimeout(() => element.classList.remove(extraClass), 1000);
+        setTimeout(() => element.classList.remove(extraClass), 700);
       }
       element.classList.add("fade-in");
       resolve();
@@ -171,16 +171,14 @@
 
   async function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
+    await fadeOut(questionView);
     categoryLabel.textContent = "Strafaufgabe";
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
     const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
     const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
     questionBox.textContent = randomPflicht;
     penaltyBtn.style.display = "none";
-    questionView.style.display = "flex";
-    questionView.classList.remove("fade-in", "fade-out");
-    questionView.classList.add("mystery");
-    setTimeout(() => questionView.classList.remove("mystery"), 1000);
+    await fadeIn(questionView, "mystery");
   }
 
   truthBtn.addEventListener("click", () => startRound("wahrheit"));
