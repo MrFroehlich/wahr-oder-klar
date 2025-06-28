@@ -213,15 +213,45 @@ fetch("JSON/wop.json")
     fragenKategorien = data;
     ladeAktiveKategorien();
     modeSelection.style.display = "flex";
-    backBtn.style.display = "none";
+    // backBtn.style.display = "none"; // <-- auskommentiert oder entfernt
     setupEventListeners();
   })
   .catch(err => {
     console.error("Fehler beim Laden der Fragen JSON:", err);
     modeSelection.style.display = "flex";
-    backBtn.style.display = "none";
+    // backBtn.style.display = "none"; // <-- auskommentiert oder entfernt
     setupEventListeners();
   });
+
+// ...
+
+async function nextRound() {
+  istStrafaufgabeAktiv = false;
+  await fadeOut(questionView);
+  await fadeIn(modeSelection);
+  // backBtn.style.display = "none"; // <-- NICHT mehr verstecken
+}
+
+// Auch bei startRound den backBtn nicht verstecken:
+
+async function startRound(modus) {
+  aktuellerModus = modus;
+  istStrafaufgabeAktiv = false;
+  penaltyHeading.style.display = "none";
+  penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
+
+  await fadeOut(modeSelection);
+
+  const { label, frage } = getRandomQuestion(modus);
+  aktuelleKategorie = label;
+  aktuelleFrage = frage;
+  categoryLabel.textContent = label;
+  questionBox.textContent = frage;
+
+  await fadeIn(questionView);
+
+  doneBtn.style.display = "inline-block";
+}
 </script>
 </body>
 </html>
