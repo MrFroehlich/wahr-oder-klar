@@ -2,631 +2,1743 @@
   "funny": {
     "label": " 🧃 Locker & Lustig",
     "wahrheit": [
-      {"frage": "Was war dein peinlichster Lachanfall?"},
-      {"frage": "Wovor hast du als Kind Angst gehabt?"},
-      {"frage": "Was ist das Lächerlichste, das du je gemacht hast, um jemanden zu beeindrucken?"},
-      {"frage": "Hast du jemals aus Versehen jemanden versehentlich beleidigt?"},
-      {"frage": "Was ist dein lustigstes Missgeschick im Alltag?"},
-      {"frage": "Welches Lied singst du heimlich unter der Dusche?"},
-      {"frage": "Was ist das Verrückteste, das du je gegessen hast?"},
-      {"frage": "Hast du eine alberne Angewohnheit, die niemand kennt?"},
-      {"frage": "Was war dein merkwürdigster Traum?"},
-      {"frage": "Welchen albernen Spitznamen hast du mal bekommen?"},
-      {"frage": "Wann hast du zuletzt laut und unkontrolliert gelacht?"},
-      {"frage": "Was war dein schlimmster Modetrend, an dem du beteiligt warst?"},
-      {"frage": "Welcher Cartoon oder Comic hat dich als Kind am meisten fasziniert?"},
-      {"frage": "Was war dein lustigster Unfall beim Sport?"},
-      {"frage": "Hast du schon mal aus Versehen jemanden total falsch angesprochen?"},
-      {"frage": "Was ist dein lustigstes Missverständnis mit Freunden?"},
-      {"frage": "Hast du jemals eine lustige Ausrede benutzt, um nicht zur Schule oder Arbeit zu gehen?"},
-      {"frage": "Welcher Film oder welche Serie bringt dich immer zum Lachen?"},
-      {"frage": "Was war dein lustigster Moment in der Schule?"},
-      {"frage": "Hast du jemals einen Witz erzählt, der total schief gegangen ist?"},
-      {"frage": "Wenn du ein Tier sein könntest, welches wärst du und warum?"},
-      {"frage": "Was war das Peinlichste, das dir bei einem Date passiert ist?"},
-      {"frage": "Welchen lustigen Spitznamen würdest du dir selbst geben?"},
-      {"frage": "Was war dein schlimmster Tanz-Move bisher?"},
-      {"frage": "Hast du jemals laut gelacht, ohne zu wissen warum?"},
-      {"frage": "Was ist dein Lieblingswitz, den du immer erzählst?"},
-      {"frage": "Was war dein schlimmster Versprecher vor vielen Leuten?"},
-      {"frage": "Welche Kindersendung findest du heute noch lustig?"},
-      {"frage": "Was ist das Verrückteste, was du in einem Supermarkt gemacht hast?"},
-      {"frage": "Hast du schon mal einen Streich gespielt, der total in die Hose ging?"},
-      {"frage": "Was war deine lustigste Reaktion auf einen schlechten Film?"},
-      {"frage": "Hast du mal jemanden aus Versehen beim Namen falsch genannt?"},
-      {"frage": "Was ist die dümmste Ausrede, die du jemals benutzt hast?"},
-      {"frage": "Wenn du eine Superkraft hättest, die total nutzlos ist, welche wäre das?"},
-      {"frage": "Welches lustige Geräusch kannst du besonders gut nachmachen?"},
-      {"frage": "Was ist das Verrückteste, was du nachts getan hast?"},
-      {"frage": "Hast du jemals etwas Peinliches im Aufzug gemacht?"},
-      {"frage": "Was war dein peinlichstes Selfie-Moment?"},
-      {"frage": "Welche Comicfigur würdest du am liebsten treffen?"}
+      {
+        "frage": "Was war dein peinlichster Lachanfall?"
+      },
+      {
+        "frage": "Wovor hast du als Kind Angst gehabt?"
+      },
+      {
+        "frage": "Was ist das Lächerlichste, das du je gemacht hast, um jemanden zu beeindrucken?"
+      },
+      {
+        "frage": "Hast du jemals aus Versehen jemanden versehentlich beleidigt?"
+      },
+      {
+        "frage": "Was ist dein lustigstes Missgeschick im Alltag?"
+      },
+      {
+        "frage": "Welches Lied singst du heimlich unter der Dusche?"
+      },
+      {
+        "frage": "Was ist das Verrückteste, das du je gegessen hast?"
+      },
+      {
+        "frage": "Hast du eine alberne Angewohnheit, die niemand kennt?"
+      },
+      {
+        "frage": "Was war dein merkwürdigster Traum?"
+      },
+      {
+        "frage": "Welchen albernen Spitznamen hast du mal bekommen?"
+      },
+      {
+        "frage": "Wann hast du zuletzt laut und unkontrolliert gelacht?"
+      },
+      {
+        "frage": "Was war dein schlimmster Modetrend, an dem du beteiligt warst?"
+      },
+      {
+        "frage": "Welcher Cartoon oder Comic hat dich als Kind am meisten fasziniert?"
+      },
+      {
+        "frage": "Was war dein lustigster Unfall beim Sport?"
+      },
+      {
+        "frage": "Hast du schon mal aus Versehen jemanden total falsch angesprochen?"
+      },
+      {
+        "frage": "Was ist dein lustigstes Missverständnis mit Freunden?"
+      },
+      {
+        "frage": "Hast du jemals eine lustige Ausrede benutzt, um nicht zur Schule oder Arbeit zu gehen?"
+      },
+      {
+        "frage": "Welcher Film oder welche Serie bringt dich immer zum Lachen?"
+      },
+      {
+        "frage": "Was war dein lustigster Moment in der Schule?"
+      },
+      {
+        "frage": "Hast du jemals einen Witz erzählt, der total schief gegangen ist?"
+      },
+      {
+        "frage": "Wenn du ein Tier sein könntest, welches wärst du und warum?"
+      },
+      {
+        "frage": "Was war das Peinlichste, das dir bei einem Date passiert ist?"
+      },
+      {
+        "frage": "Welchen lustigen Spitznamen würdest du dir selbst geben?"
+      },
+      {
+        "frage": "Was war dein schlimmster Tanz-Move bisher?"
+      },
+      {
+        "frage": "Hast du jemals laut gelacht, ohne zu wissen warum?"
+      },
+      {
+        "frage": "Was ist dein Lieblingswitz, den du immer erzählst?"
+      },
+      {
+        "frage": "Was war dein schlimmster Versprecher vor vielen Leuten?"
+      },
+      {
+        "frage": "Welche Kindersendung findest du heute noch lustig?"
+      },
+      {
+        "frage": "Was ist das Verrückteste, was du in einem Supermarkt gemacht hast?"
+      },
+      {
+        "frage": "Hast du schon mal einen Streich gespielt, der total in die Hose ging?"
+      },
+      {
+        "frage": "Was war deine lustigste Reaktion auf einen schlechten Film?"
+      },
+      {
+        "frage": "Hast du mal jemanden aus Versehen beim Namen falsch genannt?"
+      },
+      {
+        "frage": "Was ist die dümmste Ausrede, die du jemals benutzt hast?"
+      },
+      {
+        "frage": "Wenn du eine Superkraft hättest, die total nutzlos ist, welche wäre das?"
+      },
+      {
+        "frage": "Welches lustige Geräusch kannst du besonders gut nachmachen?"
+      },
+      {
+        "frage": "Was ist das Verrückteste, was du nachts getan hast?"
+      },
+      {
+        "frage": "Hast du jemals etwas Peinliches im Aufzug gemacht?"
+      },
+      {
+        "frage": "Was war dein peinlichstes Selfie-Moment?"
+      },
+      {
+        "frage": "Welche Comicfigur würdest du am liebsten treffen?"
+      }
     ],
     "pflicht": [
-      {"text": "Zeig dein zuletzt gemachtes Selfie – ohne Kommentar."},
-      {"text": "Lies den letzten Satz, den du jemandem per WhatsApp geschrieben hast, laut vor."},
-      {"text": "Stell deinem Sitznachbarn eine unangenehm ernste Frage – ausgedacht!"},
-      {"text": "Lass einen anderen Spieler ein Emoji auswählen, das du an jemanden schicken musst."},
-      {"text": "Zeig dein letztes gesuchtes Wort bei Google (wenn nicht allzu peinlich)."},
-      {"text": "Lass dein Handy von jemand anderem für 30 Sekunden durchsuchen – ohne Apps zu öffnen."},
-      {"text": "Erzähl eine Kindheitserinnerung, über die du heute lachen kannst."},
-      {"text": "Zeig dein lustigstes Bild in deiner Galerie."},
-      {"text": "Schreib einer Person auf Instagram: 'Hey, hast du mein Ladegerät gesehen?' – und lass es 2 Minuten stehen."},
-      {"text": "Schreib in eine WhatsApp-Gruppe: 'Ich kann heute leider nicht kommen.' Ohne Erklärung."},
-      {"text": "Sag den Spielern reihum ein Kompliment – aber mit völlig übertriebenem Ernst."},
-      {"text": "Sag etwas Nettes über die Person, die dich zuletzt genervt hat."},
-      {"text": "Erzähl einen Fun-Fact über dich, den hier niemand kennt."},
-      {"text": "Tausch dein Handy-Hintergrundbild – jemand anderes darf es bestimmen (nur für 5 Minuten)."},
-      {"text": "Zeig deinen aktuellen Sperrbildschirm."},
-      {"text": "Nenne drei Dinge, ohne die du morgens nicht klarkommst."},
-      {"text": "Lies die drei letzten Tabs in deinem Browser vor."},
-      {"text": "Schreib einem alten Kontakt auf WhatsApp: 'Hey, erinnerst du dich noch an mich?'"},
-      {"text": "Lass einen Mitspieler einen Sticker verschicken – an eine zufällige Person."},
-      {"text": "Schreib deinem besten Freund / deiner besten Freundin nur 'Ich hab nachgedacht...' und warte die Reaktion ab."},
-      {"text": "Erfinde spontan eine schlechte Ausrede, warum du heute zu spät gekommen bist."},
-      {"text": "Beschreibe dein letztes Essen wie ein Food-Kritiker."},
-      {"text": "Erzähl eine verrückte Sache, die du mal im Internet bestellt hast."},
-      {"text": "Tausch dein Getränk mit jemand anderem – egal, was er trinkt."},
-      {"text": "Zeig die letzte Sprachnachricht, die du bekommen hast – aber ohne Ton, nur vorlesen."},
-      {"text": "Versuch, ein Produkt aus der Nähe wie in einer Fernsehwerbung anzupreisen."},
-      {"text": "Sag etwas extrem Nettes mit einer komplett unfreundlichen Stimme."},
-      {"text": "Tu für 30 Sekunden so, als wärst du ein völlig überheblicher Influencer."},
-      {"text": "Stell dich vor, als wärst du ein/e Promi mit totalem Größenwahn."},
-      {"text": "Mach für 10 Sekunden eine extrem überzeugende Liebeserklärung – an ein zufälliges Objekt im Raum."},
-      {"text": "Sprich eine Minute lang, ohne das Wort 'und' zu benutzen – Thema: Katzenvideos."},
-      {"text": "Erfinde eine Dating-App für eine absurde Zielgruppe (z.B. Omas mit Tattoos)."},
-      {"text": "Stell dir vor, du bewirbst dich als Babysitter – wie würdest du dich vorstellen?"},
-      {"text": "Imitiere ein berühmtes Zitat… aber total falsch und dramatisch."},
-      {"text": "Führe ein fiktives Bewerbungsgespräch für deinen Traumberuf – der aber richtig bescheuert ist."},
-      {"text": "Zeig deinen peinlichsten Suchbegriff der letzten Woche (freiwillig zensierbar)"},
-      {"text": "Beende den Satz: 'Ich habe ein geheimes Talent für...'"}
+      {
+        "text": "Zeig dein zuletzt gemachtes Selfie – ohne Kommentar."
+      },
+      {
+        "text": "Lies den letzten Satz, den du jemandem per WhatsApp geschrieben hast, laut vor."
+      },
+      {
+        "text": "Stell deinem Sitznachbarn eine unangenehm ernste Frage – ausgedacht!"
+      },
+      {
+        "text": "Lass einen anderen Spieler ein Emoji auswählen, das du an jemanden schicken musst."
+      },
+      {
+        "text": "Zeig dein letztes gesuchtes Wort bei Google (wenn nicht allzu peinlich)."
+      },
+      {
+        "text": "Lass dein Handy von jemand anderem für 30 Sekunden durchsuchen – ohne Apps zu öffnen."
+      },
+      {
+        "text": "Erzähl eine Kindheitserinnerung, über die du heute lachen kannst."
+      },
+      {
+        "text": "Zeig dein lustigstes Bild in deiner Galerie."
+      },
+      {
+        "text": "Schreib einer Person auf Instagram: 'Hey, hast du mein Ladegerät gesehen?' – und lass es 2 Minuten stehen."
+      },
+      {
+        "text": "Schreib in eine WhatsApp-Gruppe: 'Ich kann heute leider nicht kommen.' Ohne Erklärung."
+      },
+      {
+        "text": "Sag den Spielern reihum ein Kompliment – aber mit völlig übertriebenem Ernst."
+      },
+      {
+        "text": "Sag etwas Nettes über die Person, die dich zuletzt genervt hat."
+      },
+      {
+        "text": "Erzähl einen Fun-Fact über dich, den hier niemand kennt."
+      },
+      {
+        "text": "Tausch dein Handy-Hintergrundbild – jemand anderes darf es bestimmen (nur für 5 Minuten)."
+      },
+      {
+        "text": "Zeig deinen aktuellen Sperrbildschirm."
+      },
+      {
+        "text": "Nenne drei Dinge, ohne die du morgens nicht klarkommst."
+      },
+      {
+        "text": "Lies die drei letzten Tabs in deinem Browser vor."
+      },
+      {
+        "text": "Schreib einem alten Kontakt auf WhatsApp: 'Hey, erinnerst du dich noch an mich?'"
+      },
+      {
+        "text": "Lass einen Mitspieler einen Sticker verschicken – an eine zufällige Person."
+      },
+      {
+        "text": "Schreib deinem besten Freund / deiner besten Freundin nur 'Ich hab nachgedacht...' und warte die Reaktion ab."
+      },
+      {
+        "text": "Erfinde spontan eine schlechte Ausrede, warum du heute zu spät gekommen bist."
+      },
+      {
+        "text": "Beschreibe dein letztes Essen wie ein Food-Kritiker."
+      },
+      {
+        "text": "Erzähl eine verrückte Sache, die du mal im Internet bestellt hast."
+      },
+      {
+        "text": "Tausch dein Getränk mit jemand anderem – egal, was er trinkt."
+      },
+      {
+        "text": "Zeig die letzte Sprachnachricht, die du bekommen hast – aber ohne Ton, nur vorlesen."
+      },
+      {
+        "text": "Versuch, ein Produkt aus der Nähe wie in einer Fernsehwerbung anzupreisen."
+      },
+      {
+        "text": "Sag etwas extrem Nettes mit einer komplett unfreundlichen Stimme."
+      },
+      {
+        "text": "Tu für 30 Sekunden so, als wärst du ein völlig überheblicher Influencer."
+      },
+      {
+        "text": "Stell dich vor, als wärst du ein/e Promi mit totalem Größenwahn."
+      },
+      {
+        "text": "Mach für 10 Sekunden eine extrem überzeugende Liebeserklärung – an ein zufälliges Objekt im Raum."
+      },
+      {
+        "text": "Sprich eine Minute lang, ohne das Wort 'und' zu benutzen – Thema: Katzenvideos."
+      },
+      {
+        "text": "Erfinde eine Dating-App für eine absurde Zielgruppe (z.B. Omas mit Tattoos)."
+      },
+      {
+        "text": "Stell dir vor, du bewirbst dich als Babysitter – wie würdest du dich vorstellen?"
+      },
+      {
+        "text": "Imitiere ein berühmtes Zitat… aber total falsch und dramatisch."
+      },
+      {
+        "text": "Führe ein fiktives Bewerbungsgespräch für deinen Traumberuf – der aber richtig bescheuert ist."
+      },
+      {
+        "text": "Zeig deinen peinlichsten Suchbegriff der letzten Woche (freiwillig zensierbar)"
+      },
+      {
+        "text": "Beende den Satz: 'Ich habe ein geheimes Talent für...'"
+      }
     ]
   },
   "daring": {
     "label": " 🫱 Vertrauensbasis",
     "wahrheit": [
-      {"frage": "In wen warst du mal heimlich verliebt – und weiß diese Person es?"},
-      {"frage": "Hast du schon einmal jemandem ins Gesicht gelogen, um ihn nicht zu verletzen?"},
-      {"frage": "Was würdest du niemals deinen Eltern erzählen?"},
-      {"frage": "Wann hast du das letzte Mal so richtig Herzschmerz gehabt?"},
-      {"frage": "Gibt es etwas, das du noch nie jemandem erzählt hast – und warum nicht?"},
-      {"frage": "Wen aus deiner Vergangenheit würdest du gerne noch einmal sehen – und warum?"},
-      {"frage": "Was war dein schlimmster Vertrauensbruch, den du begangen hast?"},
-      {"frage": "Was war die größte Enttäuschung, die dir je jemand zugefügt hat?"},
-      {"frage": "Gibt es einen Menschen, dem du gerade etwas Wichtiges sagen solltest, es aber nicht tust?"},
-      {"frage": "Wie oft denkst du an deine Vergangenheit – und mit welchen Gefühlen?"},
-      {"frage": "Was ist eine Erinnerung, die du niemandem gern erzählst?"},
-      {"frage": "Welche Wahrheit über dich würdest du gerne ändern?"},
-      {"frage": "Gibt es einen Teil von dir, den du bewusst versteckst?"},
-      {"frage": "Was war die schwerste Entscheidung, die du je treffen musstest?"},
-      {"frage": "Hast du schon mal mit jemandem Kontakt abgebrochen, ohne den Grund zu erklären?"},
-      {"frage": "Was verletzt dich am meisten, wenn es jemand zu dir sagt?"},
-      {"frage": "Was war dein letzter echter Vertrauensbruch – als Opfer oder Täter?"},
-      {"frage": "Gibt es jemanden, dem du nie wieder vertrauen kannst – warum?"},
-      {"frage": "Was denkst du heimlich über jemand hier in der Runde?"},
-      {"frage": "Gibt es einen Menschen, den du sehr vermisst, obwohl du das nicht zeigen willst?"},
-      {"frage": "Was ist deine größte Unsicherheit im Umgang mit anderen?"},
-      {"frage": "Hast du schon mal so getan, als wärst du glücklich, obwohl du es nicht warst?"},
-      {"frage": "Wem würdest du heute noch gern etwas vergeben – kannst es aber (noch) nicht?"},
-      {"frage": "Was war deine tiefste Verletzung in einer Freundschaft?"},
-      {"frage": "Was denkst du über die Liebe – ehrlich?"},
-      {"frage": "Hast du schon mal jemandem deine Gefühle gestanden und es bereut?"},
-      {"frage": "Was brauchst du von einem Menschen, um dich wirklich öffnen zu können?"},
-      {"frage": "Wen würdest du anrufen, wenn du nachts nicht schlafen kannst – und warum?"},
-      {"frage": "Was würdest du deinem früheren Ich dringend sagen wollen?"},
-      {"frage": "Was bereust du am meisten, das du nicht gesagt hast?"},
-      {"frage": "Hast du schon mal geweint, ohne dass es jemand mitbekommen hat?"},
-      {"frage": "Gibt es jemanden, bei dem du dich entschuldigen solltest?"},
-      {"frage": "Was war das letzte Geheimnis, das du jemandem anvertraut hast?"},
-      {"frage": "Was ist deine größte Angst, wenn es um Nähe geht?"},
-      {"frage": "Was willst du niemandem zeigen, obwohl du es eigentlich bräuchtest?"},
-      {"frage": "Hast du schon mal jemandem nicht geholfen, obwohl du es hättest tun können?"},
-      {"frage": "Was ist etwas, das du dir oft wünschst – aber nie laut aussprichst?"},
-      {"frage": "Was macht dich emotional wirklich verwundbar?"},
-      {"frage": "Wann hast du das letzte Mal gedacht: 'Ich kann so nicht mehr weitermachen'?"}
+      {
+        "frage": "In wen warst du mal heimlich verliebt – und weiß diese Person es?"
+      },
+      {
+        "frage": "Hast du schon einmal jemandem ins Gesicht gelogen, um ihn nicht zu verletzen?"
+      },
+      {
+        "frage": "Was würdest du niemals deinen Eltern erzählen?"
+      },
+      {
+        "frage": "Wann hast du das letzte Mal so richtig Herzschmerz gehabt?"
+      },
+      {
+        "frage": "Gibt es etwas, das du noch nie jemandem erzählt hast – und warum nicht?"
+      },
+      {
+        "frage": "Wen aus deiner Vergangenheit würdest du gerne noch einmal sehen – und warum?"
+      },
+      {
+        "frage": "Was war dein schlimmster Vertrauensbruch, den du begangen hast?"
+      },
+      {
+        "frage": "Was war die größte Enttäuschung, die dir je jemand zugefügt hat?"
+      },
+      {
+        "frage": "Gibt es einen Menschen, dem du gerade etwas Wichtiges sagen solltest, es aber nicht tust?"
+      },
+      {
+        "frage": "Wie oft denkst du an deine Vergangenheit – und mit welchen Gefühlen?"
+      },
+      {
+        "frage": "Was ist eine Erinnerung, die du niemandem gern erzählst?"
+      },
+      {
+        "frage": "Welche Wahrheit über dich würdest du gerne ändern?"
+      },
+      {
+        "frage": "Gibt es einen Teil von dir, den du bewusst versteckst?"
+      },
+      {
+        "frage": "Was war die schwerste Entscheidung, die du je treffen musstest?"
+      },
+      {
+        "frage": "Hast du schon mal mit jemandem Kontakt abgebrochen, ohne den Grund zu erklären?"
+      },
+      {
+        "frage": "Was verletzt dich am meisten, wenn es jemand zu dir sagt?"
+      },
+      {
+        "frage": "Was war dein letzter echter Vertrauensbruch – als Opfer oder Täter?"
+      },
+      {
+        "frage": "Gibt es jemanden, dem du nie wieder vertrauen kannst – warum?"
+      },
+      {
+        "frage": "Was denkst du heimlich über jemand hier in der Runde?"
+      },
+      {
+        "frage": "Gibt es einen Menschen, den du sehr vermisst, obwohl du das nicht zeigen willst?"
+      },
+      {
+        "frage": "Was ist deine größte Unsicherheit im Umgang mit anderen?"
+      },
+      {
+        "frage": "Hast du schon mal so getan, als wärst du glücklich, obwohl du es nicht warst?"
+      },
+      {
+        "frage": "Wem würdest du heute noch gern etwas vergeben – kannst es aber (noch) nicht?"
+      },
+      {
+        "frage": "Was war deine tiefste Verletzung in einer Freundschaft?"
+      },
+      {
+        "frage": "Was denkst du über die Liebe – ehrlich?"
+      },
+      {
+        "frage": "Hast du schon mal jemandem deine Gefühle gestanden und es bereut?"
+      },
+      {
+        "frage": "Was brauchst du von einem Menschen, um dich wirklich öffnen zu können?"
+      },
+      {
+        "frage": "Wen würdest du anrufen, wenn du nachts nicht schlafen kannst – und warum?"
+      },
+      {
+        "frage": "Was würdest du deinem früheren Ich dringend sagen wollen?"
+      },
+      {
+        "frage": "Was bereust du am meisten, das du nicht gesagt hast?"
+      },
+      {
+        "frage": "Hast du schon mal geweint, ohne dass es jemand mitbekommen hat?"
+      },
+      {
+        "frage": "Gibt es jemanden, bei dem du dich entschuldigen solltest?"
+      },
+      {
+        "frage": "Was war das letzte Geheimnis, das du jemandem anvertraut hast?"
+      },
+      {
+        "frage": "Was ist deine größte Angst, wenn es um Nähe geht?"
+      },
+      {
+        "frage": "Was willst du niemandem zeigen, obwohl du es eigentlich bräuchtest?"
+      },
+      {
+        "frage": "Hast du schon mal jemandem nicht geholfen, obwohl du es hättest tun können?"
+      },
+      {
+        "frage": "Was ist etwas, das du dir oft wünschst – aber nie laut aussprichst?"
+      },
+      {
+        "frage": "Was macht dich emotional wirklich verwundbar?"
+      },
+      {
+        "frage": "Wann hast du das letzte Mal gedacht: 'Ich kann so nicht mehr weitermachen'?"
+      }
     ],
     "pflicht": [
-      {"text": "Lies einen Chatverlauf deiner Wahl vor – die anderen dürfen den Chat aussuchen (du entscheidest den Kontakt)."},
-      {"text": "Erzähl von einem Moment, in dem du dich richtig klein gefühlt hast."},
-      {"text": "Lass jemand anderen dein Tinder/Bumble/Whatever-Profil durchsehen (wenn vorhanden)."},
-      {"text": "Gib jemandem hier für 60 Sekunden dein Handy – sie oder er darf alle Fotos durchscrollen (keine Ordner öffnen)."},
-      {"text": "Mach ein Selfie und poste es in einer Gruppe mit dem Text: 'Wie seh ich heute aus?'"},
-      {"text": "Erzähl etwas, was du in dieser Runde noch nie jemandem gesagt hast."},
-      {"text": "Lass die anderen dein Bildschirmzeit-Widget sehen."},
-      {"text": "Lies die letzten drei gesendeten Emojis vor – ohne Kontext."},
-      {"text": "Zeig ein Foto, bei dem du heute denkst: 'Oh mein Gott, wieso?!'"},
-      {"text": "Erzähl von einer Sache, die du getan hast, obwohl du genau wusstest, dass sie falsch ist."},
-      {"text": "Gib zu, wen du in diesem Raum am meisten beobachtet hast – und warum."},
-      {"text": "Erzähl von einer Person, die dich tief verletzt hat (ohne Namen zu nennen)."},
-      {"text": "Lass jemanden durch deinen Instagram-Entdecken-Feed scrollen."},
-      {"text": "Nenne eine Sache, die du deinem Schwarm nie sagen würdest."},
-      {"text": "Zeig deinen letzten Kalendereintrag oder eine Notiz auf dem Handy."},
-      {"text": "Antworte auf die Frage: 'Wen vermisst du gerade – und warum?'"},
-      {"text": "Stell dich der Frage: 'Was war dein größter Beziehungsmist bisher?' – ehrlich."},
-      {"text": "Zeig den zuletzt gespielten Song oder Podcast auf Spotify."},
-      {"text": "Tu so, als würdest du jemandem beichten, dass du ihn/sie mal geliebt hast."},
-      {"text": "Sag einem Mitspieler etwas, das du ihm/ihr schon lange mal sagen wolltest."},
-      {"text": "Lass dir von einer Person ein altes Geheimnis aus dir 'herausfragen' – ehrlich antworten."},
-      {"text": "Nenn den Namen von jemandem, bei dem du dir manchmal wünschst, wieder Kontakt zu haben."},
-      {"text": "Mach eine ehrliche Einschätzung: Wie verliebbar bist du gerade – und warum?"},
-      {"text": "Lies deinen ältesten gespeicherten WhatsApp-Chat vor (nur Datum & Name reicht auch)."},
-      {"text": "Erzähl, bei welchem Erlebnis du zuletzt fast geweint hast."},
-      {"text": "Gib zu, worüber du dir in letzter Zeit zu viele Gedanken gemacht hast."},
-      {"text": "Sprich einen Moment an, für den du dich heute noch schämst."},
-      {"text": "Zeig deine älteste Notiz im Handy – und lies sie vor."},
-      {"text": "Sag, wie oft du dich in der letzten Woche alleine gefühlt hast (ehrlich)."},
-      {"text": "Beantworte: 'Was fehlt dir in deinem Leben, aber du traust dich nicht, es zu sagen?'"},
-      {"text": "Sprich offen über etwas, das du jemandem verzeihen solltest – aber (noch) nicht kannst."},
-      {"text": "Erzähle, wann du zuletzt einen richtig guten Ratschlag ignoriert hast."},
-      {"text": "Lies einen alten Instagram-Kommentar oder DM vor, die du bereust."},
-      {"text": "Wähle eine Person und sag ihr, was du an ihr bewunderst – ohne Ironie."},
-      {"text": "Nenne einen Charakterfehler von dir, der dir manchmal im Weg steht."},
-      {"text": "Antworte ehrlich: Bist du eher Herz oder Kopf? Und warum?"},
-      {"text": "Erzähl die Geschichte hinter deinem letzten Liebeskummer – in einem Satz."},
-      {"text": "Lass dir von den anderen eine Frage stellen, die du ehrlich beantworten musst."},
-      {"text": "Beantworte spontan: Wer oder was hat dich zu dem gemacht, was du heute bist?"},
-      {"text": "Gib zu, was du dich selbst manchmal nicht traust, dir einzugestehen."}
+      {
+        "text": "Lies einen Chatverlauf deiner Wahl vor – die anderen dürfen den Chat aussuchen (du entscheidest den Kontakt)."
+      },
+      {
+        "text": "Erzähl von einem Moment, in dem du dich richtig klein gefühlt hast."
+      },
+      {
+        "text": "Lass jemand anderen dein Tinder/Bumble/Whatever-Profil durchsehen (wenn vorhanden)."
+      },
+      {
+        "text": "Gib jemandem hier für 60 Sekunden dein Handy – sie oder er darf alle Fotos durchscrollen (keine Ordner öffnen)."
+      },
+      {
+        "text": "Mach ein Selfie und poste es in einer Gruppe mit dem Text: 'Wie seh ich heute aus?'"
+      },
+      {
+        "text": "Erzähl etwas, was du in dieser Runde noch nie jemandem gesagt hast."
+      },
+      {
+        "text": "Lass die anderen dein Bildschirmzeit-Widget sehen."
+      },
+      {
+        "text": "Lies die letzten drei gesendeten Emojis vor – ohne Kontext."
+      },
+      {
+        "text": "Zeig ein Foto, bei dem du heute denkst: 'Oh mein Gott, wieso?!'"
+      },
+      {
+        "text": "Erzähl von einer Sache, die du getan hast, obwohl du genau wusstest, dass sie falsch ist."
+      },
+      {
+        "text": "Gib zu, wen du in diesem Raum am meisten beobachtet hast – und warum."
+      },
+      {
+        "text": "Erzähl von einer Person, die dich tief verletzt hat (ohne Namen zu nennen)."
+      },
+      {
+        "text": "Lass jemanden durch deinen Instagram-Entdecken-Feed scrollen."
+      },
+      {
+        "text": "Nenne eine Sache, die du deinem Schwarm nie sagen würdest."
+      },
+      {
+        "text": "Zeig deinen letzten Kalendereintrag oder eine Notiz auf dem Handy."
+      },
+      {
+        "text": "Antworte auf die Frage: 'Wen vermisst du gerade – und warum?'"
+      },
+      {
+        "text": "Stell dich der Frage: 'Was war dein größter Beziehungsmist bisher?' – ehrlich."
+      },
+      {
+        "text": "Zeig den zuletzt gespielten Song oder Podcast auf Spotify."
+      },
+      {
+        "text": "Tu so, als würdest du jemandem beichten, dass du ihn/sie mal geliebt hast."
+      },
+      {
+        "text": "Sag einem Mitspieler etwas, das du ihm/ihr schon lange mal sagen wolltest."
+      },
+      {
+        "text": "Lass dir von einer Person ein altes Geheimnis aus dir 'herausfragen' – ehrlich antworten."
+      },
+      {
+        "text": "Nenn den Namen von jemandem, bei dem du dir manchmal wünschst, wieder Kontakt zu haben."
+      },
+      {
+        "text": "Mach eine ehrliche Einschätzung: Wie verliebbar bist du gerade – und warum?"
+      },
+      {
+        "text": "Lies deinen ältesten gespeicherten WhatsApp-Chat vor (nur Datum & Name reicht auch)."
+      },
+      {
+        "text": "Erzähl, bei welchem Erlebnis du zuletzt fast geweint hast."
+      },
+      {
+        "text": "Gib zu, worüber du dir in letzter Zeit zu viele Gedanken gemacht hast."
+      },
+      {
+        "text": "Sprich einen Moment an, für den du dich heute noch schämst."
+      },
+      {
+        "text": "Zeig deine älteste Notiz im Handy – und lies sie vor."
+      },
+      {
+        "text": "Sag, wie oft du dich in der letzten Woche alleine gefühlt hast (ehrlich)."
+      },
+      {
+        "text": "Beantworte: 'Was fehlt dir in deinem Leben, aber du traust dich nicht, es zu sagen?'"
+      },
+      {
+        "text": "Sprich offen über etwas, das du jemandem verzeihen solltest – aber (noch) nicht kannst."
+      },
+      {
+        "text": "Erzähle, wann du zuletzt einen richtig guten Ratschlag ignoriert hast."
+      },
+      {
+        "text": "Lies einen alten Instagram-Kommentar oder DM vor, die du bereust."
+      },
+      {
+        "text": "Wähle eine Person und sag ihr, was du an ihr bewunderst – ohne Ironie."
+      },
+      {
+        "text": "Nenne einen Charakterfehler von dir, der dir manchmal im Weg steht."
+      },
+      {
+        "text": "Antworte ehrlich: Bist du eher Herz oder Kopf? Und warum?"
+      },
+      {
+        "text": "Erzähl die Geschichte hinter deinem letzten Liebeskummer – in einem Satz."
+      },
+      {
+        "text": "Lass dir von den anderen eine Frage stellen, die du ehrlich beantworten musst."
+      },
+      {
+        "text": "Beantworte spontan: Wer oder was hat dich zu dem gemacht, was du heute bist?"
+      },
+      {
+        "text": "Gib zu, was du dich selbst manchmal nicht traust, dir einzugestehen."
+      }
     ]
   },
-
-
-  
-
-"mind": {
-  "label": " 🧠 Kopfkino",
-  "wahrheit": [
-      {"frage": "Was ist deine wildeste Fantasie, die du noch nie umgesetzt hast?"},
-      {"frage": "Hast du schon mal etwas geträumt, das dich danach den ganzen Tag beschäftigt hat?"},
-      {"frage": "Was erregt dich, obwohl du es niemals zugeben würdest?"},
-      {"frage": "Mit welchem Promi würdest du sofort in die Kiste steigen – ohne zu zögern?"},
-      {"frage": "Was war die letzte Situation, in der du bewusst mit jemandem geflirtet hast?"},
-      {"frage": "Wie oft denkst du an gewisse Dinge – wenn du alleine bist?"},
-      {"frage": "Gibt es jemanden hier, den du dir schon mal in einer Fantasie vorgestellt hast?"},
-      {"frage": "Was findest du extrem anziehend, obwohl es eher ungewöhnlich ist?"},
-      {"frage": "Was war das Unanständigste, das du je geschrieben oder gesagt hast?"},
-      {"frage": "Was würdest du machen, wenn du einen Tag lang alles dürftest – ohne Konsequenzen?"},
-      {"frage": "Gibt es einen Ort, an dem du unbedingt mal… naja… mehr erleben willst?"},
-      {"frage": "Wie viel Haut darf’s für dich sein, bis es unangenehm wird?"},
-      {"frage": "Was würdest du tun, wenn dir jemand völlig Fremdes ein eindeutiges Angebot macht?"},
-      {"frage": "Was denkst du, wenn jemand plötzlich rot wird, dich aber weiter anschaut?"},
-      {"frage": "Was war das Perverseste, was du je von jemandem gehört – oder selbst gesagt – hast?"},
-      {"frage": "Was turnt dich bei jemandem auf den ersten Blick an?"},
-      {"frage": "Was war dein intensivstes Kopfkino-Erlebnis in der Öffentlichkeit?"},
-      {"frage": "Welche Kleidung findest du besonders heiß – an dir oder anderen?"},
-      {"frage": "Was ist eine No-Go-Zone… die dich aber trotzdem interessiert?"},
-      {"frage": "Hast du schon mal so getan, als wärst du schüchtern – nur um jemanden heiß zu machen?"},
-      {"frage": "Was war der Moment, in dem du am meisten Selbstbeherrschung gebraucht hast?"},
-      {"frage": "Gibt es ein Erlebnis, das du nie wieder vergessen wirst – im positiven Sinne?"},
-      {"frage": "Hast du schon mal etwas bereut, was du aus Neugier ausprobiert hast?"},
-      {"frage": "Was ist etwas, das dich nervös macht, obwohl du es eigentlich willst?"},
-      {"frage": "Was war dein letzter „Oh mein Gott, was mach ich hier?“-Moment?"},
-      {"frage": "Gibt es einen Film oder eine Szene, die dich nachhaltig… beschäftigt hat?"},
-      {"frage": "Wie wichtig ist dir die Fantasie – oder willst du immer die Realität?"},
-      {"frage": "Was war das Gewagteste, das du jemals geschrieben hast (z. B. per Chat)?"},
-      {"frage": "Hast du schon mal jemanden durch deine Ausstrahlung absichtlich provoziert?"},
-      {"frage": "Was ist ein Satz, der dich sofort kriegt – egal, wer ihn sagt?"},
-      {"frage": "Was denkst du, wenn du bei jemandem rote Ohren siehst?"},
-      {"frage": "Gibt es einen geheimen Wunsch, den du dir irgendwann erfüllen willst?"},
-      {"frage": "Was wäre dein perfektes Spiel mit Nähe und Distanz?"},
-      {"frage": "Wie würdest du reagieren, wenn jemand plötzlich völlig ungeniert wird?"},
-      {"frage": "Was bringt dich innerlich aus dem Konzept – im besten Sinne?"},
-      {"frage": "Was war der Moment, in dem du wusstest: 'Das wird gefährlich… im Kopf'?"},
-      {"frage": "Was würdest du sagen, wenn jemand dir zuflüstert: 'Sag einfach Ja'?"},
-      {"frage": "Was ist ein Tabu, das du vielleicht doch irgendwann brechen willst?"},
-      {"frage": "Was war das frechste Kompliment, das du je bekommen hast?"},
-      {"frage": "Und was war das, was dich am meisten errötet hat?"}
+  "mind": {
+    "label": " 🧠 Kopfkino",
+    "wahrheit": [
+      {
+        "frage": "Was ist deine wildeste Fantasie, die du noch nie umgesetzt hast?"
+      },
+      {
+        "frage": "Hast du schon mal etwas geträumt, das dich danach den ganzen Tag beschäftigt hat?"
+      },
+      {
+        "frage": "Was erregt dich, obwohl du es niemals zugeben würdest?"
+      },
+      {
+        "frage": "Mit welchem Promi würdest du sofort in die Kiste steigen – ohne zu zögern?"
+      },
+      {
+        "frage": "Was war die letzte Situation, in der du bewusst mit jemandem geflirtet hast?"
+      },
+      {
+        "frage": "Wie oft denkst du an gewisse Dinge – wenn du alleine bist?"
+      },
+      {
+        "frage": "Gibt es jemanden hier, den du dir schon mal in einer Fantasie vorgestellt hast?"
+      },
+      {
+        "frage": "Was findest du extrem anziehend, obwohl es eher ungewöhnlich ist?"
+      },
+      {
+        "frage": "Was war das Unanständigste, das du je geschrieben oder gesagt hast?"
+      },
+      {
+        "frage": "Was würdest du machen, wenn du einen Tag lang alles dürftest – ohne Konsequenzen?"
+      },
+      {
+        "frage": "Gibt es einen Ort, an dem du unbedingt mal… naja… mehr erleben willst?"
+      },
+      {
+        "frage": "Wie viel Haut darf’s für dich sein, bis es unangenehm wird?"
+      },
+      {
+        "frage": "Was würdest du tun, wenn dir jemand völlig Fremdes ein eindeutiges Angebot macht?"
+      },
+      {
+        "frage": "Was denkst du, wenn jemand plötzlich rot wird, dich aber weiter anschaut?"
+      },
+      {
+        "frage": "Was war das Perverseste, was du je von jemandem gehört – oder selbst gesagt – hast?"
+      },
+      {
+        "frage": "Was turnt dich bei jemandem auf den ersten Blick an?"
+      },
+      {
+        "frage": "Was war dein intensivstes Kopfkino-Erlebnis in der Öffentlichkeit?"
+      },
+      {
+        "frage": "Welche Kleidung findest du besonders heiß – an dir oder anderen?"
+      },
+      {
+        "frage": "Was ist eine No-Go-Zone… die dich aber trotzdem interessiert?"
+      },
+      {
+        "frage": "Hast du schon mal so getan, als wärst du schüchtern – nur um jemanden heiß zu machen?"
+      },
+      {
+        "frage": "Was war der Moment, in dem du am meisten Selbstbeherrschung gebraucht hast?"
+      },
+      {
+        "frage": "Gibt es ein Erlebnis, das du nie wieder vergessen wirst – im positiven Sinne?"
+      },
+      {
+        "frage": "Hast du schon mal etwas bereut, was du aus Neugier ausprobiert hast?"
+      },
+      {
+        "frage": "Was ist etwas, das dich nervös macht, obwohl du es eigentlich willst?"
+      },
+      {
+        "frage": "Was war dein letzter „Oh mein Gott, was mach ich hier?“-Moment?"
+      },
+      {
+        "frage": "Gibt es einen Film oder eine Szene, die dich nachhaltig… beschäftigt hat?"
+      },
+      {
+        "frage": "Wie wichtig ist dir die Fantasie – oder willst du immer die Realität?"
+      },
+      {
+        "frage": "Was war das Gewagteste, das du jemals geschrieben hast (z. B. per Chat)?"
+      },
+      {
+        "frage": "Hast du schon mal jemanden durch deine Ausstrahlung absichtlich provoziert?"
+      },
+      {
+        "frage": "Was ist ein Satz, der dich sofort kriegt – egal, wer ihn sagt?"
+      },
+      {
+        "frage": "Was denkst du, wenn du bei jemandem rote Ohren siehst?"
+      },
+      {
+        "frage": "Gibt es einen geheimen Wunsch, den du dir irgendwann erfüllen willst?"
+      },
+      {
+        "frage": "Was wäre dein perfektes Spiel mit Nähe und Distanz?"
+      },
+      {
+        "frage": "Wie würdest du reagieren, wenn jemand plötzlich völlig ungeniert wird?"
+      },
+      {
+        "frage": "Was bringt dich innerlich aus dem Konzept – im besten Sinne?"
+      },
+      {
+        "frage": "Was war der Moment, in dem du wusstest: 'Das wird gefährlich… im Kopf'?"
+      },
+      {
+        "frage": "Was würdest du sagen, wenn jemand dir zuflüstert: 'Sag einfach Ja'?"
+      },
+      {
+        "frage": "Was ist ein Tabu, das du vielleicht doch irgendwann brechen willst?"
+      },
+      {
+        "frage": "Was war das frechste Kompliment, das du je bekommen hast?"
+      },
+      {
+        "frage": "Und was war das, was dich am meisten errötet hat?"
+      }
     ],
     "pflicht": [
-      {"text": "Flüstere der Person links von dir einen Satz ins Ohr, der rot machen könnte."},
-      {"text": "Lies einen beliebigen Satz betont zweideutig vor – aus einem Buch, Chat, egal."},
-      {"text": "Zeig ein Emoji, das du mal in einem 'interessanten' Zusammenhang verwendet hast."},
-      {"text": "Tausch 1 Minute lang nur Blicke mit jemandem deiner Wahl – ohne zu lachen."},
-      {"text": "Nenn spontan ein geheimes Codewort, das bei dir Kopfkino auslöst."},
-      {"text": "Sprich 3 Sätze mit der heißesten Stimme, die du kannst."},
-      {"text": "Tu so, als würdest du jemanden verführerisch beobachten – 10 Sekunden lang."},
-      {"text": "Zeig dein Handy – aber nur die letzte Google-Suchanfrage."},
-      {"text": "Bewege dich 10 Sekunden lang so, als würdest du jemanden beeindrucken wollen."},
-      {"text": "Mach ein Geräusch, das du mit Kopfkino verbindest."},
-      {"text": "Gib einem anderen Spieler einen Spitznamen, der eindeutig doppeldeutig ist."},
-      {"text": "Nenne drei Begriffe, die du eindeutig findest – ohne sie zu erklären."},
-      {"text": "Tu so, als würdest du flirten, ohne ein Wort zu sagen."},
-      {"text": "Zeig den peinlichsten 'Saved' Beitrag oder Screenshot, den du im Handy hast (zensieren erlaubt 😏)."},
-      {"text": "Stell dich so hin, wie du denkst, dass du auf andere wirkst."},
-      {"text": "Mach mit geschlossenen Augen ein Geräusch, das jemand anders interpretieren muss."},
-      {"text": "Wähle jemanden und sag ihm, was an ihm 'mehr Eindruck macht als erlaubt'."},
-      {"text": "Schenk jemandem einen drinkbaren Toast – mit ganz schön viel Zwinkern."},
-      {"text": "Formuliere einen Satz, der mit 'Wenn du wüsstest, was ich gerade denke…' beginnt."},
-      {"text": "Tu so, als würdest du jemanden hier in der Runde anbaggern – subtil."},
-      {"text": "Gib jemandem ein imaginäres Kompliment – aber so, dass alle kichern müssen."},
-      {"text": "Erzähl ein völlig harmloses Erlebnis so, dass es absolut verrucht klingt."},
-      {"text": "Imitiere eine Filmszene, die du für... anregend hältst – mit Requisiten, wenn du willst."},
-      {"text": "Sag das dreckigste Wort, das dir einfällt – flüsternd."},
-      {"text": "Nenn einen Musiktitel, der bei dir für Stimmung sorgt – mit Begründung."},
-      {"text": "Zeig deinen Browserverlauf – oder einen davon ausgedachten, der noch schlimmer ist."},
-      {"text": "Sprich 15 Sekunden mit jemandem, ohne das Wort 'Nein' zu verwenden – egal was sie fragen."},
-      {"text": "Zeig 3 Handbewegungen, die man missverstehen könnte."},
-      {"text": "Tu so, als würdest du jemandem ein geheimes Zeichen geben – und dann sag, was es bedeutet."},
-      {"text": "Antworte auf eine Frage nur mit einem gehauchten 'vielleicht'."},
-      {"text": "Sag 'Ich bin völlig unschuldig' – und überzeuge niemanden."},
-      {"text": "Nimm ein Getränk in die Hand und sag: 'Das hier ist mein Date' – mit Augenkontakt."},
-      {"text": "Wähle jemanden, bei dem du dir vorstellen könntest, dass er 'Gedanken lesen' kann."},
-      {"text": "Gib ein Beispiel für ein harmloses Wort, das dich nervös machen kann."},
-      {"text": "Sprich ein Zitat aus einem Film, aber so, als wärst du sehr... inspiriert."},
-      {"text": "Reagiere 10 Sekunden auf alles, was gesagt wird, mit einem verdächtigen 'Aha...'."},
-      {"text": "Stell eine Frage, bei der du selbst rot werden würdest."},
-      {"text": "Sag 'Ich will's wissen' – und nicke dabei langsam jemandem zu."},
-      {"text": "Sag deinen Namen – als wäre es ein geheimes Codewort."}
+      {
+        "text": "Flüstere der Person links von dir einen Satz ins Ohr, der rot machen könnte."
+      },
+      {
+        "text": "Lies einen beliebigen Satz betont zweideutig vor – aus einem Buch, Chat, egal."
+      },
+      {
+        "text": "Zeig ein Emoji, das du mal in einem 'interessanten' Zusammenhang verwendet hast."
+      },
+      {
+        "text": "Tausch 1 Minute lang nur Blicke mit jemandem deiner Wahl – ohne zu lachen."
+      },
+      {
+        "text": "Nenn spontan ein geheimes Codewort, das bei dir Kopfkino auslöst."
+      },
+      {
+        "text": "Sprich 3 Sätze mit der heißesten Stimme, die du kannst."
+      },
+      {
+        "text": "Tu so, als würdest du jemanden verführerisch beobachten – 10 Sekunden lang."
+      },
+      {
+        "text": "Zeig dein Handy – aber nur die letzte Google-Suchanfrage."
+      },
+      {
+        "text": "Bewege dich 10 Sekunden lang so, als würdest du jemanden beeindrucken wollen."
+      },
+      {
+        "text": "Mach ein Geräusch, das du mit Kopfkino verbindest."
+      },
+      {
+        "text": "Gib einem anderen Spieler einen Spitznamen, der eindeutig doppeldeutig ist."
+      },
+      {
+        "text": "Nenne drei Begriffe, die du eindeutig findest – ohne sie zu erklären."
+      },
+      {
+        "text": "Tu so, als würdest du flirten, ohne ein Wort zu sagen."
+      },
+      {
+        "text": "Zeig den peinlichsten 'Saved' Beitrag oder Screenshot, den du im Handy hast (zensieren erlaubt 😏)."
+      },
+      {
+        "text": "Stell dich so hin, wie du denkst, dass du auf andere wirkst."
+      },
+      {
+        "text": "Mach mit geschlossenen Augen ein Geräusch, das jemand anders interpretieren muss."
+      },
+      {
+        "text": "Wähle jemanden und sag ihm, was an ihm 'mehr Eindruck macht als erlaubt'."
+      },
+      {
+        "text": "Schenk jemandem einen drinkbaren Toast – mit ganz schön viel Zwinkern."
+      },
+      {
+        "text": "Formuliere einen Satz, der mit 'Wenn du wüsstest, was ich gerade denke…' beginnt."
+      },
+      {
+        "text": "Tu so, als würdest du jemanden hier in der Runde anbaggern – subtil."
+      },
+      {
+        "text": "Gib jemandem ein imaginäres Kompliment – aber so, dass alle kichern müssen."
+      },
+      {
+        "text": "Erzähl ein völlig harmloses Erlebnis so, dass es absolut verrucht klingt."
+      },
+      {
+        "text": "Imitiere eine Filmszene, die du für... anregend hältst – mit Requisiten, wenn du willst."
+      },
+      {
+        "text": "Sag das dreckigste Wort, das dir einfällt – flüsternd."
+      },
+      {
+        "text": "Nenn einen Musiktitel, der bei dir für Stimmung sorgt – mit Begründung."
+      },
+      {
+        "text": "Zeig deinen Browserverlauf – oder einen davon ausgedachten, der noch schlimmer ist."
+      },
+      {
+        "text": "Sprich 15 Sekunden mit jemandem, ohne das Wort 'Nein' zu verwenden – egal was sie fragen."
+      },
+      {
+        "text": "Zeig 3 Handbewegungen, die man missverstehen könnte."
+      },
+      {
+        "text": "Tu so, als würdest du jemandem ein geheimes Zeichen geben – und dann sag, was es bedeutet."
+      },
+      {
+        "text": "Antworte auf eine Frage nur mit einem gehauchten 'vielleicht'."
+      },
+      {
+        "text": "Sag 'Ich bin völlig unschuldig' – und überzeuge niemanden."
+      },
+      {
+        "text": "Nimm ein Getränk in die Hand und sag: 'Das hier ist mein Date' – mit Augenkontakt."
+      },
+      {
+        "text": "Wähle jemanden, bei dem du dir vorstellen könntest, dass er 'Gedanken lesen' kann."
+      },
+      {
+        "text": "Gib ein Beispiel für ein harmloses Wort, das dich nervös machen kann."
+      },
+      {
+        "text": "Sprich ein Zitat aus einem Film, aber so, als wärst du sehr... inspiriert."
+      },
+      {
+        "text": "Reagiere 10 Sekunden auf alles, was gesagt wird, mit einem verdächtigen 'Aha...'."
+      },
+      {
+        "text": "Stell eine Frage, bei der du selbst rot werden würdest."
+      },
+      {
+        "text": "Sag 'Ich will's wissen' – und nicke dabei langsam jemandem zu."
+      },
+      {
+        "text": "Sag deinen Namen – als wäre es ein geheimes Codewort."
+      }
     ]
-},
-
-
-
-  
-"deep": {
+  },
+  "deep": {
     "label": " 💌 Deep Talk",
     "wahrheit": [
-      {"frage": "Was bedeutet „Glück“ für dich – ehrlich?"},
-      {"frage": "Was würdest du deinem jüngeren Ich sagen?"},
-      {"frage": "Gibt es etwas, das du dir nie verzeihen wirst?"},
-      {"frage": "Wofür bist du in deinem Leben wirklich dankbar?"},
-      {"frage": "Glaubst du an Schicksal?"},
-      {"frage": "Was war deine größte Angst in den letzten 12 Monaten?"},
-      {"frage": "Welcher Mensch hat dich am meisten geprägt – positiv oder negativ?"},
-      {"frage": "Was ist für dich schlimmer: Einsamkeit oder Verlust?"},
-      {"frage": "Wann hast du das letzte Mal aus tiefstem Herzen geweint?"},
-      {"frage": "Gibt es etwas, das du niemandem je erzählt hast?"},
-      {"frage": "Was ist für dich ein „erfülltes Leben“?"},
-      {"frage": "Hast du manchmal das Gefühl, du verstellst dich im Alltag?"},
-      {"frage": "Was fehlt dir im Moment am meisten in deinem Leben?"},
-      {"frage": "Gibt es einen Moment, der dein Leben verändert hat?"},
-      {"frage": "Was bedeutet dir Familie wirklich?"},
-      {"frage": "Würdest du dich selbst als gute*r Freund*in bezeichnen?"},
-      {"frage": "Was war der schwerste Abschied deines Lebens?"},
-      {"frage": "Gibt es jemanden, den du gerne zurück in deinem Leben hättest?"},
-      {"frage": "Wann hast du dich das letzte Mal richtig verstanden gefühlt?"},
-      {"frage": "Welche Gedanken beschäftigen dich, wenn du nachts nicht schlafen kannst?"},
-      {"frage": "Hattest du schon mal das Gefühl, jemandem nicht genug zu sein?"},
-      {"frage": "Gibt es einen Satz, der dich nie loslässt?"},
-      {"frage": "Was ist dein größtes inneres Chaos?"},
-      {"frage": "Welche Wahrheit vermeidest du gerade?"},
-      {"frage": "Glaubst du, man kann sich selbst wirklich kennen?"},
-      {"frage": "Womit kämpfst du im Alltag – was sieht man dir nicht an?"},
-      {"frage": "Was brauchst du von anderen, aber sprichst es nicht aus?"},
-      {"frage": "Hast du schon mal etwas verloren, das du nie ersetzt konntest?"},
-      {"frage": "Welche Entscheidung bereust du bis heute?"},
-      {"frage": "Was ist deine größte Unsicherheit?"},
-      {"frage": "Welchen Teil deiner Vergangenheit versteckst du?"},
-      {"frage": "Was macht dich im Leben wirklich stolz?"},
-      {"frage": "Gibt es etwas, das du unbedingt noch sagen möchtest – aber nie traust?"},
-      {"frage": "Was fehlt dir gerade am meisten in einer Beziehung (egal ob romantisch, freundschaftlich oder familiär)?"},
-      {"frage": "Wer bist du, wenn niemand zuschaut?"},
-      {"frage": "Womit tust du dir selbst immer wieder weh?"},
-      {"frage": "Was bedeutet „Zuhause“ für dich?"},
-      {"frage": "Was hast du lange verdrängt?"},
-      {"frage": "Glaubst du, Menschen können sich grundlegend ändern?"},
-      {"frage": "Was willst du loslassen, aber kannst es noch nicht?"}
+      {
+        "frage": "Was bedeutet „Glück“ für dich – ehrlich?"
+      },
+      {
+        "frage": "Was würdest du deinem jüngeren Ich sagen?"
+      },
+      {
+        "frage": "Gibt es etwas, das du dir nie verzeihen wirst?"
+      },
+      {
+        "frage": "Wofür bist du in deinem Leben wirklich dankbar?"
+      },
+      {
+        "frage": "Glaubst du an Schicksal?"
+      },
+      {
+        "frage": "Was war deine größte Angst in den letzten 12 Monaten?"
+      },
+      {
+        "frage": "Welcher Mensch hat dich am meisten geprägt – positiv oder negativ?"
+      },
+      {
+        "frage": "Was ist für dich schlimmer: Einsamkeit oder Verlust?"
+      },
+      {
+        "frage": "Wann hast du das letzte Mal aus tiefstem Herzen geweint?"
+      },
+      {
+        "frage": "Gibt es etwas, das du niemandem je erzählt hast?"
+      },
+      {
+        "frage": "Was ist für dich ein „erfülltes Leben“?"
+      },
+      {
+        "frage": "Hast du manchmal das Gefühl, du verstellst dich im Alltag?"
+      },
+      {
+        "frage": "Was fehlt dir im Moment am meisten in deinem Leben?"
+      },
+      {
+        "frage": "Gibt es einen Moment, der dein Leben verändert hat?"
+      },
+      {
+        "frage": "Was bedeutet dir Familie wirklich?"
+      },
+      {
+        "frage": "Würdest du dich selbst als gute*r Freund*in bezeichnen?"
+      },
+      {
+        "frage": "Was war der schwerste Abschied deines Lebens?"
+      },
+      {
+        "frage": "Gibt es jemanden, den du gerne zurück in deinem Leben hättest?"
+      },
+      {
+        "frage": "Wann hast du dich das letzte Mal richtig verstanden gefühlt?"
+      },
+      {
+        "frage": "Welche Gedanken beschäftigen dich, wenn du nachts nicht schlafen kannst?"
+      },
+      {
+        "frage": "Hattest du schon mal das Gefühl, jemandem nicht genug zu sein?"
+      },
+      {
+        "frage": "Gibt es einen Satz, der dich nie loslässt?"
+      },
+      {
+        "frage": "Was ist dein größtes inneres Chaos?"
+      },
+      {
+        "frage": "Welche Wahrheit vermeidest du gerade?"
+      },
+      {
+        "frage": "Glaubst du, man kann sich selbst wirklich kennen?"
+      },
+      {
+        "frage": "Womit kämpfst du im Alltag – was sieht man dir nicht an?"
+      },
+      {
+        "frage": "Was brauchst du von anderen, aber sprichst es nicht aus?"
+      },
+      {
+        "frage": "Hast du schon mal etwas verloren, das du nie ersetzt konntest?"
+      },
+      {
+        "frage": "Welche Entscheidung bereust du bis heute?"
+      },
+      {
+        "frage": "Was ist deine größte Unsicherheit?"
+      },
+      {
+        "frage": "Welchen Teil deiner Vergangenheit versteckst du?"
+      },
+      {
+        "frage": "Was macht dich im Leben wirklich stolz?"
+      },
+      {
+        "frage": "Gibt es etwas, das du unbedingt noch sagen möchtest – aber nie traust?"
+      },
+      {
+        "frage": "Was fehlt dir gerade am meisten in einer Beziehung (egal ob romantisch, freundschaftlich oder familiär)?"
+      },
+      {
+        "frage": "Wer bist du, wenn niemand zuschaut?"
+      },
+      {
+        "frage": "Womit tust du dir selbst immer wieder weh?"
+      },
+      {
+        "frage": "Was bedeutet „Zuhause“ für dich?"
+      },
+      {
+        "frage": "Was hast du lange verdrängt?"
+      },
+      {
+        "frage": "Glaubst du, Menschen können sich grundlegend ändern?"
+      },
+      {
+        "frage": "Was willst du loslassen, aber kannst es noch nicht?"
+      }
     ],
     "pflicht": [
-      {"text": "Schau der Person gegenüber 30 Sekunden lang schweigend in die Augen."},
-      {"text": "Lies deine letzte Notiz oder Tagebuchzeile laut vor."},
-      {"text": "Zeig ein Bild auf deinem Handy, das für dich eine große Bedeutung hat – und erklär warum."},
-      {"text": "Sag einer Person in der Runde ein Kompliment, das du sonst nicht aussprechen würdest."},
-      {"text": "Lies eine alte Nachricht vor, die dich heute noch berührt."},
-      {"text": "Beschreibe in 3 Sätzen, wer du bist – ohne über Äußerlichkeiten zu sprechen."},
-      {"text": "Schreib einen Satz auf, der dich beschreibt, und zeige ihn allen."},
-      {"text": "Teile eine Entscheidung mit der Gruppe, die du bereust – ohne Witz."},
-      {"text": "Sag, welche Person in dieser Runde du am meisten vermissen würdest – und warum."},
-      {"text": "Leg dein Handy offen vor dich – für 2 Minuten dürfen die anderen Fragen dazu stellen."},
-      {"text": "Lies den letzten Songtext, den du gehört hast, vor – und sag, ob er etwas mit dir zu tun hat."},
-      {"text": "Sag, was du an dir selbst am meisten magst – und am wenigsten."},
-      {"text": "Beschreibe dein inneres Chaos mit einem Bild oder Vergleich."},
-      {"text": "Lies einen Teil aus einer alten Nachricht oder einem alten Tagebucheintrag vor."},
-      {"text": "Teile mit der Gruppe, worauf du in deinem Leben gerade keinen Einfluss hast – aber gerne hättest."},
-      {"text": "Ruf eine Person an, die dir fehlt – auch wenn du nur auf die Mailbox sprichst."},
-      {"text": "Lass die Gruppe dir eine „harte Frage“ stellen – du musst ehrlich antworten."},
-      {"text": "Zeige ein Erinnerungsstück auf deinem Handy (z. B. Screenshot, altes Bild)."},
-      {"text": "Lies eine Nachricht vor, die du nie abgeschickt hast."},
-      {"text": "Sag, worüber du nie lachst – weil es dich tief trifft."},
-      {"text": "Lass die Gruppe eine Eigenschaft raten, die dich verletzt – bestätige oder verneine."},
-      {"text": "Lies eine der letzten 5 Suchanfragen am Handy vor."},
-      {"text": "Beschreibe, was dich an der Welt gerade richtig wütend macht."},
-      {"text": "Sage ehrlich: Was ist deine größte Baustelle im Leben?"},
-      {"text": "Sprich laut aus, was du dir gerade wünschst – auch wenn es unangenehm ist."},
-      {"text": "Beschreibe, was du brauchst – ohne dabei das Wort „brauchen“ zu verwenden."},
-      {"text": "Mach ein Selfie, wie du dich innerlich fühlst – und zeig es."},
-      {"text": "Schreib auf einen Zettel, was du loswerden willst – zerreiß ihn dann laut."},
-      {"text": "Mach einer Person in der Runde ein ehrliches Dankesgeständnis."},
-      {"text": "Lies deinen letzten „Sprachmemo-Titel“ (wenn vorhanden) vor."},
-      {"text": "Erzähl von einem Moment, an dem du dich absolut wertlos gefühlt hast."},
-      {"text": "Sag, welchen Wunsch du vor dir herschiebst – und warum."},
-      {"text": "Teile einen Gedanken, den du seit Tagen mit dir herumträgst."},
-      {"text": "Frag die Runde: „Was denkt ihr, was ich verstecke?“ – und höre zu."},
-      {"text": "Schreib einen Satz auf, den du jemandem sagen willst – zeig ihn, sag aber nicht an wen er geht."},
-      {"text": "Nenne eine Sache, die du loslassen musst – und tu so, als würdest du es jetzt tun."},
-      {"text": "Lies einen alten WhatsApp-Status oder ein altes Profil vor."},
-      {"text": "Öffne ein altes Fotoalbum oder Screenshot-Ordner und erzähle eine Geschichte dazu."},
-      {"text": "Sag, was du für einen echten Neuanfang bräuchtest."},
-      {"text": "Sag: „Ich bin dankbar für…“ – und nenne 3 Dinge."}
+      {
+        "text": "Schau der Person gegenüber 30 Sekunden lang schweigend in die Augen."
+      },
+      {
+        "text": "Lies deine letzte Notiz oder Tagebuchzeile laut vor."
+      },
+      {
+        "text": "Zeig ein Bild auf deinem Handy, das für dich eine große Bedeutung hat – und erklär warum."
+      },
+      {
+        "text": "Sag einer Person in der Runde ein Kompliment, das du sonst nicht aussprechen würdest."
+      },
+      {
+        "text": "Lies eine alte Nachricht vor, die dich heute noch berührt."
+      },
+      {
+        "text": "Beschreibe in 3 Sätzen, wer du bist – ohne über Äußerlichkeiten zu sprechen."
+      },
+      {
+        "text": "Schreib einen Satz auf, der dich beschreibt, und zeige ihn allen."
+      },
+      {
+        "text": "Teile eine Entscheidung mit der Gruppe, die du bereust – ohne Witz."
+      },
+      {
+        "text": "Sag, welche Person in dieser Runde du am meisten vermissen würdest – und warum."
+      },
+      {
+        "text": "Leg dein Handy offen vor dich – für 2 Minuten dürfen die anderen Fragen dazu stellen."
+      },
+      {
+        "text": "Lies den letzten Songtext, den du gehört hast, vor – und sag, ob er etwas mit dir zu tun hat."
+      },
+      {
+        "text": "Sag, was du an dir selbst am meisten magst – und am wenigsten."
+      },
+      {
+        "text": "Beschreibe dein inneres Chaos mit einem Bild oder Vergleich."
+      },
+      {
+        "text": "Lies einen Teil aus einer alten Nachricht oder einem alten Tagebucheintrag vor."
+      },
+      {
+        "text": "Teile mit der Gruppe, worauf du in deinem Leben gerade keinen Einfluss hast – aber gerne hättest."
+      },
+      {
+        "text": "Ruf eine Person an, die dir fehlt – auch wenn du nur auf die Mailbox sprichst."
+      },
+      {
+        "text": "Lass die Gruppe dir eine „harte Frage“ stellen – du musst ehrlich antworten."
+      },
+      {
+        "text": "Zeige ein Erinnerungsstück auf deinem Handy (z. B. Screenshot, altes Bild)."
+      },
+      {
+        "text": "Lies eine Nachricht vor, die du nie abgeschickt hast."
+      },
+      {
+        "text": "Sag, worüber du nie lachst – weil es dich tief trifft."
+      },
+      {
+        "text": "Lass die Gruppe eine Eigenschaft raten, die dich verletzt – bestätige oder verneine."
+      },
+      {
+        "text": "Lies eine der letzten 5 Suchanfragen am Handy vor."
+      },
+      {
+        "text": "Beschreibe, was dich an der Welt gerade richtig wütend macht."
+      },
+      {
+        "text": "Sage ehrlich: Was ist deine größte Baustelle im Leben?"
+      },
+      {
+        "text": "Sprich laut aus, was du dir gerade wünschst – auch wenn es unangenehm ist."
+      },
+      {
+        "text": "Beschreibe, was du brauchst – ohne dabei das Wort „brauchen“ zu verwenden."
+      },
+      {
+        "text": "Mach ein Selfie, wie du dich innerlich fühlst – und zeig es."
+      },
+      {
+        "text": "Schreib auf einen Zettel, was du loswerden willst – zerreiß ihn dann laut."
+      },
+      {
+        "text": "Mach einer Person in der Runde ein ehrliches Dankesgeständnis."
+      },
+      {
+        "text": "Lies deinen letzten „Sprachmemo-Titel“ (wenn vorhanden) vor."
+      },
+      {
+        "text": "Erzähl von einem Moment, an dem du dich absolut wertlos gefühlt hast."
+      },
+      {
+        "text": "Sag, welchen Wunsch du vor dir herschiebst – und warum."
+      },
+      {
+        "text": "Teile einen Gedanken, den du seit Tagen mit dir herumträgst."
+      },
+      {
+        "text": "Frag die Runde: „Was denkt ihr, was ich verstecke?“ – und höre zu."
+      },
+      {
+        "text": "Schreib einen Satz auf, den du jemandem sagen willst – zeig ihn, sag aber nicht an wen er geht."
+      },
+      {
+        "text": "Nenne eine Sache, die du loslassen musst – und tu so, als würdest du es jetzt tun."
+      },
+      {
+        "text": "Lies einen alten WhatsApp-Status oder ein altes Profil vor."
+      },
+      {
+        "text": "Öffne ein altes Fotoalbum oder Screenshot-Ordner und erzähle eine Geschichte dazu."
+      },
+      {
+        "text": "Sag, was du für einen echten Neuanfang bräuchtest."
+      },
+      {
+        "text": "Sag: „Ich bin dankbar für…“ – und nenne 3 Dinge."
+      }
     ]
   },
-
-
-
-
-"bold": {
+  "bold": {
     "label": " 🫣 Mut & Grenzen",
     "wahrheit": [
-      { "frage": "Wann hast du das letzte Mal bewusst deine Komfortzone verlassen?" },
-      { "frage": "Was war die mutigste Entscheidung, die du je getroffen hast?" },
-      { "frage": "Gibt es eine Grenze, die du nie überschreiten würdest?" },
-      { "frage": "Hast du schon mal etwas getan, wofür du dich später geschämt hast?" },
-      { "frage": "Was ist das Verrückteste, das du je aus Liebe getan hast?" },
-      { "frage": "Welches Geheimnis hast du bisher niemandem erzählt?" },
-      { "frage": "Wen hast du zuletzt enttäuscht – und warum?" },
-      { "frage": "Wann hast du das letzte Mal bewusst „Nein“ gesagt, obwohl du es bereut hast?" },
-      { "frage": "Was würdest du tun, wenn du keine Angst hättest?" },
-      { "frage": "Wann hast du dich das letzte Mal richtig klein gefühlt?" },
-      { "frage": "Gibt es etwas, das du unbedingt mal ausprobieren möchtest – traust dich aber nicht?" },
-      { "frage": "Was war dein peinlichster Moment, den kaum jemand kennt?" },
-      { "frage": "Hast du schon mal jemanden absichtlich verletzt?" },
-      { "frage": "Was würdest du niemals über dich preisgeben – außer hier?" },
-      { "frage": "Wann hast du dich zuletzt wirklich verletzt gefühlt?" },
-      { "frage": "Welchen Fehler wiederholst du immer wieder?" },
-      { "frage": "Hast du schon mal eine Freundschaft absichtlich beendet?" },
-      { "frage": "Was ist für dich das größte Risiko im Leben?" },
-      { "frage": "Wann hast du zuletzt jemandem die Meinung gesagt – und es bereut?" },
-      { "frage": "Was ist deine größte Schwäche, die du vor anderen versteckst?" },
-      { "frage": "Welcher Satz würde dich am meisten verletzen, wenn er gesagt wird?" },
-      { "frage": "Gibt es jemanden, dem du noch etwas Wichtiges sagen musst?" },
-      { "frage": "Was ist deine größte Angst im Umgang mit anderen Menschen?" },
-      { "frage": "Wann hast du zuletzt etwas getan, nur um zu beweisen, dass du es kannst?" },
-      { "frage": "Was würdest du niemals für Geld tun?" },
-      { "frage": "Welcher Traum wurde dir schon zerstört?" },
-      { "frage": "Gibt es eine Entscheidung, die dein Leben komplett verändert hat?" },
-      { "frage": "Wann hast du das letzte Mal ein Geheimnis verraten?" },
-      { "frage": "Was würdest du tun, wenn dich niemand verurteilen könnte?" },
-      { "frage": "Welche Lüge hast du am längsten aufrechterhalten?" },
-      { "frage": "Hast du schon mal jemanden absichtlich ignoriert – und warum?" },
-      { "frage": "Was war das Verrückteste, das du für Aufmerksamkeit getan hast?" },
-      { "frage": "Welches Tabu würdest du gerne brechen?" },
-      { "frage": "Wann hast du dich das letzte Mal richtig mutig gefühlt?" },
-      { "frage": "Was würdest du tun, wenn du wüsstest, dass du nicht scheitern kannst?" },
-      { "frage": "Gibt es etwas, das du bereust, nicht getan zu haben?" },
-      { "frage": "Welcher Moment hat dir gezeigt, wie stark du wirklich bist?" },
-      { "frage": "Was ist deine größte Herausforderung gerade?" },
-      { "frage": "Wann hast du zuletzt deine Meinung geändert – und warum?" }
+      {
+        "frage": "Wann hast du das letzte Mal bewusst deine Komfortzone verlassen?"
+      },
+      {
+        "frage": "Was war die mutigste Entscheidung, die du je getroffen hast?"
+      },
+      {
+        "frage": "Gibt es eine Grenze, die du nie überschreiten würdest?"
+      },
+      {
+        "frage": "Hast du schon mal etwas getan, wofür du dich später geschämt hast?"
+      },
+      {
+        "frage": "Was ist das Verrückteste, das du je aus Liebe getan hast?"
+      },
+      {
+        "frage": "Welches Geheimnis hast du bisher niemandem erzählt?"
+      },
+      {
+        "frage": "Wen hast du zuletzt enttäuscht – und warum?"
+      },
+      {
+        "frage": "Wann hast du das letzte Mal bewusst „Nein“ gesagt, obwohl du es bereut hast?"
+      },
+      {
+        "frage": "Was würdest du tun, wenn du keine Angst hättest?"
+      },
+      {
+        "frage": "Wann hast du dich das letzte Mal richtig klein gefühlt?"
+      },
+      {
+        "frage": "Gibt es etwas, das du unbedingt mal ausprobieren möchtest – traust dich aber nicht?"
+      },
+      {
+        "frage": "Was war dein peinlichster Moment, den kaum jemand kennt?"
+      },
+      {
+        "frage": "Hast du schon mal jemanden absichtlich verletzt?"
+      },
+      {
+        "frage": "Was würdest du niemals über dich preisgeben – außer hier?"
+      },
+      {
+        "frage": "Wann hast du dich zuletzt wirklich verletzt gefühlt?"
+      },
+      {
+        "frage": "Welchen Fehler wiederholst du immer wieder?"
+      },
+      {
+        "frage": "Hast du schon mal eine Freundschaft absichtlich beendet?"
+      },
+      {
+        "frage": "Was ist für dich das größte Risiko im Leben?"
+      },
+      {
+        "frage": "Wann hast du zuletzt jemandem die Meinung gesagt – und es bereut?"
+      },
+      {
+        "frage": "Was ist deine größte Schwäche, die du vor anderen versteckst?"
+      },
+      {
+        "frage": "Welcher Satz würde dich am meisten verletzen, wenn er gesagt wird?"
+      },
+      {
+        "frage": "Gibt es jemanden, dem du noch etwas Wichtiges sagen musst?"
+      },
+      {
+        "frage": "Was ist deine größte Angst im Umgang mit anderen Menschen?"
+      },
+      {
+        "frage": "Wann hast du zuletzt etwas getan, nur um zu beweisen, dass du es kannst?"
+      },
+      {
+        "frage": "Was würdest du niemals für Geld tun?"
+      },
+      {
+        "frage": "Welcher Traum wurde dir schon zerstört?"
+      },
+      {
+        "frage": "Gibt es eine Entscheidung, die dein Leben komplett verändert hat?"
+      },
+      {
+        "frage": "Wann hast du das letzte Mal ein Geheimnis verraten?"
+      },
+      {
+        "frage": "Was würdest du tun, wenn dich niemand verurteilen könnte?"
+      },
+      {
+        "frage": "Welche Lüge hast du am längsten aufrechterhalten?"
+      },
+      {
+        "frage": "Hast du schon mal jemanden absichtlich ignoriert – und warum?"
+      },
+      {
+        "frage": "Was war das Verrückteste, das du für Aufmerksamkeit getan hast?"
+      },
+      {
+        "frage": "Welches Tabu würdest du gerne brechen?"
+      },
+      {
+        "frage": "Wann hast du dich das letzte Mal richtig mutig gefühlt?"
+      },
+      {
+        "frage": "Was würdest du tun, wenn du wüsstest, dass du nicht scheitern kannst?"
+      },
+      {
+        "frage": "Gibt es etwas, das du bereust, nicht getan zu haben?"
+      },
+      {
+        "frage": "Welcher Moment hat dir gezeigt, wie stark du wirklich bist?"
+      },
+      {
+        "frage": "Was ist deine größte Herausforderung gerade?"
+      },
+      {
+        "frage": "Wann hast du zuletzt deine Meinung geändert – und warum?"
+      }
     ],
     "pflicht": [
-      { "text": "Sag laut, was du normalerweise für dich behältst – ohne Filter." },
-      { "text": "Ruf jemanden an und gestehe etwas, das du bisher verheimlicht hast." },
-      { "text": "Lies laut eine Nachricht vor, die du nie abschicken wolltest." },
-      { "text": "Mach einen klaren Satz darüber, was deine größte Grenze ist." },
-      { "text": "Zeige deine ehrlichste Emotion für 30 Sekunden, ohne sie zu verbergen." },
-      { "text": "Mach eine Minute lang eine Pose, die deine Stärke zeigt." },
-      { "text": "Schreibe einen Satz auf, der deine größte Schwäche beschreibt – und lies ihn vor." },
-      { "text": "Tanze 30 Sekunden lang so, als würde dich niemand sehen." },
-      { "text": "Lass dich von jemandem aus der Runde eine mutige Frage stellen und beantworte sie ehrlich." },
-      { "text": "Sprich für 1 Minute darüber, was du an dir selbst mutig findest." },
-      { "text": "Lies einen persönlichen Brief vor, den du selbst geschrieben hast (oder improvisiere)." },
-      { "text": "Steh auf und sag laut, was du an dir selbst am meisten magst – und warum." },
-      { "text": "Mach eine Minute lang ein ernster Gesichtsausdruck, der deine inneren Kämpfe zeigt." },
-      { "text": "Zeige eine Fähigkeit, die du gerne vor anderen versteckst." },
-      { "text": "Nenne eine Grenze, die du im Leben für dich gezogen hast – und warum." },
-      { "text": "Mach eine mutige Aussage, die du normalerweise nie sagen würdest." },
-      { "text": "Erzähle eine Geschichte, in der du dich richtig überwinden musstest." },
-      { "text": "Lies eine Nachricht vor, die dich verletzt hat – und sag, wie du dich dabei gefühlt hast." },
-      { "text": "Ruf eine Person an und sag ihr, was du ihr schon lange sagen wolltest." },
-      { "text": "Zeige einen Gegenstand, der für dich Mut bedeutet, und erkläre warum." },
-      { "text": "Mach 10 Liegestütze (oder eine andere kleine körperliche Herausforderung)." },
-      { "text": "Sag laut, wovor du dich am meisten fürchtest – und warum." },
-      { "text": "Schreib auf, was du loslassen möchtest – und zeig es der Gruppe." },
-      { "text": "Sag eine mutige Sache über eine andere Person in der Runde – ehrlich und respektvoll." },
-      { "text": "Lies einen Satz vor, der dich motiviert – und erkläre warum." },
-      { "text": "Steh auf und mache einen mutigen Gang durch den Raum." },
-      { "text": "Beschreibe eine Situation, in der du dich selbst überrascht hast." },
-      { "text": "Zeige deine ehrlichste Emotion für 1 Minute ohne Worte." },
-      { "text": "Mach eine Minute lang einen Kampfgeist-Schrei (leise, wenn dir das lieber ist)." },
-      { "text": "Erzähle, wann du das letzte Mal deine Meinung geändert hast – und warum." },
-      { "text": "Ruf eine Person an und sage ihr, warum sie dir wichtig ist." },
-      { "text": "Lies eine Nachricht vor, die du sonst nie mit anderen teilst." },
-      { "text": "Zeige, wie du mit einem Rückschlag umgehst – indem du eine kleine Übung machst (z.B. aufstehen und hinsetzen)." },
-      { "text": "Sag laut, was du an dir selbst verbessern möchtest – ohne dich zu kritisieren." },
-      { "text": "Erzähl von einem Moment, in dem du richtig stolz auf dich warst." },
-      { "text": "Mach eine Minute lang einen Gesichtsausdruck, der Mut ausdrückt." },
-      { "text": "Zeige, wie du deine Grenzen in einer schwierigen Situation verteidigst." },
-      { "text": "Lies einen Satz vor, der dich an deine Stärken erinnert." },
-      { "text": "Sag, was du als nächstes mutig ausprobieren möchtest." },
-      { "text": "Zeig der Gruppe, wie du mit Stress umgehst – z.B. mit einer Atemübung." }
+      {
+        "text": "Sag laut, was du normalerweise für dich behältst – ohne Filter."
+      },
+      {
+        "text": "Ruf jemanden an und gestehe etwas, das du bisher verheimlicht hast."
+      },
+      {
+        "text": "Lies laut eine Nachricht vor, die du nie abschicken wolltest."
+      },
+      {
+        "text": "Mach einen klaren Satz darüber, was deine größte Grenze ist."
+      },
+      {
+        "text": "Zeige deine ehrlichste Emotion für 30 Sekunden, ohne sie zu verbergen."
+      },
+      {
+        "text": "Mach eine Minute lang eine Pose, die deine Stärke zeigt."
+      },
+      {
+        "text": "Schreibe einen Satz auf, der deine größte Schwäche beschreibt – und lies ihn vor."
+      },
+      {
+        "text": "Tanze 30 Sekunden lang so, als würde dich niemand sehen."
+      },
+      {
+        "text": "Lass dich von jemandem aus der Runde eine mutige Frage stellen und beantworte sie ehrlich."
+      },
+      {
+        "text": "Sprich für 1 Minute darüber, was du an dir selbst mutig findest."
+      },
+      {
+        "text": "Lies einen persönlichen Brief vor, den du selbst geschrieben hast (oder improvisiere)."
+      },
+      {
+        "text": "Steh auf und sag laut, was du an dir selbst am meisten magst – und warum."
+      },
+      {
+        "text": "Mach eine Minute lang ein ernster Gesichtsausdruck, der deine inneren Kämpfe zeigt."
+      },
+      {
+        "text": "Zeige eine Fähigkeit, die du gerne vor anderen versteckst."
+      },
+      {
+        "text": "Nenne eine Grenze, die du im Leben für dich gezogen hast – und warum."
+      },
+      {
+        "text": "Mach eine mutige Aussage, die du normalerweise nie sagen würdest."
+      },
+      {
+        "text": "Erzähle eine Geschichte, in der du dich richtig überwinden musstest."
+      },
+      {
+        "text": "Lies eine Nachricht vor, die dich verletzt hat – und sag, wie du dich dabei gefühlt hast."
+      },
+      {
+        "text": "Ruf eine Person an und sag ihr, was du ihr schon lange sagen wolltest."
+      },
+      {
+        "text": "Zeige einen Gegenstand, der für dich Mut bedeutet, und erkläre warum."
+      },
+      {
+        "text": "Mach 10 Liegestütze (oder eine andere kleine körperliche Herausforderung)."
+      },
+      {
+        "text": "Sag laut, wovor du dich am meisten fürchtest – und warum."
+      },
+      {
+        "text": "Schreib auf, was du loslassen möchtest – und zeig es der Gruppe."
+      },
+      {
+        "text": "Sag eine mutige Sache über eine andere Person in der Runde – ehrlich und respektvoll."
+      },
+      {
+        "text": "Lies einen Satz vor, der dich motiviert – und erkläre warum."
+      },
+      {
+        "text": "Steh auf und mache einen mutigen Gang durch den Raum."
+      },
+      {
+        "text": "Beschreibe eine Situation, in der du dich selbst überrascht hast."
+      },
+      {
+        "text": "Zeige deine ehrlichste Emotion für 1 Minute ohne Worte."
+      },
+      {
+        "text": "Mach eine Minute lang einen Kampfgeist-Schrei (leise, wenn dir das lieber ist)."
+      },
+      {
+        "text": "Erzähle, wann du das letzte Mal deine Meinung geändert hast – und warum."
+      },
+      {
+        "text": "Ruf eine Person an und sage ihr, warum sie dir wichtig ist."
+      },
+      {
+        "text": "Lies eine Nachricht vor, die du sonst nie mit anderen teilst."
+      },
+      {
+        "text": "Zeige, wie du mit einem Rückschlag umgehst – indem du eine kleine Übung machst (z.B. aufstehen und hinsetzen)."
+      },
+      {
+        "text": "Sag laut, was du an dir selbst verbessern möchtest – ohne dich zu kritisieren."
+      },
+      {
+        "text": "Erzähl von einem Moment, in dem du richtig stolz auf dich warst."
+      },
+      {
+        "text": "Mach eine Minute lang einen Gesichtsausdruck, der Mut ausdrückt."
+      },
+      {
+        "text": "Zeige, wie du deine Grenzen in einer schwierigen Situation verteidigst."
+      },
+      {
+        "text": "Lies einen Satz vor, der dich an deine Stärken erinnert."
+      },
+      {
+        "text": "Sag, was du als nächstes mutig ausprobieren möchtest."
+      },
+      {
+        "text": "Zeig der Gruppe, wie du mit Stress umgehst – z.B. mit einer Atemübung."
+      }
     ]
   },
-
-
-  
-
-"taboo": {
-  "label": " 🚫 Tabuzone",
+  "taboo": {
+    "label": " 🚫 Tabuzone",
     "wahrheit": [
-      { "frage": "Wie lang ist dein Penis im steifen Zustand? Schätz notfalls." },
-      { "frage": "Worauf achtest du bei deinem eigenen Körper zuerst, wenn du nackt bist?" },
-      { "frage": "Wie oft schaust du dir deinen Penis im Spiegel an?" },
-      { "frage": "Was ist das Ungewöhnlichste, das du je bei der Selbstbefriedigung ausprobiert hast?" },
-      { "frage": "Hast du dich schon mal mit jemandem über Selbstbefriedigung ausgetauscht?" },
-      { "frage": "Was denkst du wirklich über Penisvergleiche unter Jungs?" },
-      { "frage": "Hast du dich schon mal mit jemandem nackt gesehen oder verglichen?" },
-      { "frage": "Wie oft masturbierst du in der Woche – ehrlich jetzt?" },
-      { "frage": "Was war dein bisher peinlichstes sexuelles Erlebnis (auch wenn es nur Fantasie war)?" },
-      { "frage": "Hast du schon mal beim Masturbieren an jemanden gedacht, der im Raum ist oder war?" },
-      { "frage": "Was denkst du über Intimrasur bei dir selbst?" },
-      { "frage": "Was war dein letzter richtiger sexueller Gedanke?" },
-      { "frage": "Wurdest du schon mal dabei erwischt, wie du es dir selbst gemacht hast?" },
-      { "frage": "Was ist deine Lieblingsstellung in der Theorie – auch wenn du noch keine Erfahrung hast?" },
-      { "frage": "Was ist dir an deinem Penis unangenehm – wenn überhaupt?" },
-      { "frage": "Wen aus diesem Raum würdest du am ehesten nackt sehen wollen (nur rein optisch)?" },
-      { "frage": "Was war der verstörendste Suchbegriff, den du je bei Pornos eingegeben hast?" },
-      { "frage": "Hast du schon mal im Unterricht/einer öffentlichen Situation daran gedacht, es dir zu machen?" },
-      { "frage": "Hast du schon mal vor dem Schlafengehen gewartet, bis alle weg sind, um es dir zu machen?" },
-      { "frage": "Was war das längste, das du ohne Masturbation ausgehalten hast?" },
-      { "frage": "Gibt es eine Fantasie, die dir unangenehm ist, aber die dich trotzdem anmacht?" },
-      { "frage": "Hast du schon mal probiert, mit etwas anderem als der Hand zu masturbieren?" },
-      { "frage": "Wann war das letzte Mal, dass du richtig scharf warst – ohne Pornos?" },
-      { "frage": "Würdest du dich trauen, in einer Gruppe nackt zu sein, wenn es alle wären?" },
-      { "frage": "Findest du, dass Masturbation ein Tabuthema ist oder normal?" },
-      { "frage": "Was war das Lustigste, das dir je beim Thema Sex oder Selbstbefriedigung passiert ist?" },
-      { "frage": "Hast du schon mal extra laut gestöhnt, obwohl niemand da war?" },
-      { "frage": "Wie neugierig bist du, was die Körper der anderen hier angeht – ehrlich?" },
-      { "frage": "Was ist eine Sache, die dich sofort scharf macht, ohne dass du erklären kannst warum?" },
-      { "frage": "Glaubst du, dass dein Penis über oder unter dem Durchschnitt ist?" },
-      { "frage": "Würdest du ihn gern mal zeigen, wenn du 100 % anonym wärst?" },
-      { "frage": "Gibt es eine Sache, die du gern mal ausprobieren würdest – aber dich nicht traust?" },
-      { "frage": "Was war das jüngste Alter, in dem du angefangen hast zu masturbieren?" },
-      { "frage": "Hast du schon mal danach gegoogelt, ob deine Technik „normal“ ist?" },
-      { "frage": "Würdest du dich trauen, jemandem zu zeigen, wie du es dir machst?" },
-      { "frage": "Hast du schon mal jemanden aus Versehen sexuell angesehen?" },
-      { "frage": "Was wäre dir unangenehmer: Nackt gesehen zu werden oder beim Masturbieren erwischt zu werden?" },
-      { "frage": "Gibt es einen Begriff rund um Sex, den du lange nicht verstanden hast?" },
-      { "frage": "Wie sehr interessiert dich, wie die anderen hier aussehen – untenrum?" },
-      { "frage": "Was war der größte Irrtum, den du mal über Sex hattest?" },
-      { "frage": "Wie viel weißt du über die Körper der anderen – und wie neugierig bist du darauf?" },
-      { "frage": "Was würdest du am liebsten an dir verändern – intim gesehen?" },
-      { "frage": "Hast du schon mal extra in Boxershorts geguckt, ob sich was bewegt?" },
-      { "frage": "Was ist dein geheimer Fetisch oder ein Ding, das dich übertrieben triggert?" },
-      { "frage": "Was denkst du über Sextoys – auch für Männer?" },
-      { "frage": "Hast du schon mal darüber nachgedacht, ob du gut im Bett wärst?" },
-      { "frage": "Wenn du jetzt mit jemandem schlafen könntest – wer wäre es (Promi oder real)?" },
-      { "frage": "Wie wichtig ist dir, wie dein Penis im Vergleich zu anderen aussieht?" },
-      { "frage": "Hast du dich schon mal gefragt, wie du aussiehst, wenn du kommst?" },
-      { "frage": "Was wäre dir lieber: kleiner Penis und viel Können oder großer Penis und null Plan?" },
-      { "frage": "Hast du schon mal deine Penisgröße mit jemandem verglichen?" },
-      { "frage": "Wie oft masturbierst du ungefähr pro Woche?" },
-      { "frage": "Hast du schon mal beim Masturbieren an jemanden gedacht, der im Raum sitzt?" },
-      { "frage": "Was ist das Ungewöhnlichste, das dich schon mal erregt hat?" },
-      { "frage": "Was war der komischste Ort, an dem du je masturbiert hast?" },
-      { "frage": "Hast du schon mal vor anderen Leuten (z.B. in der Schule) ungewollt eine Erektion bekommen?" },
-      { "frage": "Was denkst du ehrlich über Intimbehaarung bei dir selbst?" },
-      { "frage": "Wie stehst du zu Nacktbildern – schon mal verschickt oder bekommen?" },
-      { "frage": "Was ist das Peinlichste, was dir im Zusammenhang mit deinem Körper je passiert ist?" },
-      { "frage": "Würdest du dich trauen, dich in einer Sauna nackt zu zeigen?" },
-      { "frage": "Hast du mal versucht, deine Erektion mit etwas zu verstecken? Was?" },
-      { "frage": "Was war dein erster Gedanke, als du deinen Penis das erste Mal genau betrachtet hast?" },
-      { "frage": "Hast du dir schon mal vorgestellt, wie jemand anderes nackt aussieht?" },
-      { "frage": "Was ist das Heftigste, das du allein ausprobiert hast?" },
-      { "frage": "Würdest du in einem Film mitspielen, in dem du nackt zu sehen bist (wenn du dafür Geld bekommst)?" },
-      { "frage": "Was war die letzte Sache, bei der du erregt warst?" },
-      { "frage": "Wenn du dir deine Wunschgröße aussuchen könntest – kleiner, größer oder genau richtig?" },
-      { "frage": "Wie offen redest du mit deinen Freunden über Selbstbefriedigung?" },
-      { "frage": "Hast du mal „versehentlich“ bei jemandem was gesehen, was du nicht solltest?" },
-      { "frage": "Hast du mal deinen Vater nackt gesehen?" },
-      { "frage": "Hast du mal ein Familienmitglied nackt gesehen?" },
-      { "frage": "Wenn du eine intime Frage stellen dürftest und alle müssten ehrlich antworten – welche würdest du stellen?" },
-      { "frage": "Hast du dich mal heimlich nackt im Spiegel betrachtet?" },
-      { "frage": "Wie wichtig findest du Größe – ehrlich jetzt?" },
-      { "frage": "Wärst du bereit, einem Kumpel bei der Selbstbefriedigung zuzusehen, wenn er es wirklich will?" },
-      { "frage": "Wärst du bereit, einem Kumpel bei der Selbstbefriedigung zuzusehen, wenn er es wirklich will?" },
-      { "frage": "Was denkst du über gegenseitige Selbstbefriedigung unter Freunden – rein hypothetisch?" },
-      { "frage": "Würdest du mit deinen Freunden in die Sauna gehen – nackt?" },
-      { "frage": "Hast du mal aus Neugier was ausprobiert, das dir hinterher peinlich war?" },
-      { "frage": "Wie genau kennst du deinen eigenen Körper?" },
-      { "frage": "Was denkst du, denken andere über deine Masturbationsgewohnheiten?" },
-      { "frage": "Was wäre dir peinlicher: Jemand liest deine Gedanken beim Masturbieren oder sieht dich dabei?" },
-      { "frage": "Wenn du ein Körperteil „verschönern“ müsstest – welches wäre es?" },
-      { "frage": "Wie offen wärst du, intime Dinge in einem anonymen Forum zu erzählen?" },
-      { "frage": "Würdest du mehr über solche Themen sprechen, wenn du 100 % sicher anonym wärst?" },
-      { "frage": "Hast du dich schon mal in einer Umkleide für deinen Körper geschämt?" },
-      { "frage": "Hast du ein Ritual oder festen Ablauf beim Masturbieren?" },
-      { "frage": "Was ist das Peinlichste, was du im Internet gesucht hast (im intimen Bereich)?" }
-],
-  
-    "pflicht": [
-      { "text": "Sag laut, was du normalerweise für dich behältst – ohne Filter." },
-      { "text": "Ruf jemanden an und gestehe etwas, das du bisher verheimlicht hast." },
-      { "text": "Lies laut eine Nachricht vor, die du nie abschicken wolltest." },
-      { "text": "Mach einen klaren Satz darüber, was deine größte Grenze ist." },
-      { "text": "Zeige deine ehrlichste Emotion für 30 Sekunden, ohne sie zu verbergen." },
-      { "text": "Mach eine Minute lang eine Pose, die deine Stärke zeigt." },
-      { "text": "Schreibe einen Satz auf, der deine größte Schwäche beschreibt – und lies ihn vor." },
-      { "text": "Tanze 30 Sekunden lang so, als würde dich niemand sehen." },
-      { "text": "Lass dich von jemandem aus der Runde eine mutige Frage stellen und beantworte sie ehrlich." },
-      { "text": "Sprich für 1 Minute darüber, was du an dir selbst mutig findest." },
-      { "text": "Lies einen persönlichen Brief vor, den du selbst geschrieben hast (oder improvisiere)." },
-      { "text": "Steh auf und sag laut, was du an dir selbst am meisten magst – und warum." },
-      { "text": "Mach eine Minute lang ein ernster Gesichtsausdruck, der deine inneren Kämpfe zeigt." },
-      { "text": "Zeige eine Fähigkeit, die du gerne vor anderen versteckst." },
-      { "text": "Nenne eine Grenze, die du im Leben für dich gezogen hast – und warum." },
-      { "text": "Mach eine mutige Aussage, die du normalerweise nie sagen würdest." },
-      { "text": "Erzähle eine Geschichte, in der du dich richtig überwinden musstest." },
-      { "text": "Lies eine Nachricht vor, die dich verletzt hat – und sag, wie du dich dabei gefühlt hast." },
-      { "text": "Ruf eine Person an und sag ihr, was du ihr schon lange sagen wolltest." },
-      { "text": "Zeige einen Gegenstand, der für dich Mut bedeutet, und erkläre warum." },
-      { "text": "Mach 10 Liegestütze (oder eine andere kleine körperliche Herausforderung)." },
-      { "text": "Sag laut, wovor du dich am meisten fürchtest – und warum." },
-      { "text": "Schreib auf, was du loslassen möchtest – und zeig es der Gruppe." },
-      { "text": "Sag eine mutige Sache über eine andere Person in der Runde – ehrlich und respektvoll." },
-      { "text": "Lies einen Satz vor, der dich motiviert – und erkläre warum." },
-      { "text": "Steh auf und mache einen mutigen Gang durch den Raum." },
-      { "text": "Beschreibe eine Situation, in der du dich selbst überrascht hast." },
-      { "text": "Zeige deine ehrlichste Emotion für 1 Minute ohne Worte." },
-      { "text": "Mach eine Minute lang einen Kampfgeist-Schrei (leise, wenn dir das lieber ist)." },
-      { "text": "Erzähle, wann du das letzte Mal deine Meinung geändert hast – und warum." },
-      { "text": "Ruf eine Person an und sage ihr, warum sie dir wichtig ist." },
-      { "text": "Lies eine Nachricht vor, die du sonst nie mit anderen teilst." },
-      { "text": "Zeige, wie du mit einem Rückschlag umgehst – indem du eine kleine Übung machst (z.B. aufstehen und hinsetzen)." },
-      { "text": "Sag laut, was du an dir selbst verbessern möchtest – ohne dich zu kritisieren." },
-      { "text": "Erzähl von einem Moment, in dem du richtig stolz auf dich warst." },
-      { "text": "Mach eine Minute lang einen Gesichtsausdruck, der Mut ausdrückt." },
-      { "text": "Zeige, wie du deine Grenzen in einer schwierigen Situation verteidigst." },
-      { "text": "Lies einen Satz vor, der dich an deine Stärken erinnert." },
-      { "text": "Sag, was du als nächstes mutig ausprobieren möchtest." },
-      { "text": "Zeig der Gruppe, wie du mit Stress umgehst – z.B. mit einer Atemübung." }
+      {
+        "frage": "Wie lang ist dein Penis im steifen Zustand? Schätz notfalls."
+      },
+      {
+        "frage": "Worauf achtest du bei deinem eigenen Körper zuerst, wenn du nackt bist?"
+      },
+      {
+        "frage": "Wie oft schaust du dir deinen Penis im Spiegel an?"
+      },
+      {
+        "frage": "Was ist das Ungewöhnlichste, das du je bei der Selbstbefriedigung ausprobiert hast?"
+      },
+      {
+        "frage": "Hast du dich schon mal mit jemandem über Selbstbefriedigung ausgetauscht?"
+      },
+      {
+        "frage": "Was denkst du wirklich über Penisvergleiche unter Jungs?"
+      },
+      {
+        "frage": "Hast du dich schon mal mit jemandem nackt gesehen oder verglichen?"
+      },
+      {
+        "frage": "Wie oft masturbierst du in der Woche – ehrlich jetzt?"
+      },
+      {
+        "frage": "Was war dein bisher peinlichstes sexuelles Erlebnis (auch wenn es nur Fantasie war)?"
+      },
+      {
+        "frage": "Hast du schon mal beim Masturbieren an jemanden gedacht, der im Raum ist oder war?"
+      },
+      {
+        "frage": "Was denkst du über Intimrasur bei dir selbst?"
+      },
+      {
+        "frage": "Was war dein letzter richtiger sexueller Gedanke?"
+      },
+      {
+        "frage": "Wurdest du schon mal dabei erwischt, wie du es dir selbst gemacht hast?"
+      },
+      {
+        "frage": "Was ist deine Lieblingsstellung in der Theorie – auch wenn du noch keine Erfahrung hast?"
+      },
+      {
+        "frage": "Was ist dir an deinem Penis unangenehm – wenn überhaupt?"
+      },
+      {
+        "frage": "Wen aus diesem Raum würdest du am ehesten nackt sehen wollen (nur rein optisch)?"
+      },
+      {
+        "frage": "Was war der verstörendste Suchbegriff, den du je bei Pornos eingegeben hast?"
+      },
+      {
+        "frage": "Hast du schon mal im Unterricht/einer öffentlichen Situation daran gedacht, es dir zu machen?"
+      },
+      {
+        "frage": "Hast du schon mal vor dem Schlafengehen gewartet, bis alle weg sind, um es dir zu machen?"
+      },
+      {
+        "frage": "Was war das längste, das du ohne Masturbation ausgehalten hast?"
+      },
+      {
+        "frage": "Gibt es eine Fantasie, die dir unangenehm ist, aber die dich trotzdem anmacht?"
+      },
+      {
+        "frage": "Hast du schon mal probiert, mit etwas anderem als der Hand zu masturbieren?"
+      },
+      {
+        "frage": "Wann war das letzte Mal, dass du richtig scharf warst – ohne Pornos?"
+      },
+      {
+        "frage": "Würdest du dich trauen, in einer Gruppe nackt zu sein, wenn es alle wären?"
+      },
+      {
+        "frage": "Findest du, dass Masturbation ein Tabuthema ist oder normal?"
+      },
+      {
+        "frage": "Was war das Lustigste, das dir je beim Thema Sex oder Selbstbefriedigung passiert ist?"
+      },
+      {
+        "frage": "Hast du schon mal extra laut gestöhnt, obwohl niemand da war?"
+      },
+      {
+        "frage": "Wie neugierig bist du, was die Körper der anderen hier angeht – ehrlich?"
+      },
+      {
+        "frage": "Was ist eine Sache, die dich sofort scharf macht, ohne dass du erklären kannst warum?"
+      },
+      {
+        "frage": "Glaubst du, dass dein Penis über oder unter dem Durchschnitt ist?"
+      },
+      {
+        "frage": "Würdest du ihn gern mal zeigen, wenn du 100 % anonym wärst?"
+      },
+      {
+        "frage": "Gibt es eine Sache, die du gern mal ausprobieren würdest – aber dich nicht traust?"
+      },
+      {
+        "frage": "Was war das jüngste Alter, in dem du angefangen hast zu masturbieren?"
+      },
+      {
+        "frage": "Hast du schon mal danach gegoogelt, ob deine Technik „normal“ ist?"
+      },
+      {
+        "frage": "Würdest du dich trauen, jemandem zu zeigen, wie du es dir machst?"
+      },
+      {
+        "frage": "Hast du schon mal jemanden aus Versehen sexuell angesehen?"
+      },
+      {
+        "frage": "Was wäre dir unangenehmer: Nackt gesehen zu werden oder beim Masturbieren erwischt zu werden?"
+      },
+      {
+        "frage": "Gibt es einen Begriff rund um Sex, den du lange nicht verstanden hast?"
+      },
+      {
+        "frage": "Wie sehr interessiert dich, wie die anderen hier aussehen – untenrum?"
+      },
+      {
+        "frage": "Was war der größte Irrtum, den du mal über Sex hattest?"
+      },
+      {
+        "frage": "Wie viel weißt du über die Körper der anderen – und wie neugierig bist du darauf?"
+      },
+      {
+        "frage": "Was würdest du am liebsten an dir verändern – intim gesehen?"
+      },
+      {
+        "frage": "Hast du schon mal extra in Boxershorts geguckt, ob sich was bewegt?"
+      },
+      {
+        "frage": "Was ist dein geheimer Fetisch oder ein Ding, das dich übertrieben triggert?"
+      },
+      {
+        "frage": "Was denkst du über Sextoys – auch für Männer?"
+      },
+      {
+        "frage": "Hast du schon mal darüber nachgedacht, ob du gut im Bett wärst?"
+      },
+      {
+        "frage": "Wenn du jetzt mit jemandem schlafen könntest – wer wäre es (Promi oder real)?"
+      },
+      {
+        "frage": "Wie wichtig ist dir, wie dein Penis im Vergleich zu anderen aussieht?"
+      },
+      {
+        "frage": "Hast du dich schon mal gefragt, wie du aussiehst, wenn du kommst?"
+      },
+      {
+        "frage": "Was wäre dir lieber: kleiner Penis und viel Können oder großer Penis und null Plan?"
+      },
+      {
+        "frage": "Hast du schon mal deine Penisgröße mit jemandem verglichen?"
+      },
+      {
+        "frage": "Wie oft masturbierst du ungefähr pro Woche?"
+      },
+      {
+        "frage": "Hast du schon mal beim Masturbieren an jemanden gedacht, der im Raum sitzt?"
+      },
+      {
+        "frage": "Was ist das Ungewöhnlichste, das dich schon mal erregt hat?"
+      },
+      {
+        "frage": "Was war der komischste Ort, an dem du je masturbiert hast?"
+      },
+      {
+        "frage": "Hast du schon mal vor anderen Leuten (z.B. in der Schule) ungewollt eine Erektion bekommen?"
+      },
+      {
+        "frage": "Was denkst du ehrlich über Intimbehaarung bei dir selbst?"
+      },
+      {
+        "frage": "Wie stehst du zu Nacktbildern – schon mal verschickt oder bekommen?"
+      },
+      {
+        "frage": "Was ist das Peinlichste, was dir im Zusammenhang mit deinem Körper je passiert ist?"
+      },
+      {
+        "frage": "Würdest du dich trauen, dich in einer Sauna nackt zu zeigen?"
+      },
+      {
+        "frage": "Hast du mal versucht, deine Erektion mit etwas zu verstecken? Was?"
+      },
+      {
+        "frage": "Was war dein erster Gedanke, als du deinen Penis das erste Mal genau betrachtet hast?"
+      },
+      {
+        "frage": "Hast du dir schon mal vorgestellt, wie jemand anderes nackt aussieht?"
+      },
+      {
+        "frage": "Was ist das Heftigste, das du allein ausprobiert hast?"
+      },
+      {
+        "frage": "Würdest du in einem Film mitspielen, in dem du nackt zu sehen bist (wenn du dafür Geld bekommst)?"
+      },
+      {
+        "frage": "Was war die letzte Sache, bei der du erregt warst?"
+      },
+      {
+        "frage": "Wenn du dir deine Wunschgröße aussuchen könntest – kleiner, größer oder genau richtig?"
+      },
+      {
+        "frage": "Wie offen redest du mit deinen Freunden über Selbstbefriedigung?"
+      },
+      {
+        "frage": "Hast du mal „versehentlich“ bei jemandem was gesehen, was du nicht solltest?"
+      },
+      {
+        "frage": "Hast du mal deinen Vater nackt gesehen?"
+      },
+      {
+        "frage": "Hast du mal ein Familienmitglied nackt gesehen?"
+      },
+      {
+        "frage": "Wenn du eine intime Frage stellen dürftest und alle müssten ehrlich antworten – welche würdest du stellen?"
+      },
+      {
+        "frage": "Hast du dich mal heimlich nackt im Spiegel betrachtet?"
+      },
+      {
+        "frage": "Wie wichtig findest du Größe – ehrlich jetzt?"
+      },
+      {
+        "frage": "Wärst du bereit, einem Kumpel bei der Selbstbefriedigung zuzusehen, wenn er es wirklich will?"
+      },
+      {
+        "frage": "Wärst du bereit, einem Kumpel bei der Selbstbefriedigung zuzusehen, wenn er es wirklich will?"
+      },
+      {
+        "frage": "Was denkst du über gegenseitige Selbstbefriedigung unter Freunden – rein hypothetisch?"
+      },
+      {
+        "frage": "Würdest du mit deinen Freunden in die Sauna gehen – nackt?"
+      },
+      {
+        "frage": "Hast du mal aus Neugier was ausprobiert, das dir hinterher peinlich war?"
+      },
+      {
+        "frage": "Wie genau kennst du deinen eigenen Körper?"
+      },
+      {
+        "frage": "Was denkst du, denken andere über deine Masturbationsgewohnheiten?"
+      },
+      {
+        "frage": "Was wäre dir peinlicher: Jemand liest deine Gedanken beim Masturbieren oder sieht dich dabei?"
+      },
+      {
+        "frage": "Wenn du ein Körperteil „verschönern“ müsstest – welches wäre es?"
+      },
+      {
+        "frage": "Wie offen wärst du, intime Dinge in einem anonymen Forum zu erzählen?"
+      },
+      {
+        "frage": "Würdest du mehr über solche Themen sprechen, wenn du 100 % sicher anonym wärst?"
+      },
+      {
+        "frage": "Hast du dich schon mal in einer Umkleide für deinen Körper geschämt?"
+      },
+      {
+        "frage": "Hast du ein Ritual oder festen Ablauf beim Masturbieren?"
+      },
+      {
+        "frage": "Was ist das Peinlichste, was du im Internet gesucht hast (im intimen Bereich)?"
+      }
     ],
-
-
-"gruppenpflicht": [
-  { "gruppentext": "Jeder zeigt mit Daumen und Zeigefinger, wie lang er seinen Penis schätzt – gleichzeitig." },
-  { "gruppentext": "Jeder zeigt mit Daumen und Zeigefinger, wie lang er seinen Penis schätzt – gleichzeitig." },
-  { "gruppentext": "Alle sagen nacheinander: Was glauben sie, wie groß der Penis des linken Sitznachbarn ist?" },
-  { "gruppentext": "Jeder schreibt auf einen Zettel, wann er das letzte Mal masturbiert hat. Dann werden die Zettel gemischt und vorgelesen." },
-  { "gruppentext": "Alle beschreiben in einem Satz, wie sich ihr Penis nach dem Aufwachen anfühlt." },
-  { "gruppentext": "Alle sagen ehrlich, ob sie schon mal beim Wichsen erwischt wurden – und von wem." },
-  { "gruppentext": "Schätzt bei jedem in der Runde: trimmed, rasiert, wild oder 'weiß nicht'. Die Person sagt dann, was am ehesten zutrifft." },
-  { "gruppentext": "Alle sagen eine Sache, die sie beim Wichsen mal ausprobiert haben – oder sagen 'Pass'." },
-  { "gruppentext": "Alle nennen ein Emoji, das am besten ihren Penis beschreibt." },
-  { "gruppentext": "Jeder sagt einen Kosenamen, den er seinem Penis geben *könnte* – ob ernst oder ironisch." },
-  { "gruppentext": "Alle müssen sagen, ob sie lieber einen kleineren Penis mit mehr Technik oder einen größeren ohne Ahnung hätten." },
-  { "gruppentext": "Wer hatte schon mal eine Latte an einem unangenehmen Ort? Jeder, der 'Ja' sagt, nennt den Ort." },
-  { "gruppentext": "Alle sagen, was sie als Erstes machen würden, wenn sie morgen mit einem anderen Penis aufwachen würden." },
-  { "gruppentext": "Alle sagen ehrlich: Schon mal Penis mit Lineal oder anderem gemessen? Wenn ja, womit?" },
-  { "gruppentext": "Jeder nennt ein Körperteil an sich, das er ungern zeigt – außer dem Penis." },
-  { "gruppentext": "Alle schätzen: Wer aus der Runde hat am meisten Erfahrung mit seinem Körper? Danach klärt jeder auf." },
-  { "gruppentext": "Jeder sagt, was er denkt, wie oft andere aus der Runde masturbieren – danach dürfen sich die Betroffenen äußern." },
-  { "gruppentext": "Jeder denkt sich einen Werbeslogan für seinen Penis aus – und sagt ihn mit Werbestimme." },
-  { "gruppentext": "Alle sagen ehrlich: Schon mal 'Penisneid' gehabt in der Umkleide oder beim Schulsport?" },
-  { "gruppentext": "Jeder beschreibt in einem Satz, wie sein Penis sich benehmen würde, wenn er eine Persönlichkeit hätte." },
-  { "gruppentext": "Wer traut sich: Zeige mit einem Gegenstand (Flasche, Fernbedienung...) *symbolisch* die eigene Länge – alle dürfen raten, ob’s realistisch ist." },
-  { "gruppentext": "Jeder beantwortet: Wenn ihr Penis ein Soundtrack hätte – welcher Song wäre es?" },
-  { "gruppentext": "Alle sagen: Wie lange dauert ihr 'Durchschnitts-Wichsen'?" },
-  { "gruppentext": "Alle sagen ehrlich: Schon mal bei jemand anderem gedacht 'krasser Körper'?" },
-  { "gruppentext": "Jeder beantwortet: Wenn ihr Penis in einer Sitcom mitspielen würde – welcher Charakter wäre er?" },
-  { "gruppentext": "Alle sagen ehrlich: Hat jemand hier schon mal geträumt, einen Penisvergleich zu machen?" },
-  { "gruppentext": "Alle schreiben anonym eine Fantasie auf – wird gemischt und vorgelesen." },
-  { "gruppentext": "Jeder sagt: Masturbieren – morgens, abends oder beides?" },
-  { "gruppentext": "Alle müssen ehrlich antworten: Rasierst du dich untenrum? Ja / Nein / Kommt drauf an." },
-  { "gruppentext": "Alle halten Daumen hoch oder runter bei: 'Ich habe meinen Penis mal verglichen.'" },
-  { "gruppentext": "Jeder schreibt heimlich auf: 'Mein Penis ist ...' – es wird vorgelesen und geraten, wer was geschrieben hat." },
-  { "gruppentext": "Alle rücken etwas näher zusammen und sagen: Was würdet ihr NIEMALS über euren Penis erzählen?" },
-  { "gruppentext": "Jeder sagt, was er glaubt: Wer in der Runde hat den größten Penis?" },
-  { "gruppentext": "Jeder sagt spontan ein Synonym, das er privat für Penis benutzt – keine Wiederholungen!" },
-  { "gruppentext": "Alle sagen reihum, wie sie ihren ersten Porno gefunden haben – oder wie’s losging." },
-  { "gruppentext": "Jeder sagt: Hattest du schon mal Angst, dass etwas mit deinem Penis nicht stimmt?" },
-  { "gruppentext": "Alle stellen sich im Kreis auf und müssen sagen: 'Wenn mein Penis sprechen könnte, würde er ... sagen.'" },
-  { "gruppentext": "Jeder sagt ehrlich: Schon mal beim Wichsen an jemanden hier gedacht? (Kein Name nötig.)" },
-  { "gruppentext": "Alle sagen: Wenn dein Penis ein Tier wäre – welches wäre es und warum?" },
-  { "gruppentext": "Alle geben eine Schulnote für ihr bestes Stück – ehrlich." },
-  { "gruppentext": "Jeder sagt ein Tabu-Thema, über das er sonst nie redet – mindestens eines muss penisbezogen sein." },
-  { "gruppentext": "Alle legen verdeckt einen Zettel mit 'Größer als 15 cm' / 'Kleiner als 15 cm' – danach wird gemischt und gezählt." },
-  { "gruppentext": "Jeder zeigt mit einer Wasserflasche oder Dose, wie ähnlich sein Penis ist – Form, Umfang, alles." },
-  { "gruppentext": "Alle schreiben auf: 'Mein lustigstes Penis-Erlebnis' – gemischt, gezogen, vorgelesen." },
-  { "gruppentext": "Jeder sagt: Was wäre dir peinlicher – deine Pornosammlung oder ein Penisbild von dir?" }
-]
-
-}
+    "pflicht": [
+      {
+        "text": "Sag laut, was du normalerweise für dich behältst – ohne Filter."
+      },
+      {
+        "text": "Ruf jemanden an und gestehe etwas, das du bisher verheimlicht hast."
+      },
+      {
+        "text": "Lies laut eine Nachricht vor, die du nie abschicken wolltest."
+      },
+      {
+        "text": "Mach einen klaren Satz darüber, was deine größte Grenze ist."
+      },
+      {
+        "text": "Zeige deine ehrlichste Emotion für 30 Sekunden, ohne sie zu verbergen."
+      },
+      {
+        "text": "Mach eine Minute lang eine Pose, die deine Stärke zeigt."
+      },
+      {
+        "text": "Schreibe einen Satz auf, der deine größte Schwäche beschreibt – und lies ihn vor."
+      },
+      {
+        "text": "Tanze 30 Sekunden lang so, als würde dich niemand sehen."
+      },
+      {
+        "text": "Lass dich von jemandem aus der Runde eine mutige Frage stellen und beantworte sie ehrlich."
+      },
+      {
+        "text": "Sprich für 1 Minute darüber, was du an dir selbst mutig findest."
+      },
+      {
+        "text": "Lies einen persönlichen Brief vor, den du selbst geschrieben hast (oder improvisiere)."
+      },
+      {
+        "text": "Steh auf und sag laut, was du an dir selbst am meisten magst – und warum."
+      },
+      {
+        "text": "Mach eine Minute lang ein ernster Gesichtsausdruck, der deine inneren Kämpfe zeigt."
+      },
+      {
+        "text": "Zeige eine Fähigkeit, die du gerne vor anderen versteckst."
+      },
+      {
+        "text": "Nenne eine Grenze, die du im Leben für dich gezogen hast – und warum."
+      },
+      {
+        "text": "Mach eine mutige Aussage, die du normalerweise nie sagen würdest."
+      },
+      {
+        "text": "Erzähle eine Geschichte, in der du dich richtig überwinden musstest."
+      },
+      {
+        "text": "Lies eine Nachricht vor, die dich verletzt hat – und sag, wie du dich dabei gefühlt hast."
+      },
+      {
+        "text": "Ruf eine Person an und sag ihr, was du ihr schon lange sagen wolltest."
+      },
+      {
+        "text": "Zeige einen Gegenstand, der für dich Mut bedeutet, und erkläre warum."
+      },
+      {
+        "text": "Mach 10 Liegestütze (oder eine andere kleine körperliche Herausforderung)."
+      },
+      {
+        "text": "Sag laut, wovor du dich am meisten fürchtest – und warum."
+      },
+      {
+        "text": "Schreib auf, was du loslassen möchtest – und zeig es der Gruppe."
+      },
+      {
+        "text": "Sag eine mutige Sache über eine andere Person in der Runde – ehrlich und respektvoll."
+      },
+      {
+        "text": "Lies einen Satz vor, der dich motiviert – und erkläre warum."
+      },
+      {
+        "text": "Steh auf und mache einen mutigen Gang durch den Raum."
+      },
+      {
+        "text": "Beschreibe eine Situation, in der du dich selbst überrascht hast."
+      },
+      {
+        "text": "Zeige deine ehrlichste Emotion für 1 Minute ohne Worte."
+      },
+      {
+        "text": "Mach eine Minute lang einen Kampfgeist-Schrei (leise, wenn dir das lieber ist)."
+      },
+      {
+        "text": "Erzähle, wann du das letzte Mal deine Meinung geändert hast – und warum."
+      },
+      {
+        "text": "Ruf eine Person an und sage ihr, warum sie dir wichtig ist."
+      },
+      {
+        "text": "Lies eine Nachricht vor, die du sonst nie mit anderen teilst."
+      },
+      {
+        "text": "Zeige, wie du mit einem Rückschlag umgehst – indem du eine kleine Übung machst (z.B. aufstehen und hinsetzen)."
+      },
+      {
+        "text": "Sag laut, was du an dir selbst verbessern möchtest – ohne dich zu kritisieren."
+      },
+      {
+        "text": "Erzähl von einem Moment, in dem du richtig stolz auf dich warst."
+      },
+      {
+        "text": "Mach eine Minute lang einen Gesichtsausdruck, der Mut ausdrückt."
+      },
+      {
+        "text": "Zeige, wie du deine Grenzen in einer schwierigen Situation verteidigst."
+      },
+      {
+        "text": "Lies einen Satz vor, der dich an deine Stärken erinnert."
+      },
+      {
+        "text": "Sag, was du als nächstes mutig ausprobieren möchtest."
+      },
+      {
+        "text": "Zeig der Gruppe, wie du mit Stress umgehst – z.B. mit einer Atemübung."
+      }
+    ],
+    "gruppenpflicht": [
+      {
+        "gruppentext": "Jeder zeigt mit Daumen und Zeigefinger, wie lang er seinen Penis schätzt – gleichzeitig."
+      },
+      {
+        "gruppentext": "Jeder zeigt mit Daumen und Zeigefinger, wie lang er seinen Penis schätzt – gleichzeitig."
+      },
+      {
+        "gruppentext": "Alle sagen nacheinander: Was glauben sie, wie groß der Penis des linken Sitznachbarn ist?"
+      },
+      {
+        "gruppentext": "Jeder schreibt auf einen Zettel, wann er das letzte Mal masturbiert hat. Dann werden die Zettel gemischt und vorgelesen."
+      },
+      {
+        "gruppentext": "Alle beschreiben in einem Satz, wie sich ihr Penis nach dem Aufwachen anfühlt."
+      },
+      {
+        "gruppentext": "Alle sagen ehrlich, ob sie schon mal beim Wichsen erwischt wurden – und von wem."
+      },
+      {
+        "gruppentext": "Schätzt bei jedem in der Runde: trimmed, rasiert, wild oder 'weiß nicht'. Die Person sagt dann, was am ehesten zutrifft."
+      },
+      {
+        "gruppentext": "Alle sagen eine Sache, die sie beim Wichsen mal ausprobiert haben – oder sagen 'Pass'."
+      },
+      {
+        "gruppentext": "Alle nennen ein Emoji, das am besten ihren Penis beschreibt."
+      },
+      {
+        "gruppentext": "Jeder sagt einen Kosenamen, den er seinem Penis geben *könnte* – ob ernst oder ironisch."
+      },
+      {
+        "gruppentext": "Alle müssen sagen, ob sie lieber einen kleineren Penis mit mehr Technik oder einen größeren ohne Ahnung hätten."
+      },
+      {
+        "gruppentext": "Wer hatte schon mal eine Latte an einem unangenehmen Ort? Jeder, der 'Ja' sagt, nennt den Ort."
+      },
+      {
+        "gruppentext": "Alle sagen, was sie als Erstes machen würden, wenn sie morgen mit einem anderen Penis aufwachen würden."
+      },
+      {
+        "gruppentext": "Alle sagen ehrlich: Schon mal Penis mit Lineal oder anderem gemessen? Wenn ja, womit?"
+      },
+      {
+        "gruppentext": "Jeder nennt ein Körperteil an sich, das er ungern zeigt – außer dem Penis."
+      },
+      {
+        "gruppentext": "Alle schätzen: Wer aus der Runde hat am meisten Erfahrung mit seinem Körper? Danach klärt jeder auf."
+      },
+      {
+        "gruppentext": "Jeder sagt, was er denkt, wie oft andere aus der Runde masturbieren – danach dürfen sich die Betroffenen äußern."
+      },
+      {
+        "gruppentext": "Jeder denkt sich einen Werbeslogan für seinen Penis aus – und sagt ihn mit Werbestimme."
+      },
+      {
+        "gruppentext": "Alle sagen ehrlich: Schon mal 'Penisneid' gehabt in der Umkleide oder beim Schulsport?"
+      },
+      {
+        "gruppentext": "Jeder beschreibt in einem Satz, wie sein Penis sich benehmen würde, wenn er eine Persönlichkeit hätte."
+      },
+      {
+        "gruppentext": "Wer traut sich: Zeige mit einem Gegenstand (Flasche, Fernbedienung...) *symbolisch* die eigene Länge – alle dürfen raten, ob’s realistisch ist."
+      },
+      {
+        "gruppentext": "Jeder beantwortet: Wenn ihr Penis ein Soundtrack hätte – welcher Song wäre es?"
+      },
+      {
+        "gruppentext": "Alle sagen: Wie lange dauert ihr 'Durchschnitts-Wichsen'?"
+      },
+      {
+        "gruppentext": "Alle sagen ehrlich: Schon mal bei jemand anderem gedacht 'krasser Körper'?"
+      },
+      {
+        "gruppentext": "Jeder beantwortet: Wenn ihr Penis in einer Sitcom mitspielen würde – welcher Charakter wäre er?"
+      },
+      {
+        "gruppentext": "Alle sagen ehrlich: Hat jemand hier schon mal geträumt, einen Penisvergleich zu machen?"
+      },
+      {
+        "gruppentext": "Alle schreiben anonym eine Fantasie auf – wird gemischt und vorgelesen."
+      },
+      {
+        "gruppentext": "Jeder sagt: Masturbieren – morgens, abends oder beides?"
+      },
+      {
+        "gruppentext": "Alle müssen ehrlich antworten: Rasierst du dich untenrum? Ja / Nein / Kommt drauf an."
+      },
+      {
+        "gruppentext": "Alle halten Daumen hoch oder runter bei: 'Ich habe meinen Penis mal verglichen.'"
+      },
+      {
+        "gruppentext": "Jeder schreibt heimlich auf: 'Mein Penis ist ...' – es wird vorgelesen und geraten, wer was geschrieben hat."
+      },
+      {
+        "gruppentext": "Alle rücken etwas näher zusammen und sagen: Was würdet ihr NIEMALS über euren Penis erzählen?"
+      },
+      {
+        "gruppentext": "Jeder sagt, was er glaubt: Wer in der Runde hat den größten Penis?"
+      },
+      {
+        "gruppentext": "Jeder sagt spontan ein Synonym, das er privat für Penis benutzt – keine Wiederholungen!"
+      },
+      {
+        "gruppentext": "Alle sagen reihum, wie sie ihren ersten Porno gefunden haben – oder wie’s losging."
+      },
+      {
+        "gruppentext": "Jeder sagt: Hattest du schon mal Angst, dass etwas mit deinem Penis nicht stimmt?"
+      },
+      {
+        "gruppentext": "Alle stellen sich im Kreis auf und müssen sagen: 'Wenn mein Penis sprechen könnte, würde er ... sagen.'"
+      },
+      {
+        "gruppentext": "Jeder sagt ehrlich: Schon mal beim Wichsen an jemanden hier gedacht? (Kein Name nötig.)"
+      },
+      {
+        "gruppentext": "Alle sagen: Wenn dein Penis ein Tier wäre – welches wäre es und warum?"
+      },
+      {
+        "gruppentext": "Alle geben eine Schulnote für ihr bestes Stück – ehrlich."
+      },
+      {
+        "gruppentext": "Jeder sagt ein Tabu-Thema, über das er sonst nie redet – mindestens eines muss penisbezogen sein."
+      },
+      {
+        "gruppentext": "Alle legen verdeckt einen Zettel mit 'Größer als 15 cm' / 'Kleiner als 15 cm' – danach wird gemischt und gezählt."
+      },
+      {
+        "gruppentext": "Jeder zeigt mit einer Wasserflasche oder Dose, wie ähnlich sein Penis ist – Form, Umfang, alles."
+      },
+      {
+        "gruppentext": "Alle schreiben auf: 'Mein lustigstes Penis-Erlebnis' – gemischt, gezogen, vorgelesen."
+      },
+      {
+        "gruppentext": "Jeder sagt: Was wäre dir peinlicher – deine Pornosammlung oder ein Penisbild von dir?"
+      }
+    ]
+  }
 }
