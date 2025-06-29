@@ -79,6 +79,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let fragenKategorien = {};
   let aktiveKategorien = [];
+  let verwendeteFragen = { wahrheit: [], pflicht: [] };
 
   const modeSelection = document.getElementById("modeSelection");
   const questionView = document.getElementById("questionView");
@@ -97,32 +98,34 @@ document.addEventListener("DOMContentLoaded", function () {
   let istStrafaufgabeAktiv = false;
 
   function getRandomQuestion(modus) {
-  const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-  const catKey = pool[Math.floor(Math.random() * pool.length)];
-  const cat = fragenKategorien[catKey];
+    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
+    const verwendete = verwendeteFragen[modus];
+    const verfuegbareKategorien = pool.filter(k => {
+      const fragenArray = fragenKategorien[k][modus];
+      return fragenArray && fragenArray.length > 0;
+    });
+    if (verfuegbareKategorien.length === 0) return { label: "", frage: "Keine Fragen verfügbar." };
 
-  if (!cat) {
-    console.warn("Kategorie nicht gefunden:", catKey);
-    return { label: "", frage: "Keine Fragen verfügbar." };
+    let frage = null;
+    let versuche = 0;
+    while (!frage && versuche < 50) {
+      const catKey = verfuegbareKategorien[Math.floor(Math.random() * verfuegbareKategorien.length)];
+      const cat = fragenKategorien[catKey];
+      const fragenArray = cat[modus];
+      const kandidaten = fragenArray.filter(eintrag => {
+        const text = modus === "wahrheit" ? eintrag.frage : eintrag.text || eintrag.gruppentext;
+        return !verwendete.includes(text);
+      });
+      if (kandidaten.length > 0) {
+        const eintrag = kandidaten[Math.floor(Math.random() * kandidaten.length)];
+        frage = modus === "wahrheit" ? eintrag.frage : eintrag.text || eintrag.gruppentext;
+        verwendete.push(frage);
+        return { label: cat.label, frage };
+      }
+      versuche++;
+    }
+    return { label: "", frage: "Keine neue Frage mehr verfügbar." };
   }
-
-  const fragenArray = modus === "wahrheit" ? cat.wahrheit : cat.pflicht;
-  if (!fragenArray || fragenArray.length === 0) {
-    return { label: cat.label, frage: "Keine Fragen in dieser Kategorie." };
-  }
-
-  const eintrag = fragenArray[Math.floor(Math.random() * fragenArray.length)];
-  let frage = "";
-
-  if (modus === "wahrheit") {
-    frage = eintrag.frage || "Ungültiger Wahrheits-Eintrag.";
-  } else {
-    // Pflichtmodus
-    frage = eintrag.text || eintrag.gruppentext || "Ungültiger Pflicht-Eintrag.";
-  }
-
-  return { label: cat.label, frage };
-}
 
   function fadeOut(element) {
     return new Promise(resolve => {
@@ -153,15 +156,12 @@ document.addEventListener("DOMContentLoaded", function () {
     istStrafaufgabeAktiv = false;
     penaltyHeading.style.display = "none";
     penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
-
     await fadeOut(modeSelection);
-
     const { label, frage } = getRandomQuestion(modus);
     aktuelleKategorie = label;
     aktuelleFrage = frage;
     categoryLabel.textContent = label;
     questionBox.textContent = frage;
-
     await fadeIn(questionView);
   }
 
@@ -174,16 +174,15 @@ document.addEventListener("DOMContentLoaded", function () {
   async function showStrafaufgabe() {
     istStrafaufgabeAktiv = true;
     await fadeOut(questionView);
-
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
     const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
-    const randomPflicht = allPflicht[Math.floor(Math.random() * allPflicht.length)];
-
+    const kandidaten = allPflicht.filter(e => typeof e === "object");
+    const eintrag = kandidaten[Math.floor(Math.random() * kandidaten.length)];
+    const aufgabe = eintrag.text || eintrag.gruppentext || "Ungültige Strafaufgabe.";
     categoryLabel.textContent = "";
     penaltyHeading.style.display = "block";
-    questionBox.textContent = randomPflicht;
+    questionBox.textContent = aufgabe;
     penaltyBtn.style.display = "none";
-
     await fadeIn(questionView, "mystery");
   }
 
