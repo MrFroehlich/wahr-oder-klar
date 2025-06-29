@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function ladeAktiveKategorien() {
-    const auswahl = sessionStorage.getItem("wopKategorien");
+  const auswahl = localStorage.getItem("wopCategories");
     if (auswahl) {
       try {
         aktiveKategorien = JSON.parse(auswahl);
