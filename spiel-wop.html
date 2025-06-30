@@ -72,46 +72,43 @@
     .gender-toggle.visible {
       display: flex;
     }
-    .slider-container {
+    .slider-switch {
+      position: relative;
+      width: 120px;
+      height: 50px;
+      background-color: #ddd;
+      border-radius: 50px;
       display: flex;
       align-items: center;
-      gap: 1rem;
-      background: #f0f0f0;
-      border-radius: 2rem;
-      padding: 0.4rem 1rem;
+      justify-content: space-between;
+      padding: 0 10px;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     }
-    .slider-container span {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-    .slider {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100px;
-      height: 1.2rem;
-      background: #ccc;
-      border-radius: 1rem;
-      outline: none;
-      cursor: pointer;
-    }
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 1.2rem;
-      height: 1.2rem;
+    .slider-switch::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 42px;
+      height: 42px;
+      background-color: white;
       border-radius: 50%;
-      background: #333;
-      cursor: pointer;
+      transition: left 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .slider-switch.female::before {
+      left: 74px;
+    }
+    .slider-switch span {
+      z-index: 1;
+      font-size: 1.5rem;
     }
     @media (prefers-color-scheme: dark) {
-      .slider-container {
-        background: #333;
+      .slider-switch {
+        background-color: #555;
       }
-      .slider {
-        background: #666;
-      }
-      .slider::-webkit-slider-thumb {
-        background: #eee;
+      .slider-switch::before {
+        background-color: #ccc;
       }
     }
   </style>
@@ -130,9 +127,8 @@
 <main>
   <div class="container">
     <div id="genderToggle" class="gender-toggle">
-      <div class="slider-container">
+      <div id="genderSwitch" class="slider-switch">
         <span>👦</span>
-        <input type="range" min="0" max="1" step="1" id="genderSlider" class="slider">
         <span>👧</span>
       </div>
     </div>
@@ -154,12 +150,25 @@
 </main>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  let fragenKategorien = {};
-  let aktiveKategorien = [];
-  let verwendeteFragen = { wahrheit: [], pflicht: [] };
-
   const genderToggle = document.getElementById("genderToggle");
-  const genderSlider = document.getElementById("genderSlider");
+  const genderSwitch = document.getElementById("genderSwitch");
+
+  if (sessionStorage.getItem("wopGeschlecht") === "mixed") {
+    genderToggle.classList.add("visible");
+  }
+
+  function setGenderClass(gender) {
+    genderSwitch.classList.toggle("female", gender === "female");
+    sessionStorage.setItem("currentGender", gender);
+  }
+
+  genderSwitch.addEventListener("click", () => {
+    const current = sessionStorage.getItem("currentGender") || "male";
+    const next = current === "male" ? "female" : "male";
+    setGenderClass(next);
+  });
+
+  setGenderClass(sessionStorage.getItem("currentGender") || "male");
 
   const modeSelection = document.getElementById("modeSelection");
   const questionView = document.getElementById("questionView");
@@ -172,25 +181,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const penaltyBtn = document.getElementById("penaltyBtn");
   const backBtn = document.getElementById("backBtn");
 
+  let fragenKategorien = {};
+  let aktiveKategorien = [];
+  let verwendeteFragen = { wahrheit: [], pflicht: [] };
   let aktuelleKategorie = "";
   let aktuelleFrage = "";
   let aktuellerModus = "";
   let istStrafaufgabeAktiv = false;
-
-  const globalGender = sessionStorage.getItem("wopGeschlecht") || "mixed";
-  if (globalGender === "mixed") genderToggle.classList.add("visible");
-
-  function setGenderSlider(gender) {
-    sessionStorage.setItem("currentGender", gender);
-    genderSlider.value = gender === "male" ? 0 : 1;
-  }
-
-  genderSlider.addEventListener("input", () => {
-    const gender = genderSlider.value === "0" ? "male" : "female";
-    sessionStorage.setItem("currentGender", gender);
-  });
-
-  setGenderSlider(sessionStorage.getItem("currentGender") || "male");
 
   function getRandomQuestion(modus) {
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
@@ -252,6 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
     penaltyHeading.style.display = "none";
     penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
     await fadeOut(modeSelection);
+    genderToggle.classList.remove("visible");
     const { label, frage } = getRandomQuestion(modus);
     aktuelleKategorie = label;
     aktuelleFrage = frage;
@@ -264,6 +262,9 @@ document.addEventListener("DOMContentLoaded", function () {
     istStrafaufgabeAktiv = false;
     await fadeOut(questionView);
     await fadeIn(modeSelection);
+    if (sessionStorage.getItem("wopGeschlecht") === "mixed") {
+      genderToggle.classList.add("visible");
+    }
   }
 
   async function showStrafaufgabe() {
