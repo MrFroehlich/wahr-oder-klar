@@ -373,34 +373,3 @@ document.addEventListener('DOMContentLoaded', () => {
     tip.addEventListener('click', e => e.stopPropagation());
   });
 });
-
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const wopStartBtn = document.getElementById('wopStartBtn');
-  const wopCategoryOptions = document.getElementById('wopCategoryOptions');
-
-  wopStartBtn.addEventListener('click', () => {
-    // Kategorien aus den Checkboxen auslesen, falls Kategorieauswahl sichtbar
-    let selectedCategories = [];
-
-    if (wopCategoryOptions.style.display !== 'none') {
-      // Nur Checkboxen, die checked sind, sammeln
-      const checkboxes = wopCategoryOptions.querySelectorAll('input[type="checkbox"]:checked');
-      checkboxes.forEach(cb => selectedCategories.push(cb.value));
-    } else {
-      // Wenn Kategorieauswahl ausgeblendet (z.B. Gemischt-Modus), dann speichern wir "gemischt"
-      selectedCategories = ['gemischt'];
-    }
-
-    // Speichern in localStorage
-    localStorage.setItem('wopCategories', JSON.stringify(selectedCategories));
-
-    // Weiterleitung zur Spieleseite
-    window.location.href = 'spiel-wop.html';
-  });
-});
