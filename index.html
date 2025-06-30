@@ -73,6 +73,16 @@
     <span class="close-modal" id="closeWopModal">❌</span>
     <h2>Wahrheit oder Pflicht – Kategorien</h2>
 
+    <!-- NEU: Geschlechtsauswahl -->
+    <div class="gender-select">
+      <p>Für wen sollen die Aufgaben sein?</p>
+      <div class="gender-buttons">
+        <button class="gender-btn active" data-value="mixed">⚧ Gemischt</button>
+        <button class="gender-btn" data-value="male">👦 Nur Jungs</button>
+        <button class="gender-btn" data-value="female">👧 Nur Mädchen</button>
+      </div>
+    </div>
+
     <div class="mode-select">
       <button id="wopBtnMixed" class="mode-btn active">🎨 Gemischt</button>
       <button id="wopBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
@@ -112,7 +122,7 @@
     <button class="start-btn" id="wopStartBtn">Los geht’s!</button>
   </div>
 </div>
-
+  
 
 <!-- Modal "Wer würde eher...?" -->
 <div class="modal-overlay hidden" id="wdeModal">
@@ -289,6 +299,21 @@
 
 
 <script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const genderButtons = document.querySelectorAll(".gender-btn");
+  const defaultGender = sessionStorage.getItem("wopGeschlecht") || "mixed";
+
+  genderButtons.forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.value === defaultGender);
+    btn.addEventListener("click", () => {
+      genderButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      sessionStorage.setItem("wopGeschlecht", btn.dataset.value);
+    });
+  });
+});
+</script>
 
 </body>
 </html>
