@@ -72,42 +72,50 @@
     .gender-toggle.visible {
       display: flex;
     }
-    .slider-switch {
+    .gender-slider {
       position: relative;
-      width: 120px;
+      width: 160px;
       height: 50px;
-      background-color: #ddd;
-      border-radius: 50px;
+      background: linear-gradient(to right, #a2d5f2 50%, #f6a2c1 50%);
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      font-weight: bold;
+      user-select: none;
+    }
+    .gender-slider .slider-label {
+      position: absolute;
+      width: 50%;
+      height: 100%;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 10px;
-      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      justify-content: center;
+      color: white;
+      z-index: 2;
     }
-    .slider-switch::before {
-      content: '';
+    .gender-slider .slider-thumb {
       position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 42px;
-      height: 42px;
-      background-color: white;
-      border-radius: 50%;
-      transition: left 0.3s;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-    .slider-switch.female::before {
-      left: 74px;
-    }
-    .slider-switch span {
+      width: 50%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 25px;
+      transition: left 0.3s ease;
       z-index: 1;
-      font-size: 1.5rem;
+    }
+    .gender-slider.female .slider-thumb {
+      left: 50%;
     }
     @media (prefers-color-scheme: dark) {
-      .slider-switch {
-        background-color: #555;
+      .gender-slider {
+        background: linear-gradient(to right, #337799 50%, #993355 50%);
       }
-      .slider-switch::before {
+      .gender-slider .slider-label {
+        color: #eee;
+      }
+      .gender-slider .slider-thumb {
         background-color: #ccc;
       }
     }
@@ -127,9 +135,10 @@
 <main>
   <div class="container">
     <div id="genderToggle" class="gender-toggle">
-      <div id="genderSwitch" class="slider-switch">
-        <span>👦</span>
-        <span>👧</span>
+      <div id="genderSwitch" class="gender-slider">
+        <div class="slider-label">👦</div>
+        <div class="slider-label" style="left: 50%;">👧</div>
+        <div class="slider-thumb"></div>
       </div>
     </div>
     <div id="modeSelection" class="mode-selection fade-in">
@@ -149,176 +158,27 @@
   </div>
 </main>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const genderToggle = document.getElementById("genderToggle");
-  const genderSwitch = document.getElementById("genderSwitch");
+  document.addEventListener("DOMContentLoaded", function () {
+    const genderToggle = document.getElementById("genderToggle");
+    const genderSwitch = document.getElementById("genderSwitch");
 
-  if (sessionStorage.getItem("wopGeschlecht") === "mixed") {
-    genderToggle.classList.add("visible");
-  }
-
-  function setGenderClass(gender) {
-    genderSwitch.classList.toggle("female", gender === "female");
-    sessionStorage.setItem("currentGender", gender);
-  }
-
-  genderSwitch.addEventListener("click", () => {
-    const current = sessionStorage.getItem("currentGender") || "male";
-    const next = current === "male" ? "female" : "male";
-    setGenderClass(next);
-  });
-
-  setGenderClass(sessionStorage.getItem("currentGender") || "male");
-
-  const modeSelection = document.getElementById("modeSelection");
-  const questionView = document.getElementById("questionView");
-  const truthBtn = document.getElementById("truthBtn");
-  const dareBtn = document.getElementById("dareBtn");
-  const categoryLabel = document.getElementById("categoryLabel");
-  const penaltyHeading = document.getElementById("penaltyHeading");
-  const questionBox = document.getElementById("questionBox");
-  const doneBtn = document.getElementById("doneBtn");
-  const penaltyBtn = document.getElementById("penaltyBtn");
-  const backBtn = document.getElementById("backBtn");
-
-  let fragenKategorien = {};
-  let aktiveKategorien = [];
-  let verwendeteFragen = { wahrheit: [], pflicht: [] };
-  let aktuelleKategorie = "";
-  let aktuelleFrage = "";
-  let aktuellerModus = "";
-  let istStrafaufgabeAktiv = false;
-
-  function getRandomQuestion(modus) {
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const verwendete = verwendeteFragen[modus];
-    const verfuegbareKategorien = pool.filter(k => {
-      const fragenArray = fragenKategorien[k][modus];
-      return fragenArray && fragenArray.length > 0;
-    });
-    if (verfuegbareKategorien.length === 0) return { label: "", frage: "Keine Fragen verfügbar." };
-
-    let frage = null;
-    let versuche = 0;
-    while (!frage && versuche < 50) {
-      const catKey = verfuegbareKategorien[Math.floor(Math.random() * verfuegbareKategorien.length)];
-      const cat = fragenKategorien[catKey];
-      const fragenArray = cat[modus];
-      const kandidaten = fragenArray.filter(eintrag => {
-        const text = modus === "wahrheit" ? eintrag.frage : eintrag.text || eintrag.gruppentext;
-        return !verwendete.includes(text);
-      });
-      if (kandidaten.length > 0) {
-        const eintrag = kandidaten[Math.floor(Math.random() * kandidaten.length)];
-        frage = modus === "wahrheit" ? eintrag.frage : eintrag.text || eintrag.gruppentext;
-        verwendete.push(frage);
-        return { label: cat.label, frage };
-      }
-      versuche++;
-    }
-    return { label: "", frage: "Keine neue Frage mehr verfügbar." };
-  }
-
-  function fadeOut(element) {
-    return new Promise(resolve => {
-      element.classList.remove("fade-in");
-      element.classList.add("fade-out");
-      setTimeout(() => {
-        element.style.display = "none";
-        resolve();
-      }, 400);
-    });
-  }
-
-  function fadeIn(element, extraClass = "") {
-    return new Promise(resolve => {
-      element.style.display = "flex";
-      element.classList.remove("fade-out");
-      if (extraClass) {
-        element.classList.add(extraClass);
-        setTimeout(() => element.classList.remove(extraClass), 1200);
-      }
-      element.classList.add("fade-in");
-      resolve();
-    });
-  }
-
-  async function startRound(modus) {
-    aktuellerModus = modus;
-    istStrafaufgabeAktiv = false;
-    penaltyHeading.style.display = "none";
-    penaltyBtn.style.display = modus === "wahrheit" ? "inline-block" : "none";
-    await fadeOut(modeSelection);
-    genderToggle.classList.remove("visible");
-    const { label, frage } = getRandomQuestion(modus);
-    aktuelleKategorie = label;
-    aktuelleFrage = frage;
-    categoryLabel.textContent = label;
-    questionBox.textContent = frage;
-    await fadeIn(questionView);
-  }
-
-  async function nextRound() {
-    istStrafaufgabeAktiv = false;
-    await fadeOut(questionView);
-    await fadeIn(modeSelection);
     if (sessionStorage.getItem("wopGeschlecht") === "mixed") {
       genderToggle.classList.add("visible");
     }
-  }
 
-  async function showStrafaufgabe() {
-    istStrafaufgabeAktiv = true;
-    await fadeOut(questionView);
-    categoryLabel.textContent = "Strafaufgabe";
-    const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
-    const allPflicht = pool.flatMap(k => fragenKategorien[k].pflicht);
-    const kandidaten = allPflicht.filter(e => typeof e === "object");
-    const eintrag = kandidaten[Math.floor(Math.random() * kandidaten.length)];
-    const aufgabe = eintrag.text || eintrag.gruppentext || "Ungültige Strafaufgabe.";
-    categoryLabel.textContent = "";
-    penaltyHeading.style.display = "block";
-    questionBox.textContent = aufgabe;
-    penaltyBtn.style.display = "none";
-    await fadeIn(questionView, "mystery");
-  }
-
-  function ladeAktiveKategorien() {
-    const auswahl = localStorage.getItem("wopCategories");
-    if (auswahl) {
-      try {
-        aktiveKategorien = JSON.parse(auswahl);
-      } catch {
-        aktiveKategorien = [];
-      }
-    } else {
-      aktiveKategorien = [];
+    function setGenderClass(gender) {
+      genderSwitch.classList.toggle("female", gender === "female");
+      sessionStorage.setItem("currentGender", gender);
     }
-  }
 
-  function setupEventListeners() {
-    truthBtn.addEventListener("click", () => startRound("wahrheit"));
-    dareBtn.addEventListener("click", () => startRound("pflicht"));
-    doneBtn.addEventListener("click", nextRound);
-    penaltyBtn.addEventListener("click", showStrafaufgabe);
-    backBtn.addEventListener("click", () => {
-      window.location.href = "index.html";
+    genderSwitch.addEventListener("click", () => {
+      const current = sessionStorage.getItem("currentGender") || "male";
+      const next = current === "male" ? "female" : "male";
+      setGenderClass(next);
     });
-  }
 
-  fetch("JSON/wop.json")
-    .then(response => response.json())
-    .then(data => {
-      fragenKategorien = data;
-      ladeAktiveKategorien();
-      modeSelection.style.display = "flex";
-      setupEventListeners();
-    })
-    .catch(err => {
-      console.error("Fehler beim Laden der JSON:", err);
-      alert("Fehler beim Laden der Fragen. Bitte Seite neu laden.");
-    });
-});
+    setGenderClass(sessionStorage.getItem("currentGender") || "male");
+  });
 </script>
 </body>
 </html>
