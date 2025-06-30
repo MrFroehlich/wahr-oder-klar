@@ -255,6 +255,43 @@ footer {
 
 
 
+.gender-select {
+  margin: 1.5rem 0 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+}
+
+.gender-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.gender-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid #bbb;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #222;
+}
+
+.gender-btn:hover {
+  background-color: #eee;
+  color: #000;
+}
+
+.gender-btn.active {
+  background-color: #0077ff;
+  color: #fff;
+  border-color: #0077ff;
+}
+
 
 
 
@@ -514,5 +551,27 @@ footer {
 .close-modal:hover {
   transform: scale(1.2);
   color: crimson;
+}
+
+
+
+.gender-select {
+  color: #ddd;
+}
+
+.gender-btn {
+  color: #ddd;
+  border-color: #555;
+}
+
+.gender-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.gender-btn.active {
+  background-color: #4ea3ff;
+  color: #000;
+  border-color: #4ea3ff;
 }
 }
