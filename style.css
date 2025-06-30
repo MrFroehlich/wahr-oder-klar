@@ -321,42 +321,6 @@ footer {
     background: #eee;
     color: #111;
   }
-}
-
-/* ===== Mobile Info-Icon + Tooltip ===== */
-.info-icon {
-  font-size: 0.9rem;
-  margin-left: auto;
-  cursor: pointer;
-  padding: 0 0.5rem;
-  user-select: none;
-}
-
-.mobile-tooltip {
-  position: absolute;
-  top: 120%;
-  left: 0;
-  background: #fefefe;
-  color: #222;
-  padding: 0.6rem 0.9rem;
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
-  width: max-content;
-  max-width: 280px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-
-/* Dark Mode Anpassung */
-@media (prefers-color-scheme: dark) {
-  .mobile-tooltip {
-    background: #333;
-    color: #eee;
-  }
-}
-
-.hidden {
-  display: none;
 
 
 /* HEADER */
@@ -419,6 +383,43 @@ footer {
   margin-bottom: 25px;
 }
 }
+
+
+/* ===== Mobile Info-Icon + Tooltip ===== */
+.info-icon {
+  font-size: 0.9rem;
+  margin-left: auto;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  user-select: none;
+}
+
+.mobile-tooltip {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background: #fefefe;
+  color: #222;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  width: max-content;
+  max-width: 280px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Dark Mode Anpassung */
+@media (prefers-color-scheme: dark) {
+  .mobile-tooltip {
+    background: #333;
+    color: #eee;
+  }
+}
+
+.hidden {
+  display: none;
+
 
 
 
