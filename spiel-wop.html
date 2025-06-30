@@ -64,6 +64,56 @@
       text-align: center;
       margin-bottom: 0.5rem;
     }
+    .gender-toggle {
+      display: none;
+      justify-content: center;
+      margin: 1rem auto;
+    }
+    .gender-toggle.visible {
+      display: flex;
+    }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #f0f0f0;
+      border-radius: 2rem;
+      padding: 0.4rem 1rem;
+    }
+    .slider-container span {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100px;
+      height: 1.2rem;
+      background: #ccc;
+      border-radius: 1rem;
+      outline: none;
+      cursor: pointer;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      background: #333;
+      cursor: pointer;
+    }
+    @media (prefers-color-scheme: dark) {
+      .slider-container {
+        background: #333;
+      }
+      .slider {
+        background: #666;
+      }
+      .slider::-webkit-slider-thumb {
+        background: #eee;
+      }
+    }
   </style>
 </head>
 <body>
@@ -79,6 +129,13 @@
 </header>
 <main>
   <div class="container">
+    <div id="genderToggle" class="gender-toggle">
+      <div class="slider-container">
+        <span>👦</span>
+        <input type="range" min="0" max="1" step="1" id="genderSlider" class="slider">
+        <span>👧</span>
+      </div>
+    </div>
     <div id="modeSelection" class="mode-selection fade-in">
       <button id="truthBtn">Wahrheit</button>
       <button id="dareBtn">Pflicht</button>
@@ -101,6 +158,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let aktiveKategorien = [];
   let verwendeteFragen = { wahrheit: [], pflicht: [] };
 
+  const genderToggle = document.getElementById("genderToggle");
+  const genderSlider = document.getElementById("genderSlider");
+
   const modeSelection = document.getElementById("modeSelection");
   const questionView = document.getElementById("questionView");
   const truthBtn = document.getElementById("truthBtn");
@@ -116,6 +176,21 @@ document.addEventListener("DOMContentLoaded", function () {
   let aktuelleFrage = "";
   let aktuellerModus = "";
   let istStrafaufgabeAktiv = false;
+
+  const globalGender = sessionStorage.getItem("wopGeschlecht") || "mixed";
+  if (globalGender === "mixed") genderToggle.classList.add("visible");
+
+  function setGenderSlider(gender) {
+    sessionStorage.setItem("currentGender", gender);
+    genderSlider.value = gender === "male" ? 0 : 1;
+  }
+
+  genderSlider.addEventListener("input", () => {
+    const gender = genderSlider.value === "0" ? "male" : "female";
+    sessionStorage.setItem("currentGender", gender);
+  });
+
+  setGenderSlider(sessionStorage.getItem("currentGender") || "male");
 
   function getRandomQuestion(modus) {
     const pool = aktiveKategorien.length > 0 ? aktiveKategorien : Object.keys(fragenKategorien);
@@ -207,9 +282,8 @@ document.addEventListener("DOMContentLoaded", function () {
     await fadeIn(questionView, "mystery");
   }
 
-
   function ladeAktiveKategorien() {
-  const auswahl = localStorage.getItem("wopCategories");
+    const auswahl = localStorage.getItem("wopCategories");
     if (auswahl) {
       try {
         aktiveKategorien = JSON.parse(auswahl);
