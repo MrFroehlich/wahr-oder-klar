@@ -158,27 +158,50 @@
   </div>
 </main>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const genderToggle = document.getElementById("genderToggle");
+document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const gender = urlParams.get("gender") || "mixed";
+  const mode = urlParams.get("mode") || "mixed";
+  const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
+
+  // Umschalter für Geschlecht nur anzeigen, wenn gemischt
+  const genderToggle = document.getElementById("genderToggle");
+
+  if (gender === "mixed") {
+    genderToggle.classList.add("visible");
+
+    // Setze initialen Gender-Slider nach Session oder Standard "male"
+    const storedGender = sessionStorage.getItem("currentGender") || "male";
+    setGenderClass(storedGender);
+  } else {
+    genderToggle.classList.remove("visible");
+    // Wenn nicht gemischt, Gender ist fix gesetzt
+    sessionStorage.setItem("currentGender", gender);
+  }
+
+  // Hilfsfunktion, um Slider zu setzen
+  function setGenderClass(gender) {
     const genderSwitch = document.getElementById("genderSwitch");
+    genderSwitch.classList.toggle("female", gender === "female");
+    sessionStorage.setItem("currentGender", gender);
+  }
 
-    if (sessionStorage.getItem("wopGeschlecht") === "mixed") {
-      genderToggle.classList.add("visible");
-    }
-
-    function setGenderClass(gender) {
-      genderSwitch.classList.toggle("female", gender === "female");
-      sessionStorage.setItem("currentGender", gender);
-    }
-
+  // Klick-Event für Umschalter (nur wenn sichtbar)
+  const genderSwitch = document.getElementById("genderSwitch");
+  if (genderToggle.classList.contains("visible")) {
     genderSwitch.addEventListener("click", () => {
       const current = sessionStorage.getItem("currentGender") || "male";
       const next = current === "male" ? "female" : "male";
       setGenderClass(next);
     });
+  }
 
-    setGenderClass(sessionStorage.getItem("currentGender") || "male");
-  });
+  // TODO: Hier weiter: Fragen nach Kategorien und aktuellem Gender filtern & laden
+
+  console.log("Gewähltes Geschlecht:", gender);
+  console.log("Modus:", mode);
+  console.log("Kategorien:", categories);
+});
 </script>
 </body>
 </html>
