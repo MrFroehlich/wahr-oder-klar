@@ -300,17 +300,42 @@
 
 <script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const genderButtons = document.querySelectorAll(".gender-btn");
-  const defaultGender = sessionStorage.getItem("wopGeschlecht") || "mixed";
+  const startBtn = document.getElementById("wopStartBtn");
 
-  genderButtons.forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.value === defaultGender);
-    btn.addEventListener("click", () => {
-      genderButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      sessionStorage.setItem("wopGeschlecht", btn.dataset.value);
-    });
+  startBtn.addEventListener("click", () => {
+    // Aktives Geschlecht auslesen
+    const activeGenderBtn = Array.from(genderButtons).find(btn => btn.classList.contains("active"));
+    const gender = activeGenderBtn ? activeGenderBtn.dataset.value : "mixed";
+
+    // Modus: Gemischt oder Kategorien wählen?
+    const customModeActive = document.getElementById("wopBtnCustom").classList.contains("active");
+
+    // Kategorien auslesen
+    let selectedCategories = [];
+
+    if (customModeActive) {
+      const checkedBoxes = document.querySelectorAll("#wopCategoryOptions input[type='checkbox']:checked");
+      selectedCategories = Array.from(checkedBoxes).map(cb => cb.value);
+
+      if (selectedCategories.length === 0) {
+        alert("Bitte wähle mindestens eine Kategorie aus!");
+        return; // Weiterleitung abbrechen
+      }
+    } else {
+      // Wenn Gemischt, kannst du hier Default-Kategorien setzen oder einfach leer lassen
+      selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"]; // Beispiel
+    }
+
+    // URL-Parameter vorbereiten
+    const params = new URLSearchParams();
+    params.set("gender", gender);
+    params.set("mode", customModeActive ? "custom" : "mixed");
+    params.set("categories", selectedCategories.join(","));
+
+    // Weiterleitung
+    window.location.href = `spiel-wop.html?${params.toString()}`;
   });
 });
 </script>
