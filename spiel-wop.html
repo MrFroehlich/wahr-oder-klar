@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style-spiel.css" />
   <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
   <style>
+    /* --- Styles wie von dir, ergänzt für Gender-Slider mit Text --- */
     .fade-in {
       opacity: 1;
       transform: translateY(0);
@@ -64,126 +65,199 @@
       text-align: center;
       margin-bottom: 0.5rem;
     }
-.gender-toggle {
-  display: none;
-  justify-content: center;
-  margin: 1rem auto;
-  user-select: none;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-.gender-toggle.visible {
-  display: flex;
-}
+    .gender-toggle {
+      display: none;
+      justify-content: center;
+      margin: 1rem auto;
+      user-select: none;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .gender-toggle.visible {
+      display: flex;
+    }
+    .gender-slider {
+      position: relative;
+      width: 180px;
+      height: 70px;
+      background: linear-gradient(90deg, #4A90E2 50%, #E94A84 50%);
+      border-radius: 28px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      padding: 10px 10px 6px;
+      font-size: 1.7rem;
+      letter-spacing: 1px;
+      transition: background 0.4s ease;
+      user-select: none;
+    }
+    .gender-slider .slider-label {
+      flex: 1;
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .gender-slider .slider-label .emoji {
+      font-size: 2.2rem;
+      line-height: 1;
+      user-select: none;
+    }
+    .gender-slider .slider-label .label-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: 0.03em;
+      user-select: none;
+    }
+    .gender-slider .slider-thumb {
+      position: absolute;
+      top: 10px;
+      left: 4px;
+      width: 82px;
+      height: 50px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+    .gender-slider.female .slider-thumb {
+      left: calc(100% - 4px - 82px);
+    }
+    .gender-slider:not(.female) .slider-label:first-child .emoji,
+    .gender-slider:not(.female) .slider-label:first-child .label-text {
+      color: #4A90E2;
+    }
+    .gender-slider:not(.female) .slider-label:last-child .emoji,
+    .gender-slider:not(.female) .slider-label:last-child .label-text {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .gender-slider.female .slider-label:first-child .emoji,
+    .gender-slider.female .slider-label:first-child .label-text {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .gender-slider.female .slider-label:last-child .emoji,
+    .gender-slider.female .slider-label:last-child .label-text {
+      color: #E94A84;
+    }
+    .gender-slider:hover .slider-thumb {
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+    @media (prefers-color-scheme: dark) {
+      .gender-slider {
+        background: linear-gradient(90deg, #1E3A6F 50%, #7A2B49 50%);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      }
+      .gender-slider .slider-thumb {
+        background-color: #ddd;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+      }
+      .gender-slider:not(.female) .slider-label:first-child .emoji,
+      .gender-slider:not(.female) .slider-label:first-child .label-text {
+        color: #7FB7FF;
+      }
+      .gender-slider:not(.female) .slider-label:last-child .emoji,
+      .gender-slider:not(.female) .slider-label:last-child .label-text {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .gender-slider.female .slider-label:first-child .emoji,
+      .gender-slider.female .slider-label:first-child .label-text {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .gender-slider.female .slider-label:last-child .emoji,
+      .gender-slider.female .slider-label:last-child .label-text {
+        color: #F788AC;
+      }
+    }
 
-.gender-slider {
-  position: relative;
-  width: 180px;
-  height: 70px; /* mehr Höhe für Text */
-  background: linear-gradient(90deg, #4A90E2 50%, #E94A84 50%);
-  border-radius: 28px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  font-weight: 700;
-  color: white;
-  display: flex;
-  padding: 10px 10px 6px;
-  font-size: 1.7rem;
-  letter-spacing: 1px;
-  transition: background 0.4s ease;
-  user-select: none;
-}
+    /* Weitere Styles */
 
-/* Container Emoji + Text */
-.gender-slider .slider-label {
-  flex: 1;
-  text-align: center;
-  z-index: 2;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-}
-
-.gender-slider .slider-label .emoji {
-  font-size: 2.2rem;
-  line-height: 1;
-  user-select: none;
-}
-
-.gender-slider .slider-label .label-text {
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: 0.03em;
-  user-select: none;
-}
-
-.gender-slider .slider-thumb {
-  position: absolute;
-  top: 10px;
-  left: 4px;
-  width: 82px;
-  height: 50px;
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
-}
-
-.gender-slider.female .slider-thumb {
-  left: calc(100% - 4px - 82px);
-}
-
-.gender-slider:not(.female) .slider-label:first-child .emoji,
-.gender-slider:not(.female) .slider-label:first-child .label-text {
-  color: #4A90E2; /* Blau aktiv */
-}
-.gender-slider:not(.female) .slider-label:last-child .emoji,
-.gender-slider:not(.female) .slider-label:last-child .label-text {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.gender-slider.female .slider-label:first-child .emoji,
-.gender-slider.female .slider-label:first-child .label-text {
-  color: rgba(255, 255, 255, 0.6);
-}
-.gender-slider.female .slider-label:last-child .emoji,
-.gender-slider.female .slider-label:last-child .label-text {
-  color: #E94A84; /* Pink aktiv */
-}
-
-.gender-slider:hover .slider-thumb {
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
-}
-
-@media (prefers-color-scheme: dark) {
-  .gender-slider {
-    background: linear-gradient(90deg, #1E3A6F 50%, #7A2B49 50%);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
-  }
-  .gender-slider .slider-thumb {
-    background-color: #ddd;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-  }
-  .gender-slider:not(.female) .slider-label:first-child .emoji,
-  .gender-slider:not(.female) .slider-label:first-child .label-text {
-    color: #7FB7FF;
-  }
-  .gender-slider:not(.female) .slider-label:last-child .emoji,
-  .gender-slider:not(.female) .slider-label:last-child .label-text {
-    color: rgba(255, 255, 255, 0.5);
-  }
-  .gender-slider.female .slider-label:first-child .emoji,
-  .gender-slider.female .slider-label:first-child .label-text {
-    color: rgba(255, 255, 255, 0.5);
-  }
-  .gender-slider.female .slider-label:last-child .emoji,
-  .gender-slider.female .slider-label:last-child .label-text {
-    color: #F788AC;
-  }
-}
+    .container {
+      max-width: 600px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mode-selection button {
+      font-size: 1.5rem;
+      margin: 0 1rem;
+      padding: 0.8rem 2rem;
+      cursor: pointer;
+      border-radius: 10px;
+      border: 2px solid #555;
+      background: #f0f0f0;
+      transition: background 0.3s ease;
+    }
+    .mode-selection button:hover {
+      background: #ddd;
+    }
+    .question-view {
+      margin-top: 1.5rem;
+      width: 100%;
+      max-width: 550px;
+      min-height: 180px;
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+    .category-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .question-box {
+      font-size: 1.25rem;
+      text-align: center;
+      min-height: 90px;
+      margin-bottom: 1rem;
+      user-select: text;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    #doneBtn {
+      font-size: 1.1rem;
+      padding: 0.5rem 1.8rem;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background-color: #4A90E2;
+      color: white;
+      transition: background-color 0.25s ease;
+    }
+    #doneBtn:hover {
+      background-color: #357ABD;
+    }
+    #backBtn {
+      margin-top: 2rem;
+      font-size: 1rem;
+      padding: 0.4rem 1.3rem;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 2px solid #555;
+      background: #fff;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    #backBtn:hover {
+      background: #eee;
+    }
   </style>
 </head>
 <body>
@@ -200,22 +274,24 @@
 <main>
   <div class="container">
     <div id="genderToggle" class="gender-toggle">
-  <div id="genderSwitch" class="gender-slider" role="switch" aria-checked="false" tabindex="0">
-    <div class="slider-label">
-      <div class="emoji">👦</div>
-      <div class="label-text">Junge</div>
+      <div id="genderSwitch" class="gender-slider" role="switch" aria-checked="false" tabindex="0">
+        <div class="slider-label">
+          <div class="emoji">👦</div>
+          <div class="label-text">Junge</div>
+        </div>
+        <div class="slider-label" style="left: 50%;">
+          <div class="emoji">👧</div>
+          <div class="label-text">Mädchen</div>
+        </div>
+        <div class="slider-thumb"></div>
+      </div>
     </div>
-    <div class="slider-label" style="left: 50%;">
-      <div class="emoji">👧</div>
-      <div class="label-text">Mädchen</div>
-    </div>
-    <div class="slider-thumb"></div>
-  </div>
-  </div>
+
     <div id="modeSelection" class="mode-selection fade-in">
       <button id="truthBtn">Wahrheit</button>
       <button id="dareBtn">Pflicht</button>
     </div>
+
     <div id="questionView" class="question-view fade-out" style="display:none;">
       <div class="category-label" id="categoryLabel"></div>
       <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
@@ -225,53 +301,217 @@
         <button id="penaltyBtn" class="action-btn strafaufgabe">Strafaufgabe</button>
       </div>
     </div>
+
     <button id="backBtn" class="back-button">Zurück zur Startseite</button>
   </div>
 </main>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  // --- Parameter und Elemente ---
   const urlParams = new URLSearchParams(window.location.search);
-  const gender = urlParams.get("gender") || "mixed";
-  const mode = urlParams.get("mode") || "mixed";
-  const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
+  const genderParam = urlParams.get("gender") || "mixed"; // male, female, mixed
+  const modeParam = urlParams.get("mode") || "mixed"; // truth, dare, mixed
+  const categoriesParam = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
 
-  // Umschalter für Geschlecht nur anzeigen, wenn gemischt
   const genderToggle = document.getElementById("genderToggle");
+  const genderSwitch = document.getElementById("genderSwitch");
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const questionBox = document.getElementById("questionBox");
+  const penaltyHeading = document.getElementById("penaltyHeading");
+  const doneBtn = document.getElementById("doneBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
+  const backBtn = document.getElementById("backBtn");
 
-  if (gender === "mixed") {
+  // --- Beispiel-Daten (kannst du später durch JSON laden) ---
+  const questionsData = {
+    funny: {
+      label: "Lustig",
+      wahrheit: [
+        { frage: "Wann hast du das letzte Mal richtig laut gelacht?" , gender: "neutral" },
+        { frage: "Was war dein lustigstes Missgeschick?" , gender: "neutral" },
+      ],
+      pflicht: [
+        { text: "Mache eine Grimasse und halte sie 10 Sekunden." , gender: "neutral" },
+        { text: "Erzähle einen Witz, der jeden zum Lachen bringt." , gender: "neutral" },
+      ]
+    },
+    daring: {
+      label: "Mutig",
+      wahrheit: [
+        { frage: "Wann hast du das letzte Mal etwas gewagt, was du eigentlich nicht wolltest?" , gender: "neutral" },
+        { frage: "Was ist deine größte Angst?" , gender: "neutral" },
+      ],
+      pflicht: [
+        { text: "Springe einmal auf und runter." , gender: "neutral" },
+        { text: "Schreibe eine kurze Nachricht an jemanden, der dich nervt." , gender: "neutral" },
+      ]
+    },
+    taboo: {
+      label: "Tabuzone",
+      wahrheit: [
+        { frage: "Was ist dein geheimster Wunsch?" , gender: "male" },
+        { frage: "Wann hast du zuletzt eine Liebeserklärung gemacht?" , gender: "female" },
+        { frage: "Was war das verrückteste, was du heimlich gemacht hast?" , gender: "neutral" }
+      ],
+      pflicht: [
+        { text: "Flüstere jemandem ein geheimes Kompliment zu." , gender: "neutral" },
+        { text: "Schicke eine peinliche Nachricht an deinen Crush." , gender: "female" },
+        { text: "Trinke einen Schluck Wasser mit geschlossenen Augen." , gender: "male" }
+      ]
+    }
+  };
+
+  // --- Status ---
+  let currentGender = "male";
+  let currentMode = "truth"; // Wahrheit oder Pflicht
+  let currentCategory = null;
+  let currentQuestion = null;
+  let isPenalty = false;
+
+  // --- Initial Setup ---
+
+  // Sichtbarkeit GenderToggle regeln
+  if (genderParam === "mixed") {
     genderToggle.classList.add("visible");
-
-    // Setze initialen Gender-Slider nach Session oder Standard "male"
-    const storedGender = sessionStorage.getItem("currentGender") || "male";
-    setGenderClass(storedGender);
+    currentGender = sessionStorage.getItem("currentGender") || "male";
   } else {
     genderToggle.classList.remove("visible");
-    // Wenn nicht gemischt, Gender ist fix gesetzt
-    sessionStorage.setItem("currentGender", gender);
+    currentGender = genderParam;
+    sessionStorage.setItem("currentGender", currentGender);
   }
+  setGenderClass(currentGender);
 
-  // Hilfsfunktion, um Slider zu setzen
+  // Hilfsfunktion GenderSlider setzen
   function setGenderClass(gender) {
-    const genderSwitch = document.getElementById("genderSwitch");
     genderSwitch.classList.toggle("female", gender === "female");
     sessionStorage.setItem("currentGender", gender);
   }
 
-  // Klick-Event für Umschalter (nur wenn sichtbar)
-  const genderSwitch = document.getElementById("genderSwitch");
+  // Event GenderSwitch Click
   if (genderToggle.classList.contains("visible")) {
     genderSwitch.addEventListener("click", () => {
-      const current = sessionStorage.getItem("currentGender") || "male";
-      const next = current === "male" ? "female" : "male";
-      setGenderClass(next);
+      currentGender = currentGender === "male" ? "female" : "male";
+      setGenderClass(currentGender);
     });
   }
 
-  // TODO: Hier weiter: Fragen nach Kategorien und aktuellem Gender filtern & laden
+  // Modus-Voreinstellung
+  currentMode = modeParam === "truth" || modeParam === "dare" ? modeParam : "mixed";
 
-  console.log("Gewähltes Geschlecht:", gender);
-  console.log("Modus:", mode);
-  console.log("Kategorien:", categories);
+  // Frage-Tasten
+  const truthBtn = document.getElementById("truthBtn");
+  const dareBtn = document.getElementById("dareBtn");
+
+  // Event Wahrheit oder Pflicht wählen
+  truthBtn.addEventListener("click", () => {
+    currentMode = "truth";
+    loadQuestion();
+    toggleView();
+  });
+  dareBtn.addEventListener("click", () => {
+    currentMode = "dare";
+    loadQuestion();
+    toggleView();
+  });
+
+  // Frage laden - filter nach Kategorie & Gender
+  function loadQuestion() {
+    isPenalty = false;
+    penaltyHeading.style.display = "none";
+
+    // Filter Kategorien - falls keine Auswahl: alle Kategorien
+    let availableCategories = categoriesParam.length > 0 ? categoriesParam : Object.keys(questionsData);
+
+    // Filter nach Kategorie, Modus und Gender
+    // Gender in Frage / Pflicht als "male", "female" oder "neutral"
+    let filteredQuestions = [];
+
+    for (const catKey of availableCategories) {
+      const catData = questionsData[catKey];
+      if (!catData) continue;
+
+      const questionsArray = currentMode === "truth" ? catData.wahrheit : catData.pflicht;
+
+      const filtered = questionsArray.filter(q => {
+        // Wenn gender neutral oder match currentGender, dann erlauben
+        return !q.gender || q.gender === "neutral" || q.gender === currentGender;
+      }).map(q => ({
+        ...q,
+        category: catData.label
+      }));
+
+      filteredQuestions.push(...filtered);
+    }
+
+    if (filteredQuestions.length === 0) {
+      questionBox.textContent = "Keine passenden Fragen gefunden.";
+      currentQuestion = null;
+      return;
+    }
+
+    // Zufällige Frage wählen
+    const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
+    currentQuestion = filteredQuestions[randomIndex];
+
+    // Frage anzeigen
+    categoryLabel.textContent = currentQuestion.category;
+    questionBox.textContent = currentMode === "truth" ? currentQuestion.frage : currentQuestion.text;
+  }
+
+  // Umschalten zwischen Modus-Auswahl und Frage-Ansicht
+  function toggleView() {
+    if (modeSelection.classList.contains("fade-in")) {
+      modeSelection.classList.remove("fade-in");
+      modeSelection.classList.add("fade-out");
+      setTimeout(() => {
+        modeSelection.style.display = "none";
+        questionView.style.display = "flex";
+        questionView.classList.remove("fade-out");
+        questionView.classList.add("fade-in");
+      }, 400);
+    } else {
+      questionView.classList.remove("fade-in");
+      questionView.classList.add("fade-out");
+      setTimeout(() => {
+        questionView.style.display = "none";
+        modeSelection.style.display = "flex";
+        modeSelection.classList.remove("fade-out");
+        modeSelection.classList.add("fade-in");
+        penaltyHeading.style.display = "none";
+        isPenalty = false;
+        currentQuestion = null;
+      }, 400);
+    }
+  }
+
+  // Button "Erledigt / Nächste Frage"
+  doneBtn.addEventListener("click", () => {
+    loadQuestion();
+  });
+
+  // Button "Strafaufgabe"
+  penaltyBtn.addEventListener("click", () => {
+    if (!currentQuestion) return;
+    isPenalty = true;
+    penaltyHeading.style.display = "block";
+    // Text ändern je nach Pflicht oder Wahrheit
+    questionBox.textContent = currentMode === "truth"
+      ? "Erledige jetzt die Strafaufgabe!"
+      : "Hier kommt deine Strafaufgabe!";
+  });
+
+  // Button "Zurück zur Startseite" reloadet aktuell die Seite
+  backBtn.addEventListener("click", () => {
+    window.location.href = "/"; // Oder eine echte Startseite, anpassen wie gewünscht
+  });
+
+  console.log("Gewähltes Geschlecht:", currentGender);
+  console.log("Modus:", currentMode);
+  console.log("Kategorien:", categoriesParam);
+
 });
 </script>
 </body>
