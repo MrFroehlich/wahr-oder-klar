@@ -540,13 +540,10 @@
 
     // Strafaufgabe anzeigen (zur Demo: einfach rotes Label & Text ändern)
     function showPenalty() {
-    penaltyHeading.style.display = "block";
-    questionBox.textContent = "Das ist die Strafaufgabe! 🔥";
-    questionBox.classList.remove("mystery"); // evtl. alte Klasse entfernen
-    void questionBox.offsetWidth; // reflow zur sicheren Neuauslösung
-    questionBox.classList.add("mystery");
-    doneBtn.textContent = "Zurück zur Auswahl";
-    penaltyBtn.style.display = "none";
+      penaltyHeading.style.display = "block";
+      questionBox.textContent = "Das ist die Strafaufgabe! 🔥";
+      doneBtn.textContent = "Zurück zur Auswahl";
+      penaltyBtn.style.display = "none";
     }
 
     // Button-Events
