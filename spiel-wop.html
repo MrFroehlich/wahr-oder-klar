@@ -64,61 +64,126 @@
       text-align: center;
       margin-bottom: 0.5rem;
     }
-    .gender-toggle {
-      display: none;
-      justify-content: center;
-      margin: 1rem auto;
-    }
-    .gender-toggle.visible {
-      display: flex;
-    }
-    .gender-slider {
-      position: relative;
-      width: 160px;
-      height: 50px;
-      background: linear-gradient(to right, #a2d5f2 50%, #f6a2c1 50%);
-      border-radius: 25px;
-      overflow: hidden;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      font-weight: bold;
-      user-select: none;
-    }
-    .gender-slider .slider-label {
-      position: absolute;
-      width: 50%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      z-index: 2;
-    }
-    .gender-slider .slider-thumb {
-      position: absolute;
-      width: 50%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      background-color: rgba(255, 255, 255, 0.85);
-      border-radius: 25px;
-      transition: left 0.3s ease;
-      z-index: 1;
-    }
-    .gender-slider.female .slider-thumb {
-      left: 50%;
-    }
-    @media (prefers-color-scheme: dark) {
-      .gender-slider {
-        background: linear-gradient(to right, #337799 50%, #993355 50%);
-      }
-      .gender-slider .slider-label {
-        color: #eee;
-      }
-      .gender-slider .slider-thumb {
-        background-color: #ccc;
-      }
-    }
+.gender-toggle {
+  display: none;
+  justify-content: center;
+  margin: 1rem auto;
+  user-select: none;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.gender-toggle.visible {
+  display: flex;
+}
+
+.gender-slider {
+  position: relative;
+  width: 180px;
+  height: 70px; /* mehr Höhe für Text */
+  background: linear-gradient(90deg, #4A90E2 50%, #E94A84 50%);
+  border-radius: 28px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  padding: 10px 10px 6px;
+  font-size: 1.7rem;
+  letter-spacing: 1px;
+  transition: background 0.4s ease;
+  user-select: none;
+}
+
+/* Container Emoji + Text */
+.gender-slider .slider-label {
+  flex: 1;
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.gender-slider .slider-label .emoji {
+  font-size: 2.2rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.gender-slider .slider-label .label-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  user-select: none;
+}
+
+.gender-slider .slider-thumb {
+  position: absolute;
+  top: 10px;
+  left: 4px;
+  width: 82px;
+  height: 50px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.gender-slider.female .slider-thumb {
+  left: calc(100% - 4px - 82px);
+}
+
+.gender-slider:not(.female) .slider-label:first-child .emoji,
+.gender-slider:not(.female) .slider-label:first-child .label-text {
+  color: #4A90E2; /* Blau aktiv */
+}
+.gender-slider:not(.female) .slider-label:last-child .emoji,
+.gender-slider:not(.female) .slider-label:last-child .label-text {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.gender-slider.female .slider-label:first-child .emoji,
+.gender-slider.female .slider-label:first-child .label-text {
+  color: rgba(255, 255, 255, 0.6);
+}
+.gender-slider.female .slider-label:last-child .emoji,
+.gender-slider.female .slider-label:last-child .label-text {
+  color: #E94A84; /* Pink aktiv */
+}
+
+.gender-slider:hover .slider-thumb {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  .gender-slider {
+    background: linear-gradient(90deg, #1E3A6F 50%, #7A2B49 50%);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  }
+  .gender-slider .slider-thumb {
+    background-color: #ddd;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+  .gender-slider:not(.female) .slider-label:first-child .emoji,
+  .gender-slider:not(.female) .slider-label:first-child .label-text {
+    color: #7FB7FF;
+  }
+  .gender-slider:not(.female) .slider-label:last-child .emoji,
+  .gender-slider:not(.female) .slider-label:last-child .label-text {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .gender-slider.female .slider-label:first-child .emoji,
+  .gender-slider.female .slider-label:first-child .label-text {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .gender-slider.female .slider-label:last-child .emoji,
+  .gender-slider.female .slider-label:last-child .label-text {
+    color: #F788AC;
+  }
+}
   </style>
 </head>
 <body>
@@ -135,12 +200,18 @@
 <main>
   <div class="container">
     <div id="genderToggle" class="gender-toggle">
-      <div id="genderSwitch" class="gender-slider">
-        <div class="slider-label">👦</div>
-        <div class="slider-label" style="left: 50%;">👧</div>
-        <div class="slider-thumb"></div>
-      </div>
+  <div id="genderSwitch" class="gender-slider" role="switch" aria-checked="false" tabindex="0">
+    <div class="slider-label">
+      <div class="emoji">👦</div>
+      <div class="label-text">Junge</div>
     </div>
+    <div class="slider-label" style="left: 50%;">
+      <div class="emoji">👧</div>
+      <div class="label-text">Mädchen</div>
+    </div>
+    <div class="slider-thumb"></div>
+  </div>
+  </div>
     <div id="modeSelection" class="mode-selection fade-in">
       <button id="truthBtn">Wahrheit</button>
       <button id="dareBtn">Pflicht</button>
