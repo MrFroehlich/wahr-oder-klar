@@ -5,33 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wahrheit oder Pflicht – Spiel</title>
   <link rel="stylesheet" href="style-spiel.css" />
-  <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" href="bilder/favicon-96x96.png" type="image/png" sizes="96x96" />
   <style>
     :root {
-  --slider-bg-left: #7cc6fe;
-  --slider-bg-right: #f4a7c1;
-  --slider-thumb: rgba(255, 255, 255, 0.85);
-  --slider-label: #fff;
+      --slider-bg-left: #a2d5f2;
+      --slider-bg-right: #f6a2c1;
+      --slider-thumb: rgba(255, 255, 255, 0.85);
+      --slider-label: #ffffff;
 
-  --btn-bg: #346bc2;
-  --btn-bg-hover: #2959a8;
-  --btn-text: #fff;
-  --penalty-color: #c0392b;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --slider-bg-left: #356890;
-    --slider-bg-right: #8e4a6c;
-    --slider-thumb: #bbb;
-    --slider-label: #eee;
+      --btn-bg: #346bc2;
+      --btn-bg-hover: #2959a3;
+      --btn-text: #ffffff;
+      --penalty-color: #e74c3c;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --slider-bg-left: #337799;
+        --slider-bg-right: #993355;
+        --slider-thumb: #ccc;
+        --slider-label: #eee;
 
-    --btn-bg: #2d4c7f;
-    --btn-bg-hover: #3a5a99;
-    --btn-text: #fff;
-    --penalty-color: #e74c3c;
-  }
-}
-      .fade-in {
+        --btn-bg: #234;
+        --btn-bg-hover: #345;
+        --btn-text: #fff;
+        --penalty-color: #ff6b5c;
+      }
+    }
+
+    /* ==================== GENERIC ELEMENTS ==================== */
+    .fade-in {
       opacity: 1;
       transform: translateY(0);
       transition: opacity 0.4s ease, transform 0.4s ease;
@@ -44,6 +46,7 @@
       pointer-events: none;
       user-select: none;
     }
+
     .mystery {
       animation: mysteryFade 0.6s ease forwards;
     }
@@ -64,35 +67,12 @@
         filter: blur(0);
       }
     }
-    .action-btn.strafaufgabe {
-      background-color: transparent;
-      color: #555;
-      font-size: 0.9rem;
-      padding: 0.4rem 1rem;
-      border-radius: 0.4rem;
-      border: 1.5px solid #aaa;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      align-self: center;
-      max-width: 150px;
-    }
-    .action-btn.strafaufgabe:hover {
-      background-color: #eee;
-      color: #222;
-      border-color: #888;
-    }
-    .straf-label {
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      font-weight: bold;
-      color: red;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-    /* GENDER TOGGLE */
+
+    /* ==================== GENDER SLIDER ==================== */
     .gender-toggle {
-      display: none; /* default hidden */
+      display: none;
       justify-content: center;
-      width: 100%;
+      margin: 1.3rem 0 1.5rem;
     }
     .gender-toggle.visible {
       display: flex;
@@ -100,25 +80,22 @@
     .gender-slider {
       position: relative;
       width: 180px;
-      height: 60px; /* deutlich höher */
+      height: 60px;
       border-radius: 30px;
       background: linear-gradient(to right, var(--slider-bg-left) 50%, var(--slider-bg-right) 50%);
-      box-shadow: 0 0 8px rgba(0,0,0,0.15);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
       cursor: pointer;
       user-select: none;
-      font-weight: 700;
-      font-size: 2.2rem;
+      font-weight: bold;
+      font-size: 2rem;
       color: var(--slider-label);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 1.3rem;
-      box-sizing: border-box;
     }
     .gender-slider .slider-label {
-      pointer-events: none;
-      user-select: none;
-      user-drag: none;
+      z-index: 2;
     }
     .gender-slider .slider-thumb {
       position: absolute;
@@ -126,409 +103,266 @@
       height: 100%;
       top: 0;
       left: 0;
-      border-radius: 30px;
       background-color: var(--slider-thumb);
+      border-radius: 30px;
       transition: left 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
       z-index: 1;
     }
     .gender-slider.female .slider-thumb {
       left: 50%;
     }
 
-    /* MODE SELECTION (Wahrheit/Pflicht) */
-    .mode-selection {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-    }
-    .mode-selection button {
-      flex: 1;
-      padding: 1rem 0;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--btn-text);
-      background-color: var(--btn-bg);
+    /* ==================== BUTTONS ==================== */
+    button {
       border: none;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 10px rgba(52, 107, 194, 0.3);
+      font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.25s ease;
       user-select: none;
-      text-align: center;
+    }
+    .mode-selection button,
+    #doneBtn,
+    .back-button {
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+      padding: 1rem 0;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
     }
     .mode-selection button:hover,
-    .mode-selection button:focus {
+    #doneBtn:hover,
+    .back-button:hover {
       background-color: var(--btn-bg-hover);
-      outline: none;
+    }
+    .action-btn.strafaufgabe,
+    #penaltyBtn {
+      background-color: transparent;
+      color: var(--penalty-color);
+      border: 2.5px solid var(--penalty-color);
+      padding: 0.7rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    #penaltyBtn:hover {
+      background-color: var(--penalty-color);
+      color: white;
     }
 
-    /* QUESTION VIEW */
+    /* ==================== QUESTION VIEW ==================== */
     .question-view {
-      width: 100%;
-      max-width: 100%;
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
-      gap: 1.3rem;
-      text-align: center;
-      min-height: 180px;
-    }
-    .category-label {
-      font-weight: 700;
-      font-size: 1rem;
-      opacity: 0.65;
-      user-select: none;
-    }
-    .straf-label {
-      font-size: clamp(1.7rem, 5vw, 3rem);
-      font-weight: 700;
-      color: var(--penalty-color);
-      margin: 0.3rem 0;
-      user-select: none;
+      gap: 1.2rem;
     }
     .question-box {
-      font-size: 1.25rem;
-      font-weight: 600;
-      padding: 1rem 1.5rem;
-      border-radius: 0.6rem;
-      background-color: var(--btn-bg);
+      padding: 1rem 1.4rem;
+      background: var(--btn-bg);
       color: var(--btn-text);
-      box-shadow: 0 4px 15px rgba(52, 107, 194, 0.4);
-      user-select: none;
-      min-height: 110px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      border-radius: 0.6rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-align: center;
+      min-height: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      line-height: 1.3;
+    }
+    .category-label {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      font-weight: bold;
+    }
+    .straf-label {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: var(--penalty-color);
     }
 
-    /* ACTION BUTTONS unter der Frage */
     .action-buttons {
-      width: 100%;
       display: flex;
       justify-content: center;
       gap: 1rem;
-    }
-    .action-buttons button {
-      flex: 1;
-      padding: 0.75rem 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: 0.5rem;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-    }
-    #doneBtn {
-      background-color: #27ae60;
-      color: white;
-    }
-    #doneBtn:hover,
-    #doneBtn:focus {
-      background-color: #1e8449;
-      outline: none;
-    }
-    #penaltyBtn {
-      background-color: transparent;
-      border: 2.5px solid var(--penalty-color);
-      color: var(--penalty-color);
-      font-weight: 700;
-      max-width: 160px;
-    }
-    #penaltyBtn:hover,
-    #penaltyBtn:focus {
-      background-color: var(--penalty-color);
-      color: white;
-      outline: none;
+      width: 100%;
+      max-width: 500px;
     }
 
-    /* ZURÜCK BUTTON */
+    /* ==================== LAYOUT ==================== */
+    header {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    main {
+      padding: 1rem;
+      max-width: 700px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mode-selection {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
     .back-button {
+      margin-top: 2rem;
       width: 100%;
       max-width: 480px;
-      padding: 1rem 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border-radius: 0.5rem;
-      border: none;
-      background-color: #999;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      transition: background-color 0.25s ease;
-    }
-    .back-button:hover,
-    .back-button:focus {
-      background-color: #777;
-      outline: none;
-    }
-
-    /* Fade Animations */
-    .fade-in {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: auto;
-    }
-    .fade-out {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: none;
-      user-select: none;
-      height: 0;
-      overflow: hidden;
     }
   </style>
 </head>
 <body>
 <header>
-  <div class="header-inner" style="display:flex; align-items:center; gap:1rem; padding: 0 1.5rem;">
-    <div class="logo">🔮</div>
-    <div class="title-group">
-      <h1 style="margin:0; font-weight:700; font-size:1.8rem;">Wahrheit oder Pflicht</h1>
-      <p class="subtitle" style="margin:0; opacity:0.85;">Wähle Wahrheit oder Pflicht und lass dich überraschen!</p>
-    </div>
-    <div class="icon-right" style="margin-left:auto; font-size:1.6rem;">🤐</div>
-  </div>
+  <div class="logo">🔮</div>
+  <h1 style="font-size: 1.6rem;">Wahrheit oder Pflicht</h1>
+  <div class="icon-right">🤐</div>
 </header>
+
 <main>
-  <div class="container">
-    <div id="genderToggle" class="gender-toggle" aria-label="Geschlecht auswählen" role="group">
-      <div id="genderSwitch" class="gender-slider" tabindex="0" aria-pressed="false" aria-label="Geschlecht Umschalter">
-        <div class="slider-label" aria-hidden="true">👦</div>
-        <div class="slider-label" style="user-select:none; position:absolute; left: 50%;" aria-hidden="true">👧</div>
-        <div class="slider-thumb"></div>
-      </div>
+  <div id="genderToggle" class="gender-toggle">
+    <div id="genderSwitch" class="gender-slider" tabindex="0">
+      <div class="slider-label">👦</div>
+      <div class="slider-label">👧</div>
+      <div class="slider-thumb"></div>
     </div>
+  </div>
 
-    <div id="modeSelection" class="mode-selection fade-in" aria-live="polite">
-      <button id="truthBtn" type="button">Wahrheit</button>
-      <button id="dareBtn" type="button">Pflicht</button>
-    </div>
+  <div id="modeSelection" class="mode-selection fade-in">
+    <button id="truthBtn">Wahrheit</button>
+    <button id="dareBtn">Pflicht</button>
+  </div>
 
-    <div id="questionView" class="question-view fade-out" style="display:none;">
-      <div class="category-label" id="categoryLabel"></div>
-      <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
-      <div class="question-box" id="questionBox">Frage erscheint hier...</div>
-      <div class="action-buttons">
-        <button id="doneBtn">Erledigt / Nächste Frage</button>
-        <button id="penaltyBtn" class="action-btn strafaufgabe">Strafaufgabe</button>
-      </div>
+  <div id="questionView" class="question-view fade-out">
+    <div class="category-label" id="categoryLabel"></div>
+    <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
+    <div class="question-box" id="questionBox">Frage erscheint hier…</div>
+    <div class="action-buttons">
+      <button id="doneBtn">Erledigt / Nächste Frage</button>
+      <button id="penaltyBtn">Strafaufgabe</button>
     </div>
-    <button id="backBtn" class="back-button">Zurück zur Startseite</button>
-    </div>
+  </div>
+
+  <button id="backBtn" class="back-button">Zurück zur Startseite</button>
 </main>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Parameter aus URL (könnten aus Modal kommen)
-    const urlParams = new URLSearchParams(window.location.search);
-    const gender = urlParams.get("gender") || "mixed";  // 'male', 'female' oder 'mixed'
-    const mode = urlParams.get("mode") || "mixed";      // 'truth', 'dare', 'mixed'
-    const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
+document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const gender = urlParams.get("gender") || "mixed";
+  const mode = urlParams.get("mode") || "mixed";
+  const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
 
-    // UI Elemente
-    const genderToggle = document.getElementById("genderToggle");
-    const genderSwitch = document.getElementById("genderSwitch");
-    const modeSelection = document.getElementById("modeSelection");
-    const questionView = document.getElementById("questionView");
-    const categoryLabel = document.getElementById("categoryLabel");
-    const penaltyHeading = document.getElementById("penaltyHeading");
-    const questionBox = document.getElementById("questionBox");
-    const doneBtn = document.getElementById("doneBtn");
-    const penaltyBtn = document.getElementById("penaltyBtn");
-    const backBtn = document.getElementById("backBtn");
+  const genderToggle = document.getElementById("genderToggle");
+  const genderSwitch = document.getElementById("genderSwitch");
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const penaltyHeading = document.getElementById("penaltyHeading");
+  const questionBox = document.getElementById("questionBox");
+  const doneBtn = document.getElementById("doneBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
 
-    // Sichtbarkeit Gender-Slider nur bei "mixed"
-    if (gender === "mixed") {
-      genderToggle.classList.add("visible");
-      // Initial Gender Slider aus Session oder default male
-      const storedGender = sessionStorage.getItem("currentGender") || "male";
-      setGenderClass(storedGender);
-    } else {
-      genderToggle.classList.remove("visible");
-      sessionStorage.setItem("currentGender", gender);
-    }
+  if (gender === "mixed") {
+    genderToggle.classList.add("visible");
+    const storedGender = sessionStorage.getItem("currentGender") || "male";
+    setGenderClass(storedGender);
+  } else {
+    genderToggle.classList.remove("visible");
+    sessionStorage.setItem("currentGender", gender);
+  }
 
-    // Gender Slider Steuerung
-    function setGenderClass(g) {
-      genderSwitch.classList.toggle("female", g === "female");
-      sessionStorage.setItem("currentGender", g);
-      genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
-    }
-    if (genderToggle.classList.contains("visible")) {
-      genderSwitch.addEventListener("click", () => {
-        const current = sessionStorage.getItem("currentGender") || "male";
-        const next = current === "male" ? "female" : "male";
-        setGenderClass(next);
-      });
-      // Auch Tastatur-Support (Leertaste, Enter)
-      genderSwitch.addEventListener("keydown", (e) => {
-        if (e.key === " " || e.key === "Enter") {
-          e.preventDefault();
-          genderSwitch.click();
-        }
-      });
-    }
+  function setGenderClass(g) {
+    genderSwitch.classList.toggle("female", g === "female");
+    sessionStorage.setItem("currentGender", g);
+  }
 
-    // Beispiel-Daten (Später: aus JSON laden)
-    const exampleData = {
-      funny: {
-        label: "Lustig",
-        wahrheit: [
-          { frage: "Was war dein peinlichstes Erlebnis?" },
-          { frage: "Hast du jemals gelogen, um jemanden zu beeindrucken?" }
-        ],
-        pflicht: [
-          { text: "Mach 10 Hampelmänner." },
-          { text: "Sing ein Lied, laut und schief." }
-        ]
-      },
-      daring: {
-        label: "Mutig",
-        wahrheit: [
-          { frage: "Wann hast du zuletzt etwas Verbotenes getan?" },
-          { frage: "Hast du schon mal jemanden geküsst, den du nicht solltest?" }
-        ],
-        pflicht: [
-          { text: "Spring in den Pool – egal wie kalt." },
-          { text: "Ruf jemanden an und gestehe ihm ein Geheimnis." }
-        ]
-      }
-    };
-
-    // Filterfunktion für Fragen je nach Kategorie, Modus und Gender
-    function filterQuestions(data, selectedCategories, currentMode, currentGender) {
-      let wahrheitArr = [];
-      let pflichtArr = [];
-
-      selectedCategories.forEach(catKey => {
-        if (data[catKey]) {
-          // Für Wahrheit (wenn erlaubt)
-          if (currentMode === "truth" || currentMode === "mixed") {
-            wahrheitArr.push(...data[catKey].wahrheit);
-          }
-          // Für Pflicht (wenn erlaubt)
-          if (currentMode === "dare" || currentMode === "mixed") {
-            pflichtArr.push(...data[catKey].pflicht);
-          }
-        }
-      });
-
-      // Optional: Filter nach Gender (wenn gewünscht)
-      // aktuell nicht nötig, da keine geschlechtsspezifischen Fragen vorliegen
-
-      return { wahrheitArr, pflichtArr };
-    }
-
-    // State
-    let currentModeSelected = null; // 'truth' oder 'dare'
-    let currentQuestion = null;
-    let wahrheitPool = [];
-    let pflichtPool = [];
-
-    // Helfer: Frage zufällig aus Array ziehen und aus Pool entfernen
-    function getRandomQuestion(pool) {
-      if (pool.length === 0) return null;
-      const idx = Math.floor(Math.random() * pool.length);
-      const q = pool.splice(idx, 1)[0];
-      return q;
-    }
-
-    // Frage anzeigen
-    function showQuestion(mode) {
-      currentModeSelected = mode;
-      modeSelection.classList.add("fade-out");
-      modeSelection.style.display = "none";
-      questionView.style.display = "flex";
-      questionView.classList.remove("fade-out");
-      questionView.classList.add("fade-in");
-      penaltyHeading.style.display = "none";
-
-      let q;
-      if (mode === "truth") {
-        q = getRandomQuestion(wahrheitPool);
-        categoryLabel.textContent = "Wahrheit";
-      } else if (mode === "dare") {
-        q = getRandomQuestion(pflichtPool);
-        categoryLabel.textContent = "Pflicht";
-      } else {
-        q = null;
-        categoryLabel.textContent = "";
-      }
-
-      if (!q) {
-        questionBox.textContent = "Keine Fragen/Aufgaben mehr in dieser Kategorie.";
-        doneBtn.textContent = "Zurück zur Auswahl";
-        penaltyBtn.style.display = "none";
-        return;
-      }
-
-      // Frage oder Pflichttext anzeigen
-      if (mode === "truth") {
-        questionBox.textContent = q.frage || "Fehler: Keine Frage gefunden.";
-        penaltyBtn.style.display = "inline-block";
-      } else {
-        questionBox.textContent = q.text || "Fehler: Keine Aufgabe gefunden.";
-        penaltyBtn.style.display = "inline-block";
-      }
-      doneBtn.textContent = "Erledigt / Nächste Frage";
-    }
-
-    // Strafaufgabe anzeigen (zur Demo: einfach rotes Label & Text ändern)
-    function showPenalty() {
-      penaltyHeading.style.display = "block";
-      questionBox.textContent = "Das ist die Strafaufgabe! 🔥";
-      doneBtn.textContent = "Zurück zur Auswahl";
-      penaltyBtn.style.display = "none";
-    }
-
-    // Button-Events
-    document.getElementById("truthBtn").addEventListener("click", () => {
-      showQuestion("truth");
-    });
-    document.getElementById("dareBtn").addEventListener("click", () => {
-      showQuestion("dare");
-    });
-    doneBtn.addEventListener("click", () => {
-      // Nach Erledigt wieder zur Modus-Auswahl zurück
-      questionView.classList.remove("fade-in");
-      questionView.classList.add("fade-out");
-      setTimeout(() => {
-        questionView.style.display = "none";
-        modeSelection.style.display = "flex";
-        modeSelection.classList.remove("fade-out");
-        modeSelection.classList.add("fade-in");
-        penaltyHeading.style.display = "none";
-        penaltyBtn.style.display = "inline-block";
-        questionBox.textContent = "Frage erscheint hier...";
-      }, 400);
-    });
-    penaltyBtn.addEventListener("click", () => {
-      showPenalty();
-    });
-    backBtn.addEventListener("click", () => {
-      // Einfach zurück zur Startseite (index.html)
-      window.location.href = "index.html";
-    });
-
-    // Initial: Fragen aus Daten filtern (kategorien aus URL)
-    const { wahrheitArr, pflichtArr } = filterQuestions(exampleData, categories.length > 0 ? categories : Object.keys(exampleData), mode, gender);
-    wahrheitPool = [...wahrheitArr];
-    pflichtPool = [...pflichtArr];
-
-    // Debug output
-    console.log("Start Gender:", sessionStorage.getItem("currentGender"));
-    console.log("Start Kategorien:", categories);
-    console.log("Start Modus:", mode);
+  genderSwitch.addEventListener("click", () => {
+    const current = sessionStorage.getItem("currentGender") || "male";
+    setGenderClass(current === "male" ? "female" : "male");
   });
+
+  // Demo-Daten
+  const data = {
+    funny: {
+      label: "Lustig",
+      wahrheit: [ { frage: "Was war dein peinlichstes Erlebnis?" } ],
+      pflicht: [ { text: "Mach 10 Hampelmänner." } ]
+    }
+  };
+
+  const { wahrheitArr, pflichtArr } = (() => {
+    const w = [], p = [];
+    (categories.length ? categories : Object.keys(data)).forEach(k => {
+      if (data[k]) {
+        if (mode !== "dare") w.push(...data[k].wahrheit);
+        if (mode !== "truth") p.push(...data[k].pflicht);
+      }
+    });
+    return { wahrheitArr: w, pflichtArr: p };
+  })();
+
+  function getRandom(pool) {
+    if (!pool.length) return null;
+    const idx = Math.floor(Math.random() * pool.length);
+    return pool.splice(idx, 1)[0];
+  }
+
+  function showQuestion(selectedMode) {
+    modeSelection.classList.add("fade-out");
+    modeSelection.style.display = "none";
+    questionView.style.display = "flex";
+    questionView.classList.remove("fade-out");
+    questionView.classList.add("fade-in");
+    penaltyHeading.style.display = "none";
+
+    let q = selectedMode === "truth" ? getRandom(wahrheitArr) : getRandom(pflichtArr);
+    if (!q) {
+      questionBox.textContent = "Keine Fragen mehr verfügbar.";
+      doneBtn.textContent = "Zurück";
+      penaltyBtn.style.display = "none";
+      return;
+    }
+
+    categoryLabel.textContent = selectedMode === "truth" ? "Wahrheit" : "Pflicht";
+    questionBox.textContent = selectedMode === "truth" ? q.frage : q.text;
+    questionBox.classList.remove("mystery");
+    doneBtn.textContent = "Erledigt / Nächste Frage";
+    penaltyBtn.style.display = "inline-block";
+  }
+
+  function showPenalty() {
+    penaltyHeading.style.display = "block";
+    questionBox.textContent = "🔥 Das ist deine Strafaufgabe!";
+    questionBox.classList.add("mystery");
+    doneBtn.textContent = "Zurück zur Auswahl";
+    penaltyBtn.style.display = "none";
+  }
+
+  document.getElementById("truthBtn").addEventListener("click", () => showQuestion("truth"));
+  document.getElementById("dareBtn").addEventListener("click", () => showQuestion("dare"));
+  doneBtn.addEventListener("click", () => {
+    questionView.classList.remove("fade-in");
+    questionView.classList.add("fade-out");
+    setTimeout(() => {
+      questionView.style.display = "none";
+      modeSelection.style.display = "flex";
+      modeSelection.classList.remove("fade-out");
+      modeSelection.classList.add("fade-in");
+      penaltyHeading.style.display = "none";
+      questionBox.textContent = "Frage erscheint hier...";
+      penaltyBtn.style.display = "inline-block";
+    }, 400);
+  });
+  penaltyBtn.addEventListener("click", showPenalty);
+  document.getElementById("backBtn").addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+});
 </script>
 </body>
 </html>
