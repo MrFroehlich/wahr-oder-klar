@@ -89,52 +89,100 @@
       margin-bottom: 0.5rem;
     }
     /* GENDER TOGGLE */
-    .gender-toggle {
-      display: none; /* default hidden */
-      justify-content: center;
-      width: 100%;
-    }
-    .gender-toggle.visible {
-      display: flex;
-    }
-    .gender-slider {
-      position: relative;
-      width: 180px;
-      height: 60px; /* deutlich höher */
-      border-radius: 30px;
-      background: linear-gradient(to right, var(--slider-bg-left) 50%, var(--slider-bg-right) 50%);
-      box-shadow: 0 0 8px rgba(0,0,0,0.15);
-      cursor: pointer;
-      user-select: none;
-      font-weight: 700;
-      font-size: 2.2rem;
-      color: var(--slider-label);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.3rem;
-      box-sizing: border-box;
-    }
-    .gender-slider .slider-label {
-      pointer-events: none;
-      user-select: none;
-      user-drag: none;
-    }
-    .gender-slider .slider-thumb {
-      position: absolute;
-      width: 50%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      border-radius: 30px;
-      background-color: var(--slider-thumb);
-      transition: left 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-      z-index: 1;
-    }
-    .gender-slider.female .slider-thumb {
-      left: 50%;
-    }
+.gender-toggle {
+  display: none;
+  justify-content: center;
+  margin: 1rem auto;
+  user-select: none;
+}
+
+.gender-toggle.visible {
+  display: flex;
+}
+
+.gender-slider {
+  position: relative;
+  width: 180px;
+  height: 70px;
+  background: linear-gradient(90deg, #4A90E2 50%, #E94A84 50%);
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease;
+}
+
+.slider-label {
+  position: relative;
+  width: 50%;
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.slider-label .emoji {
+  font-size: 1.8rem;
+  user-select: none;
+}
+
+.slider-label .label-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  user-select: none;
+  color: white;
+}
+
+.slider-thumb {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 80px;
+  height: 60px;
+  background: white;
+  border-radius: 28px;
+  z-index: 1;
+  transition: left 0.3s ease;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* Wenn weiblich ausgewählt, wandert der Thumb nach rechts */
+.gender-slider.female .slider-thumb {
+  left: calc(100% - 85px);
+}
+
+/* Farbige Icons je nach Auswahl */
+.gender-slider.female .slider-label:first-child .emoji,
+.gender-slider.female .slider-label:first-child .label-text {
+  opacity: 0.4;
+}
+
+.gender-slider:not(.female) .slider-label:last-child .emoji,
+.gender-slider:not(.female) .slider-label:last-child .label-text {
+  opacity: 0.4;
+}
+
+/* Darkmode */
+@media (prefers-color-scheme: dark) {
+  .gender-slider {
+    background: linear-gradient(90deg, #1E3A6F 50%, #7A2B49 50%);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  }
+  .slider-label .label-text {
+    color: #fff;
+  }
+  .slider-thumb {
+    background-color: #eee;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  }
+}
+
 
     /* MODE SELECTION (Wahrheit/Pflicht) */
     .mode-selection {
