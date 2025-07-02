@@ -7,6 +7,30 @@
   <link rel="stylesheet" href="style-spiel.css" />
   <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
   <style>
+    :root {
+  --slider-bg-left: #7cc6fe;
+  --slider-bg-right: #f4a7c1;
+  --slider-thumb: rgba(255, 255, 255, 0.85);
+  --slider-label: #fff;
+
+  --btn-bg: #346bc2;
+  --btn-bg-hover: #2959a8;
+  --btn-text: #fff;
+  --penalty-color: #c0392b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --slider-bg-left: #356890;
+    --slider-bg-right: #8e4a6c;
+    --slider-thumb: #bbb;
+    --slider-label: #eee;
+
+    --btn-bg: #2d4c7f;
+    --btn-bg-hover: #3a5a99;
+    --btn-text: #fff;
+    --penalty-color: #e74c3c;
+  }
+}
       .fade-in {
       opacity: 1;
       transform: translateY(0);
