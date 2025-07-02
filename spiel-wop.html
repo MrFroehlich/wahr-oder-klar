@@ -289,14 +289,16 @@
       <button id="dareBtn" type="button">Pflicht</button>
     </div>
 
-    <div id="questionView" class="question-view fade-out" style="display:none;" aria-live="polite" aria-atomic="true">
-      <div class="category-label" id="categoryLabel" aria-label="Kategorie"></div>
+    <div id="questionView" class="question-view fade-out" style="display:none;">
+      <div class="category-label" id="categoryLabel"></div>
       <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
-      <div class="question-box" id="questionBox" aria-live="assertive" aria-atomic="true" role="region">Frage erscheint hier...</div>
+      <div class="question-box" id="questionBox">Frage erscheint hier...</div>
       <div class="action-buttons">
-        <button id="doneBtn" type="button">Erledigt / Nächste Frage</button>
-        <button id="penaltyBtn" type="button">Strafaufgabe</button>
+        <button id="doneBtn">Erledigt / Nächste Frage</button>
+        <button id="penaltyBtn" class="action-btn strafaufgabe">Strafaufgabe</button>
       </div>
+    </div>
+    <button id="backBtn" class="back-button">Zurück zur Startseite</button>
     </div>
 
     <button id="backBtn" class="back-button" type="button">Zurück zur Startseite</button>
