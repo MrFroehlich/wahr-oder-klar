@@ -304,6 +304,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const genderButtons = document.querySelectorAll(".gender-btn");
   const startBtn = document.getElementById("wopStartBtn");
 
+  // Geschlechtsauswahl: Klick auf Button macht ihn "active"
+  genderButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    genderButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+
   startBtn.addEventListener("click", () => {
     // Aktives Geschlecht auslesen
     const activeGenderBtn = Array.from(genderButtons).find(btn => btn.classList.contains("active"));
