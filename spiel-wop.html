@@ -146,13 +146,13 @@
     .gender-slider.female .slider-thumb {
       left: calc(100% - 95px);
     }
-    .gender-slider.female .slider-label:first-child .emoji,
-    .gender-slider.female .slider-label:first-child .label-text {
+    .gender-slider.female .slider-label:first-child {
       opacity: 0.4;
+      filter: grayscale(60%);
     }
-    .gender-slider.male .slider-label:last-child .emoji,
-    .gender-slider.male .slider-label:last-child .label-text {
+    .gender-slider.male .slider-label:last-child {
       opacity: 0.4;
+      filter: grayscale(60%);
     }
     @media (prefers-color-scheme: dark) {
       .gender-slider {
@@ -245,12 +245,14 @@
     const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
 
     if (gender === "mixed") {
-      genderToggle.classList.add("visible");
-      const storedGender = sessionStorage.getItem("currentGender") || "male";
-      setGenderClass(storedGender);
-    } else {
-      genderToggle.classList.remove("visible");
-      sessionStorage.setItem("currentGender", gender);
+    genderToggle.classList.add("visible");
+    const storedGender = sessionStorage.getItem("currentGender") || "male";
+    setGenderClass(storedGender);
+    } 
+    else {
+    genderToggle.classList.remove("visible");
+    sessionStorage.setItem("currentGender", gender);
+    setGenderClass(gender); // ✅ Diese Zeile ist entscheidend
     }
 
     function setGenderClass(g) {
