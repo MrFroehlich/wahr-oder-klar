@@ -348,10 +348,17 @@
 </header>
 <main>
   <div class="container">
-    <div id="genderToggle" class="gender-toggle" aria-label="Geschlecht auswählen" role="group">
-      <div id="genderSwitch" class="gender-slider" tabindex="0" aria-pressed="false" aria-label="Geschlecht Umschalter">
-        <div class="slider-label" aria-hidden="true">👦</div>
-        <div class="slider-label" style="user-select:none; position:absolute; left: 50%;" aria-hidden="true">👧</div>
+    <div class="container">
+    <div id="genderToggle" class="gender-toggle">
+      <div id="genderSwitch" class="gender-slider" role="switch" aria-checked="false" tabindex="0">
+        <div class="slider-label">
+          <div class="emoji">👦</div>
+          <div class="label-text">Junge</div>
+        </div>
+        <div class="slider-label" style="left: 50%;">
+          <div class="emoji">👧</div>
+          <div class="label-text">Mädchen</div>
+        </div>
         <div class="slider-thumb"></div>
       </div>
     </div>
