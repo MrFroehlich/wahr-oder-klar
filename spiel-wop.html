@@ -62,7 +62,7 @@
         filter: blur(0);
       }
     }
-      .action-btn.strafaufgabe {
+    .action-btn.strafaufgabe {
       background-color: transparent;
       color: #555;
       font-size: 0.9rem;
@@ -166,6 +166,19 @@
         background-color: #eee;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
       }
+    }
+        #penaltyBtn {
+      background-color: transparent;
+      border: 2.5px solid var(--penalty-color);
+      color: var(--penalty-color);
+      font-weight: 700;
+      max-width: 160px;
+    }
+    #penaltyBtn:hover,
+    #penaltyBtn:focus {
+      background-color: var(--penalty-color);
+      color: white;
+      outline: none;
     }
   </style>
 </head>
