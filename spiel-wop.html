@@ -263,7 +263,7 @@
     // Fragen aus JSON laden
     let wopData = {};
     try {
-      const res = await fetch("wop.json");
+      const res = await fetch("JSON/wop.json");
       wopData = await res.json();
     } catch (e) {
       alert("Fehler beim Laden der Fragen.");
