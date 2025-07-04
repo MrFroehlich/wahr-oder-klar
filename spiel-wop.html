@@ -289,10 +289,24 @@
 
     function showQuestion(mode) {
       currentModeSelected = mode;
-      const question = (mode === "truth") ? getRandom(wahrheitPool) : getRandom(pflichtPool);
-      const text = question ? (mode === "truth" ? question.frage : question.text) : "Keine Fragen/Aufgaben mehr.";
+      let question, categoryKey = "";
 
-      categoryLabel.textContent = mode === "truth" ? "Wahrheit" : "Pflicht";
+      if (mode === "truth") {
+      question = getRandom(wahrheitPool);
+      categoryKey = Object.keys(wopData).find(key => wopData[key].wahrheit.includes(question));
+      }  
+      else {
+      question = getRandom(pflichtPool);
+      categoryKey = Object.keys(wopData).find(key => wopData[key].pflicht.includes(question));
+      }
+
+      const text = question ? (mode === "truth" ? question.frage : question.text) : "Keine Fragen/Aufgaben mehr.";
+      const label = question
+      ? `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`
+      : (mode === "truth" ? "Wahrheit" : "Pflicht");
+
+      categoryLabel.textContent = label;
+
       penaltyHeading.style.display = "none";
       questionBox.textContent = text;
       questionBox.classList.remove("mystery");
