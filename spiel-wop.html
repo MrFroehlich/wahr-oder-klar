@@ -16,6 +16,10 @@
       --btn-bg-hover: #2959a8;
       --btn-text: #fff;
       --penalty-color: #c0392b;
+      --choice-line-color-light: var(--btn-bg);
+      --choice-line-color-dark: rgba(255, 255, 255, 0.75);
+      --choice-text-color-light: var(--btn-bg);
+      --choice-text-color-dark: rgba(255, 255, 255, 0.9);
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -182,48 +186,34 @@
       outline: none;
     }
 
-.choice-heading-container {
-  border-top: 2px solid var(--btn-bg);
-  padding-top: 1rem;
-  margin-top: 1.5rem;
-  width: 90%;
-  max-width: 320px;
-  margin-left: auto;
-  margin-right: auto;
-}
+    .choice-heading-container {
+      border-top: 4px solid var(--choice-line-color-light);
+      padding-top: 1rem;
+      margin-top: 1.5rem;
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-.choice-heading {
-  font-size: clamp(1.8rem, 5vw, 3rem);
-  font-weight: 700;
-  color: var(--btn-bg);
-  text-align: center;
-  margin: 0;
-}
+    .choice-heading {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--choice-text-color-light);
+      text-align: center;
+      margin: 0;
+      white-space: nowrap; /* verhindert Zeilenumbruch */
+    }
 
-@media (prefers-color-scheme: dark) {
-  .choice-heading-container {
-    border-color: rgba(255, 255, 255, 0.5);
-  }
-  .choice-heading {
-    color: rgba(255, 255, 255, 0.85);
-  }
-}
-
-/* fade-in / fade-out Klassen (falls noch nicht definiert) */
-.fade-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: auto;
-}
-
-.fade-out {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none;
-  user-select: none;
-}
+    @media (prefers-color-scheme: dark) {
+      .choice-heading-container {
+        border-color: var(--choice-line-color-dark);
+      }
+      .choice-heading {
+        color: var(--choice-text-color-dark);
+      }
+      /* Für Dark Mode Schrift- und Linienfarbe heller gemacht */
+    }
   </style>
 </head>
 <body>
@@ -402,7 +392,7 @@
       questionView.classList.remove("fade-out");
       questionView.classList.add("fade-in");
 
-      updateChoiceHeadingVisibility();  // HIER Überschrift anpassen
+      updateChoiceHeadingVisibility();  // Überschrift anpassen
     }
 
     function showPenalty() {
@@ -432,7 +422,7 @@
         questionBox.textContent = "Frage erscheint hier...";
         questionBox.classList.remove("mystery");
 
-        updateChoiceHeadingVisibility();  // HIER Überschrift anpassen
+        updateChoiceHeadingVisibility();  // Überschrift anpassen
       }, 400);
     });
     backBtn.addEventListener("click", () => window.location.href = "index.html");
