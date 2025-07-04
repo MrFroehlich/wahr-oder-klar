@@ -184,14 +184,12 @@
 
 .choice-heading-container {
   border-top: 2px solid var(--btn-bg);
-  padding-top: 0.75rem;
+  padding-top: 1rem;
   margin-top: 1.5rem;
-  width: 100%;      /* Breiter, damit Strich schön über die Breite geht */
-  max-width: none;  /* Keine maximale Breite */
-  margin-left: 0;
-  margin-right: 0;
-  display: flex;
-  justify-content: center;
+  width: 90%;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .choice-heading {
@@ -200,10 +198,8 @@
   color: var(--btn-bg);
   text-align: center;
   margin: 0;
-  white-space: nowrap; /* Verhindert Zeilenumbruch */
 }
 
-/* Darkmode Anpassung */
 @media (prefers-color-scheme: dark) {
   .choice-heading-container {
     border-color: rgba(255, 255, 255, 0.5);
@@ -213,22 +209,20 @@
   }
 }
 
-/* Optimierte Fade-In/Fade-Out */
+/* fade-in / fade-out Klassen (falls noch nicht definiert) */
 .fade-in {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+  transition: opacity 0.4s ease, transform 0.4s ease;
   pointer-events: auto;
-  display: block !important;
 }
 
 .fade-out {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+  transition: opacity 0.4s ease, transform 0.4s ease;
   pointer-events: none;
   user-select: none;
-  display: block !important;
 }
   </style>
 </head>
