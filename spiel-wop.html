@@ -192,17 +192,29 @@
       user-select: none;
     }
 
-    /* Trennlinie unter Slider, wenn Slider sichtbar */
+    /* Längerer Strich, zentriert */
     .gender-toggle.visible + .choice-heading-container {
       border-top: 2px solid var(--btn-bg);
       padding-top: 1rem;
       margin-top: 1.5rem;
+      width: 90%;          /* Länge auf 90% gesetzt */
+      max-width: 320px;    /* max-width wie container */
+      margin-left: auto;
+      margin-right: auto;
     }
-
     /* Container um Überschrift, um Rand und Positionierung zu steuern */
     .choice-heading-container {
       max-width: 320px;
       margin: 0 auto;
+    }
+    /* Farb-Anpassung Darkmode für Strich und Text */
+    @media (prefers-color-scheme: dark) {
+      .gender-toggle.visible + .choice-heading-container {
+      border-color: rgba(255, 255, 255, 0.5); /* heller, halbtransparent */
+      }
+      .choice-heading {
+      color: rgba(255, 255, 255, 0.85); /* heller Text */
+      }
     }
   </style>
 </head>
@@ -235,7 +247,7 @@
 
     <!-- NEU: Überschrift Container zwischen Slider und Buttons -->
     <div class="choice-heading-container">
-      <h2 id="choiceHeading" class="choice-heading">Wahrheit oder Pflicht?</h2>
+      <h2 id="choiceHeading" class="choice-heading fade-in">Wahrheit oder Pflicht?</h2>
     </div>
 
     <div id="modeSelection" class="mode-selection fade-in" aria-live="polite">
@@ -267,6 +279,7 @@
     const doneBtn = document.getElementById("doneBtn");
     const penaltyBtn = document.getElementById("penaltyBtn");
     const backBtn = document.getElementById("backBtn");
+    const choiceHeading = document.getElementById("choiceHeading");
 
     const urlParams = new URLSearchParams(window.location.search);
     const gender = urlParams.get("gender") || "mixed";
@@ -303,6 +316,23 @@
           genderSwitch.click();
         }
       });
+    }
+
+    // Funktion um Überschrift ein-/auszublenden
+    function updateChoiceHeadingVisibility() {
+      if (modeSelection.style.display !== "none") {
+        // Buttons sichtbar → Überschrift einblenden (fade-in)
+        choiceHeading.classList.remove("fade-out");
+        choiceHeading.classList.add("fade-in");
+        choiceHeading.style.display = "block";
+      } else {
+        // Buttons versteckt → Überschrift ausblenden (fade-out)
+        choiceHeading.classList.remove("fade-in");
+        choiceHeading.classList.add("fade-out");
+        setTimeout(() => {
+          choiceHeading.style.display = "none";
+        }, 400);
+      }
     }
 
     // Fragen aus JSON laden
@@ -363,6 +393,8 @@
       questionView.style.display = "flex";
       questionView.classList.remove("fade-out");
       questionView.classList.add("fade-in");
+
+      updateChoiceHeadingVisibility();  // HIER Überschrift anpassen
     }
 
     function showPenalty() {
@@ -391,9 +423,14 @@
         penaltyBtn.style.display = "inline-block";
         questionBox.textContent = "Frage erscheint hier...";
         questionBox.classList.remove("mystery");
+
+        updateChoiceHeadingVisibility();  // HIER Überschrift anpassen
       }, 400);
     });
     backBtn.addEventListener("click", () => window.location.href = "index.html");
+
+    // Initial Zustand Überschrift setzen
+    updateChoiceHeadingVisibility();
   });
 </script>
 </body>
