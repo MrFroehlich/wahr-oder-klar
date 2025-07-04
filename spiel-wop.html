@@ -332,20 +332,22 @@
       });
     }
 
-    // Funktion um Überschrift ein-/auszublenden
+    // Funktion um Überschrift ein-/auszublenden mit sanftem Fade
     function updateChoiceHeadingVisibility() {
       if (modeSelection.style.display !== "none") {
-        // Buttons sichtbar → Überschrift einblenden (fade-in)
-        choiceHeading.classList.remove("fade-out");
-        choiceHeading.classList.add("fade-in");
-        choiceHeading.style.display = "block";
+        // Buttons sichtbar → Überschrift fade-in
+        choiceHeading.style.display = "block"; // display sofort sichtbar machen
+        setTimeout(() => {
+          choiceHeading.classList.remove("fade-out");
+          choiceHeading.classList.add("fade-in");
+        }, 20); // Kurzer Timeout für CSS Transition
       } else {
-        // Buttons versteckt → Überschrift ausblenden (fade-out)
+        // Buttons versteckt → Überschrift fade-out
         choiceHeading.classList.remove("fade-in");
         choiceHeading.classList.add("fade-out");
         setTimeout(() => {
           choiceHeading.style.display = "none";
-        }, 400);
+        }, 400); // nach Fade-Out Dauer ausblenden
       }
     }
 
@@ -408,7 +410,7 @@
       questionView.classList.remove("fade-out");
       questionView.classList.add("fade-in");
 
-      updateChoiceHeadingVisibility();  // HIER Überschrift anpassen
+      updateChoiceHeadingVisibility();  // Überschrift aktualisieren
     }
 
     function showPenalty() {
@@ -438,14 +440,16 @@
         questionBox.textContent = "Frage erscheint hier...";
         questionBox.classList.remove("mystery");
 
-        updateChoiceHeadingVisibility();  // HIER Überschrift anpassen
+        updateChoiceHeadingVisibility();  // Überschrift aktualisieren
       }, 400);
     });
+
     backBtn.addEventListener("click", () => window.location.href = "index.html");
 
     // Initial Zustand Überschrift setzen
     updateChoiceHeadingVisibility();
   });
 </script>
+
 </body>
 </html>
