@@ -254,10 +254,10 @@
     }
 
     function setGenderClass(g) {
-      genderSwitch.classList.toggle("female", g === "female");
-      genderSwitch.classList.toggle("male", g === "male"); // <- hinzugefügt
-      sessionStorage.setItem("currentGender", g);
-      genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
+    genderSwitch.classList.remove("male", "female"); // <- Entfernt beide vorher
+     genderSwitch.classList.add(g);                   // <- Fügt "male" oder "female" hinzu
+    sessionStorage.setItem("currentGender", g);
+    genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
     }
 
     if (genderToggle.classList.contains("visible")) {
