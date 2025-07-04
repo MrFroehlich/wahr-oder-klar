@@ -186,34 +186,42 @@
       outline: none;
     }
 
-    .choice-heading-container {
-      border-top: 4px solid var(--choice-line-color-light);
-      padding-top: 1rem;
-      margin-top: 1.5rem;
-      width: 100%;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.choice-heading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
 
-    .choice-heading {
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 700;
-      color: var(--choice-text-color-light);
-      text-align: center;
-      margin: 0;
-      white-space: nowrap; /* verhindert Zeilenumbruch */
-    }
+.choice-heading-container::before,
+.choice-heading-container::after {
+  content: "";
+  flex-grow: 1;
+  height: 4px;
+  background-color: var(--choice-line-color-light);
+  border-radius: 2px;
+}
 
-    @media (prefers-color-scheme: dark) {
-      .choice-heading-container {
-        border-color: var(--choice-line-color-dark);
-      }
-      .choice-heading {
-        color: var(--choice-text-color-dark);
-      }
-      /* Für Dark Mode Schrift- und Linienfarbe heller gemacht */
-    }
+.choice-heading {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--choice-text-color-light);
+  white-space: nowrap;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .choice-heading-container::before,
+  .choice-heading-container::after {
+    background-color: var(--choice-line-color-dark);
+  }
+  .choice-heading {
+    color: var(--choice-text-color-dark);
+  }
+}
   </style>
 </head>
 <body>
