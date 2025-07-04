@@ -257,10 +257,13 @@
     }
 
     function setGenderClass(g) {
-    genderSwitch.className = `gender-slider ${g}`;
+    genderSwitch.classList.remove("male", "female");
+    genderSwitch.classList.add(g);
     sessionStorage.setItem("currentGender", g);
     genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
+    console.log("Gender-Klasse gesetzt:", genderSwitch.className);
     }
+
 
     if (genderToggle.classList.contains("visible")) {
       genderSwitch.addEventListener("click", () => {
