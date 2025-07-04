@@ -255,6 +255,7 @@
 
     function setGenderClass(g) {
       genderSwitch.classList.toggle("female", g === "female");
+      genderSwitch.classList.toggle("male", g === "male"); // <- hinzugefügt
       sessionStorage.setItem("currentGender", g);
       genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
     }
