@@ -282,173 +282,190 @@
   </div>
 </main>
 <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const genderToggle = document.getElementById("genderToggle");
-    const genderSwitch = document.getElementById("genderSwitch");
-    const modeSelection = document.getElementById("modeSelection");
-    const questionView = document.getElementById("questionView");
-    const categoryLabel = document.getElementById("categoryLabel");
-    const penaltyHeading = document.getElementById("penaltyHeading");
-    const questionBox = document.getElementById("questionBox");
-    const doneBtn = document.getElementById("doneBtn");
-    const penaltyBtn = document.getElementById("penaltyBtn");
-    const backBtn = document.getElementById("backBtn");
-    const choiceHeading = document.getElementById("choiceHeading");
+document.addEventListener("DOMContentLoaded", async () => {
+  const genderToggle = document.getElementById("genderToggle");
+  const genderSwitch = document.getElementById("genderSwitch");
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const penaltyHeading = document.getElementById("penaltyHeading");
+  const questionBox = document.getElementById("questionBox");
+  const doneBtn = document.getElementById("doneBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
+  const backBtn = document.getElementById("backBtn");
+  const choiceHeading = document.getElementById("choiceHeading");
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const gender = urlParams.get("gender") || "mixed";
-    const mode = urlParams.get("mode") || "mixed";
-    const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
+  // URL-Parameter, Gender etc.
+  const urlParams = new URLSearchParams(window.location.search);
+  const gender = urlParams.get("gender") || "mixed";
+  const mode = urlParams.get("mode") || "mixed";
+  const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
 
-    if (gender === "mixed") {
-      genderToggle.classList.add("visible");
-      const storedGender = sessionStorage.getItem("currentGender") || "male";
-      setGenderClass(storedGender);
-    } else {
-      genderToggle.classList.remove("visible");
-      sessionStorage.setItem("currentGender", gender);
-      setGenderClass(gender);
-    }
+  // Gender Toggle setzen
+  if (gender === "mixed") {
+    genderToggle.classList.add("visible");
+    const storedGender = sessionStorage.getItem("currentGender") || "male";
+    setGenderClass(storedGender);
+  } else {
+    genderToggle.classList.remove("visible");
+    sessionStorage.setItem("currentGender", gender);
+    setGenderClass(gender);
+  }
 
-    function setGenderClass(g) {
-      genderSwitch.classList.remove("male", "female");
-      genderSwitch.classList.add(g);
-      sessionStorage.setItem("currentGender", g);
-      genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
-      console.log("Gender-Klasse gesetzt:", genderSwitch.className);
-    }
+  function setGenderClass(g) {
+    genderSwitch.classList.remove("male", "female");
+    genderSwitch.classList.add(g);
+    sessionStorage.setItem("currentGender", g);
+    genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
+  }
 
-    if (genderToggle.classList.contains("visible")) {
-      genderSwitch.addEventListener("click", () => {
-        const current = sessionStorage.getItem("currentGender") || "male";
-        const next = current === "male" ? "female" : "male";
-        setGenderClass(next);
-      });
-      genderSwitch.addEventListener("keydown", (e) => {
-        if (e.key === " " || e.key === "Enter") {
-          e.preventDefault();
-          genderSwitch.click();
-        }
-      });
-    }
-
-    // Funktion um Überschrift ein-/auszublenden mit sanftem Fade
-    function updateChoiceHeadingVisibility() {
-      if (modeSelection.style.display !== "none") {
-        // Buttons sichtbar → Überschrift fade-in
-        choiceHeading.style.display = "block"; // display sofort sichtbar machen
-        setTimeout(() => {
-          choiceHeading.classList.remove("fade-out");
-          choiceHeading.classList.add("fade-in");
-        }, 20); // Kurzer Timeout für CSS Transition
-      } else {
-        // Buttons versteckt → Überschrift fade-out
-        choiceHeading.classList.remove("fade-in");
-        choiceHeading.classList.add("fade-out");
-        setTimeout(() => {
-          choiceHeading.style.display = "none";
-        }, 400); // nach Fade-Out Dauer ausblenden
-      }
-    }
-
-    // Fragen aus JSON laden
-    let wopData = {};
-    try {
-      const res = await fetch("JSON/wop.json");
-      wopData = await res.json();
-    } catch (e) {
-      alert("Fehler beim Laden der Fragen.");
-      return;
-    }
-
-    const selectedCategories = categories.length > 0 ? categories : Object.keys(wopData);
-
-    let wahrheitPool = [];
-    let pflichtPool = [];
-    selectedCategories.forEach(catKey => {
-      if (wopData[catKey]) {
-        wahrheitPool.push(...wopData[catKey].wahrheit);
-        pflichtPool.push(...wopData[catKey].pflicht);
+  if (genderToggle.classList.contains("visible")) {
+    genderSwitch.addEventListener("click", () => {
+      const current = sessionStorage.getItem("currentGender") || "male";
+      const next = current === "male" ? "female" : "male";
+      setGenderClass(next);
+    });
+    genderSwitch.addEventListener("keydown", (e) => {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        genderSwitch.click();
       }
     });
+  }
 
-    let currentModeSelected = null;
-    function getRandom(pool) {
-      if (pool.length === 0) return null;
-      return pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+  // Funktion: Überschrift "Wahrheit oder Pflicht?" zeigen/verstecken mit fade
+  function updateChoiceHeadingVisibility(show) {
+    if (show) {
+      choiceHeading.style.display = "block";
+      setTimeout(() => {
+        choiceHeading.classList.remove("fade-out");
+        choiceHeading.classList.add("fade-in");
+      }, 20);
+    } else {
+      choiceHeading.classList.remove("fade-in");
+      choiceHeading.classList.add("fade-out");
+      setTimeout(() => {
+        choiceHeading.style.display = "none";
+      }, 400);
+    }
+  }
+
+  // JSON Daten laden
+  let wopData = {};
+  try {
+    const res = await fetch("JSON/wop.json");
+    wopData = await res.json();
+  } catch (e) {
+    alert("Fehler beim Laden der Fragen.");
+    return;
+  }
+
+  const selectedCategories = categories.length > 0 ? categories : Object.keys(wopData);
+
+  let wahrheitPool = [];
+  let pflichtPool = [];
+  selectedCategories.forEach(catKey => {
+    if (wopData[catKey]) {
+      wahrheitPool.push(...wopData[catKey].wahrheit);
+      pflichtPool.push(...wopData[catKey].pflicht);
+    }
+  });
+
+  let currentModeSelected = null;
+  function getRandom(pool) {
+    if (pool.length === 0) return null;
+    return pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+  }
+
+  function showQuestion(mode) {
+    currentModeSelected = mode;
+    let question, categoryKey = "";
+
+    if (mode === "truth") {
+      question = getRandom(wahrheitPool);
+      categoryKey = Object.keys(wopData).find(key => wopData[key].wahrheit.includes(question));
+    } else {
+      question = getRandom(pflichtPool);
+      categoryKey = Object.keys(wopData).find(key => wopData[key].pflicht.includes(question));
     }
 
-    function showQuestion(mode) {
-      currentModeSelected = mode;
-      let question, categoryKey = "";
+    const text = question ? (mode === "truth" ? question.frage : question.text) : "Keine Fragen/Aufgaben mehr.";
+    const label = question
+      ? `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`
+      : (mode === "truth" ? "Wahrheit" : "Pflicht");
 
-      if (mode === "truth") {
-        question = getRandom(wahrheitPool);
-        categoryKey = Object.keys(wopData).find(key => wopData[key].wahrheit.includes(question));
-      } else {
-        question = getRandom(pflichtPool);
-        categoryKey = Object.keys(wopData).find(key => wopData[key].pflicht.includes(question));
-      }
+    categoryLabel.textContent = label;
+    penaltyHeading.style.display = "none";
+    questionBox.textContent = text;
+    questionBox.classList.remove("mystery");
+    penaltyBtn.style.display = question ? "inline-block" : "none";
+    doneBtn.textContent = question ? "Erledigt / Nächste Frage" : "Zurück zur Auswahl";
 
-      const text = question ? (mode === "truth" ? question.frage : question.text) : "Keine Fragen/Aufgaben mehr.";
-      const label = question
-        ? `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`
-        : (mode === "truth" ? "Wahrheit" : "Pflicht");
+    // fade out Auswahl (Buttons + Überschrift), fade in Fragecontainer
+    choiceHeading.classList.remove("fade-in");
+    choiceHeading.classList.add("fade-out");
+    modeSelection.classList.remove("fade-in");
+    modeSelection.classList.add("fade-out");
 
-      categoryLabel.textContent = label;
-
-      penaltyHeading.style.display = "none";
-      questionBox.textContent = text;
-      questionBox.classList.remove("mystery");
-
-      penaltyBtn.style.display = question ? "inline-block" : "none";
-      doneBtn.textContent = question ? "Erledigt / Nächste Frage" : "Zurück zur Auswahl";
-
-      modeSelection.classList.add("fade-out");
+    setTimeout(() => {
+      choiceHeading.style.display = "none";
       modeSelection.style.display = "none";
+
       questionView.style.display = "flex";
       questionView.classList.remove("fade-out");
       questionView.classList.add("fade-in");
+    }, 400);
+  }
 
-      updateChoiceHeadingVisibility();  // Überschrift aktualisieren
-    }
+  function showPenalty() {
+    const alt = currentModeSelected === "truth" ? getRandom(pflichtPool) : getRandom(wahrheitPool);
+    const text = alt ? (currentModeSelected === "truth" ? alt.text : alt.frage) : "Keine Strafaufgabe verfügbar.";
 
-    function showPenalty() {
-      const alt = currentModeSelected === "truth" ? getRandom(pflichtPool) : getRandom(wahrheitPool);
-      const text = alt ? (currentModeSelected === "truth" ? alt.text : alt.frage) : "Keine Strafaufgabe verfügbar.";
+    penaltyHeading.style.display = "block";
+    questionBox.textContent = text;
+    questionBox.classList.add("mystery");
+    penaltyBtn.style.display = "none";
+    doneBtn.textContent = "Zurück zur Auswahl";
+  }
 
-      penaltyHeading.style.display = "block";
-      questionBox.textContent = text;
-      questionBox.classList.add("mystery");
-      penaltyBtn.style.display = "none";
-      doneBtn.textContent = "Zurück zur Auswahl";
-    }
+  document.getElementById("truthBtn").addEventListener("click", () => showQuestion("truth"));
+  document.getElementById("dareBtn").addEventListener("click", () => showQuestion("dare"));
+  penaltyBtn.addEventListener("click", showPenalty);
 
-    document.getElementById("truthBtn").addEventListener("click", () => showQuestion("truth"));
-    document.getElementById("dareBtn").addEventListener("click", () => showQuestion("dare"));
-    penaltyBtn.addEventListener("click", showPenalty);
-    doneBtn.addEventListener("click", () => {
-      questionView.classList.remove("fade-in");
-      questionView.classList.add("fade-out");
-      setTimeout(() => {
-        questionView.style.display = "none";
-        modeSelection.style.display = "flex";
-        modeSelection.classList.remove("fade-out");
-        modeSelection.classList.add("fade-in");
-        penaltyHeading.style.display = "none";
-        penaltyBtn.style.display = "inline-block";
-        questionBox.textContent = "Frage erscheint hier...";
-        questionBox.classList.remove("mystery");
+  doneBtn.addEventListener("click", () => {
+    questionView.classList.remove("fade-in");
+    questionView.classList.add("fade-out");
+    setTimeout(() => {
+      questionView.style.display = "none";
 
-        updateChoiceHeadingVisibility();  // Überschrift aktualisieren
-      }, 400);
-    });
+      // Auswahl (Buttons + Überschrift) wieder einblenden
+      choiceHeading.style.display = "block";
+      modeSelection.style.display = "flex";
 
-    backBtn.addEventListener("click", () => window.location.href = "index.html");
+      choiceHeading.classList.remove("fade-out");
+      choiceHeading.classList.add("fade-in");
 
-    // Initial Zustand Überschrift setzen
-    updateChoiceHeadingVisibility();
+      modeSelection.classList.remove("fade-out");
+      modeSelection.classList.add("fade-in");
+
+      penaltyHeading.style.display = "none";
+      penaltyBtn.style.display = "inline-block";
+      questionBox.textContent = "Frage erscheint hier...";
+      questionBox.classList.remove("mystery");
+    }, 400);
   });
+
+  backBtn.addEventListener("click", () => window.location.href = "index.html");
+
+  // Initial: nur Auswahl + Überschrift zeigen, Fragecontainer verstecken
+  choiceHeading.style.display = "block";
+  choiceHeading.classList.add("fade-in");
+
+  modeSelection.style.display = "flex";
+  modeSelection.classList.add("fade-in");
+
+  questionView.style.display = "none";
+});
 </script>
 
 </body>
