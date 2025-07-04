@@ -420,22 +420,31 @@
     document.getElementById("truthBtn").addEventListener("click", () => showQuestion("truth"));
     document.getElementById("dareBtn").addEventListener("click", () => showQuestion("dare"));
     penaltyBtn.addEventListener("click", showPenalty);
-    doneBtn.addEventListener("click", () => {
-      questionView.classList.remove("fade-in");
-      questionView.classList.add("fade-out");
-      setTimeout(() => {
-        questionView.style.display = "none";
-        modeSelection.style.display = "flex";
-        modeSelection.classList.remove("fade-out");
-        modeSelection.classList.add("fade-in");
-        penaltyHeading.style.display = "none";
-        penaltyBtn.style.display = "inline-block";
-        questionBox.textContent = "Frage erscheint hier...";
-        questionBox.classList.remove("mystery");
+doneBtn.addEventListener("click", () => {
+  questionView.classList.remove("fade-in");
+  questionView.classList.add("fade-out");
 
-        updateChoiceHeadingVisibility();  // Überschrift anpassen
-      }, 400);
-    });
+  // Warte auf Ende der Transition, dann display:none setzen
+  function onTransitionEnd() {
+    questionView.style.display = "none";
+
+    modeSelection.style.display = "flex";
+    modeSelection.classList.remove("fade-out");
+    modeSelection.classList.add("fade-in");
+    penaltyHeading.style.display = "none";
+    penaltyBtn.style.display = "inline-block";
+    questionBox.textContent = "Frage erscheint hier...";
+    questionBox.classList.remove("mystery");
+
+    updateChoiceHeadingVisibility();  // Überschrift anpassen
+
+    // Eventlistener entfernen, damit er nicht mehrfach feuert
+    questionView.removeEventListener("transitionend", onTransitionEnd);
+  }
+
+  questionView.addEventListener("transitionend", onTransitionEnd);
+});
+
     backBtn.addEventListener("click", () => window.location.href = "index.html");
 
     // Initial Zustand Überschrift setzen
