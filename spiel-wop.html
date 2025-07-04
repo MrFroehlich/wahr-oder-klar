@@ -33,22 +33,21 @@
         --penalty-color: #e74c3c;
       }
     }
-.fade-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: auto;
-  will-change: opacity, transform;
-}
-
-.fade-out {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none;
-  user-select: none;
-  will-change: opacity, transform;
-}
+    .fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: auto;
+      will-change: opacity, transform;
+    }
+    .fade-out {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+      user-select: none;
+      will-change: opacity, transform;
+    }
     .mystery {
       animation: mysteryFade 0.6s ease forwards;
     }
@@ -189,42 +188,57 @@
       outline: none;
     }
 
-.choice-heading-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  width: 100%;
-}
+    /* Überschrift mit Linien links und rechts, Container immer sichtbar */
+    .choice-heading-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .choice-heading-container::before,
+    .choice-heading-container::after {
+      content: "";
+      flex-grow: 1;
+      height: 4px;
+      background-color: var(--choice-line-color-light);
+      border-radius: 2px;
+    }
+    .choice-heading {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--choice-text-color-light);
+      white-space: nowrap;
+      margin: 0;
+      padding: 0 1rem;
+      /* Damit sich die Höhe nicht ändert, auch wenn Text ausgeblendet ist */
+      min-height: 3.5rem;
+      /* Fade Animation für Text (nicht Container) */
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      will-change: opacity, transform;
+    }
+    .fade-out.choice-heading {
+      opacity: 0 !important;
+      transform: translateY(20px) !important;
+      pointer-events: none !important;
+      user-select: none !important;
+    }
 
-.choice-heading-container::before,
-.choice-heading-container::after {
-  content: "";
-  flex-grow: 1;
-  height: 4px;
-  background-color: var(--choice-line-color-light);
-  border-radius: 2px;
-}
-
-.choice-heading {
-  font-size: clamp(1.8rem, 5vw, 3rem);
-  font-weight: 700;
-  color: var(--choice-text-color-light);
-  white-space: nowrap;
-  margin: 0;
-  padding: 0 1rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .choice-heading-container::before,
-  .choice-heading-container::after {
-    background-color: var(--choice-line-color-dark);
-  }
-  .choice-heading {
-    color: var(--choice-text-color-dark);
-  }
-}
+    @media (prefers-color-scheme: dark) {
+      .choice-heading-container::before,
+      .choice-heading-container::after {
+        background-color: var(--choice-line-color-dark);
+      }
+      .choice-heading {
+        color: var(--choice-text-color-dark);
+      }
+    }
   </style>
 </head>
 <body>
@@ -254,7 +268,7 @@
       </div>
     </div>
 
-    <!-- NEU: Überschrift Container zwischen Slider und Buttons -->
+    <!-- Überschrift Container bleibt immer sichtbar -->
     <div class="choice-heading-container">
       <h2 id="choiceHeading" class="choice-heading fade-in">Wahrheit oder Pflicht?</h2>
     </div>
@@ -327,20 +341,15 @@
       });
     }
 
-    // Funktion um Überschrift ein-/auszublenden
+    // Funktion um Überschrift ein-/auszublenden (nur opacity/transform, kein display:none)
     function updateChoiceHeadingVisibility() {
       if (modeSelection.style.display !== "none") {
-        // Buttons sichtbar → Überschrift einblenden (fade-in)
         choiceHeading.classList.remove("fade-out");
         choiceHeading.classList.add("fade-in");
-        choiceHeading.style.display = "block";
+        // display bleibt immer block, Container bleibt sichtbar
       } else {
-        // Buttons versteckt → Überschrift ausblenden (fade-out)
         choiceHeading.classList.remove("fade-in");
         choiceHeading.classList.add("fade-out");
-        setTimeout(() => {
-          choiceHeading.style.display = "none";
-        }, 400);
       }
     }
 
@@ -420,30 +429,29 @@
     document.getElementById("truthBtn").addEventListener("click", () => showQuestion("truth"));
     document.getElementById("dareBtn").addEventListener("click", () => showQuestion("dare"));
     penaltyBtn.addEventListener("click", showPenalty);
-doneBtn.addEventListener("click", () => {
-  questionView.classList.remove("fade-in");
-  questionView.classList.add("fade-out");
 
-  // Warte auf Ende der Transition, dann display:none setzen
-  function onTransitionEnd() {
-    questionView.style.display = "none";
+    doneBtn.addEventListener("click", () => {
+      questionView.classList.remove("fade-in");
+      questionView.classList.add("fade-out");
 
-    modeSelection.style.display = "flex";
-    modeSelection.classList.remove("fade-out");
-    modeSelection.classList.add("fade-in");
-    penaltyHeading.style.display = "none";
-    penaltyBtn.style.display = "inline-block";
-    questionBox.textContent = "Frage erscheint hier...";
-    questionBox.classList.remove("mystery");
+      // Warte auf Ende der Transition, dann display:none setzen
+      function onTransitionEnd() {
+        questionView.style.display = "none";
 
-    updateChoiceHeadingVisibility();  // Überschrift anpassen
+        modeSelection.style.display = "flex";
+        modeSelection.classList.remove("fade-out");
+        modeSelection.classList.add("fade-in");
+        penaltyHeading.style.display = "none";
+        penaltyBtn.style.display = "inline-block";
+        questionBox.textContent = "Frage erscheint hier...";
+        questionBox.classList.remove("mystery");
 
-    // Eventlistener entfernen, damit er nicht mehrfach feuert
-    questionView.removeEventListener("transitionend", onTransitionEnd);
-  }
+        updateChoiceHeadingVisibility();  // Überschrift anpassen
 
-  questionView.addEventListener("transitionend", onTransitionEnd);
-});
+        questionView.removeEventListener("transitionend", onTransitionEnd);
+      }
+      questionView.addEventListener("transitionend", onTransitionEnd);
+    });
 
     backBtn.addEventListener("click", () => window.location.href = "index.html");
 
