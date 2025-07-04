@@ -182,40 +182,48 @@
       outline: none;
     }
 
-    /* NEU: Überschrift über Buttons */
-    .choice-heading {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      font-weight: 700;
-      text-align: center;
-      color: var(--btn-bg);
-      margin: 0.5rem 0 1.2rem 0;
-      user-select: none;
-    }
+.choice-heading-container {
+  border-top: 2px solid var(--btn-bg);
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+  width: 90%;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    /* Längerer Strich, zentriert */
-    .gender-toggle.visible + .choice-heading-container {
-      border-top: 2px solid var(--btn-bg);
-      padding-top: 1rem;
-      margin-top: 1.5rem;
-      width: 90%;          /* Länge auf 90% gesetzt */
-      max-width: 320px;    /* max-width wie container */
-      margin-left: auto;
-      margin-right: auto;
-    }
-    /* Container um Überschrift, um Rand und Positionierung zu steuern */
-    .choice-heading-container {
-      max-width: 320px;
-      margin: 0 auto;
-    }
-    /* Farb-Anpassung Darkmode für Strich und Text */
-    @media (prefers-color-scheme: dark) {
-      .gender-toggle.visible + .choice-heading-container {
-      border-color: rgba(255, 255, 255, 0.5); /* heller, halbtransparent */
-      }
-      .choice-heading {
-      color: rgba(255, 255, 255, 0.85); /* heller Text */
-      }
-    }
+.choice-heading {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--btn-bg);
+  text-align: center;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .choice-heading-container {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  .choice-heading {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+/* fade-in / fade-out Klassen (falls noch nicht definiert) */
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: auto;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  user-select: none;
+}
   </style>
 </head>
 <body>
