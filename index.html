@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wahr oder Klar? – Die Spielewebseite für Freunde und Spaß</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
@@ -28,7 +28,7 @@
 <main>
   <section class="intro">
     <h2>Hey! Schön, dass du da bist 👋</h2>
-    <p>Hier kannst du mit deinen Freunden richtig coole Spiele spielen. <br> Egal ob Klassenfahrt, Geburtstag oder einfach so – such dir einen Spielmodus aus und los geht’s!</p>
+    <p>Hier kannst du mit deinen Freunden richtig coole Spiele spielen. <br /> Egal ob Klassenfahrt, Geburtstag oder einfach so – such dir einen Spielmodus aus und los geht’s!</p>
   </section>
 
   <section class="grid">
@@ -61,19 +61,17 @@
 </main>
 
 <footer>
-  © 2025 – Julian Kaiser <br>
+  © 2025 – Julian Kaiser <br />
   Made with 💙 – Spaß garantiert 😄
 </footer>
 
-
-  
-<!-- Modal "Wahrheit oder Pflicht" -->
+<!-- Modal "Wahrheit oder Pflicht" – Schritt 1: Geschlecht + Kategorien -->
 <div class="modal-overlay hidden" id="wopModal">
   <div class="modal">
     <span class="close-modal" id="closeWopModal">❌</span>
-    <h2>Wahrheit oder Pflicht – Kategorien</h2>
+    <h2>Wahrheit oder Pflicht – Kategorien & Spieler</h2>
 
-    <!-- NEU: Geschlechtsauswahl -->
+    <!-- Geschlechtsauswahl -->
     <div class="gender-select">
       <p>Für wen sollen die Aufgaben sein?</p>
       <div class="gender-buttons">
@@ -83,44 +81,63 @@
       </div>
     </div>
 
+    <!-- Moduswahl -->
     <div class="mode-select">
       <button id="wopBtnMixed" class="mode-btn active">🎨 Gemischt</button>
       <button id="wopBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
     </div>
 
+    <!-- Kategorienauswahl -->
     <div class="category-select" id="wopCategoryOptions" style="display: none;">
       <label class="category-item" data-tooltip="Lustige, harmlose Aufgaben – ideal zum Lockerwerden.">
-        <input type="checkbox" value="funny"> 🧃 Locker & Lustig
+        <input type="checkbox" value="funny" /> 🧃 Locker & Lustig
         <div class="mobile-tooltip hidden">Lustige, harmlose Aufgaben – ideal zum Lockerwerden.</div>
       </label>
       <label class="category-item" data-tooltip="Ehrliche Fragen und Challenges für mehr Vertrauen.">
-        <input type="checkbox" value="daring"> 🫱 Vertrauensbasis
+        <input type="checkbox" value="daring" /> 🫱 Vertrauensbasis
         <div class="mobile-tooltip hidden">Ehrliche Fragen und Challenges für mehr Vertrauen.</div>
       </label>
       <label class="category-item" data-tooltip="Fantasievolle oder gedanklich tiefere Fragen.">
-        <input type="checkbox" value="mind"> 🧠 Kopfkino
+        <input type="checkbox" value="mind" /> 🧠 Kopfkino
         <div class="mobile-tooltip hidden">Fantasievolle oder gedanklich tiefere Fragen.</div>
       </label>
       <label class="category-item" data-tooltip="Gefühle, Beziehungen, Vergangenheit – es wird ernst.">
-        <input type="checkbox" value="deep"> 💌 Deep Talk
+        <input type="checkbox" value="deep" /> 💌 Deep Talk
         <div class="mobile-tooltip hidden">Gefühle, Beziehungen, Vergangenheit – es wird ernst.</div>
       </label>
       <label class="category-item" data-tooltip="Mutige Fragen oder Aufgaben mit Nervenkitzel.">
-        <input type="checkbox" value="bold"> 🫣 Mut & Grenzen
+        <input type="checkbox" value="bold" /> 🫣 Mut & Grenzen
         <div class="mobile-tooltip hidden">Mutige Fragen oder Aufgaben mit Nervenkitzel.</div>
       </label>
       <label class="category-item" data-tooltip="Peinlich, provokant oder total verrückt – nur für Mutige.">
-        <input type="checkbox" value="taboo"> 🚫 Tabuzone
+        <input type="checkbox" value="taboo" /> 🚫 Tabuzone
         <div class="mobile-tooltip hidden">Peinlich, provokant oder total verrückt – nur für Mutige.</div>
       </label>
     </div>
 
-    <button class="start-btn" id="wopStartBtn">Los geht’s!</button>
+    <button class="start-btn" id="wopToPlayerBtn">Weiter zu Spielern</button>
   </div>
 </div>
-  
 
-<!-- Modal "Wer würde eher...?" -->
+<!-- Modal "Wahrheit oder Pflicht" – Schritt 2: Spieler festlegen -->
+<div class="modal-overlay hidden" id="wopPlayersModal">
+  <div class="modal">
+    <span class="close-modal" id="closeWopPlayersModal">❌</span>
+    <h2>Spieler festlegen</h2>
+    <p>Tragt hier die Namen eurer Mitspieler:innen ein.</p>
+
+    <form id="playersForm" autocomplete="off" novalidate>
+      <div id="playersList">
+        <!-- Dynamisch generierte Spielerfelder -->
+      </div>
+      <button type="button" id="addPlayerBtn" class="start-btn" style="margin-bottom:1rem;">+ Spieler hinzufügen</button>
+    </form>
+
+    <button class="start-btn" id="wopStartGameBtn" disabled>Spiel starten</button>
+  </div>
+</div>
+
+  <!-- Modal "Wer würde eher...?" -->
 <div class="modal-overlay hidden" id="wdeModal">
   <div class="modal">
     <span class="close-modal" id="closeWdeModal">❌</span>
@@ -277,56 +294,141 @@
   </div>
 </div>
 
-
-<script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const genderButtons = document.querySelectorAll(".gender-btn");
-  const startBtn = document.getElementById("wopStartBtn");
+  document.addEventListener("DOMContentLoaded", () => {
+    // --- Variablen für Modals und Buttons ---
+    const wopModal = document.getElementById("wopModal");
+    const wopPlayersModal = document.getElementById("wopPlayersModal");
+    const wopCard = document.getElementById("wopCard");
+    const closeWopModal = document.getElementById("closeWopModal");
+    const closeWopPlayersModal = document.getElementById("closeWopPlayersModal");
+    const wopToPlayerBtn = document.getElementById("wopToPlayerBtn");
+    const wopStartGameBtn = document.getElementById("wopStartGameBtn");
+    const playersList = document.getElementById("playersList");
+    const addPlayerBtn = document.getElementById("addPlayerBtn");
 
-  // Geschlechtsauswahl: Klick auf Button macht ihn "active"
-  genderButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    genderButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-  });
-});
+    // Geschlechtsauswahl Buttons & Kategorien
+    const genderButtons = wopModal.querySelectorAll(".gender-btn");
+    const modeBtnMixed = document.getElementById("wopBtnMixed");
+    const modeBtnCustom = document.getElementById("wopBtnCustom");
+    const categoryOptions = document.getElementById("wopCategoryOptions");
 
-  startBtn.addEventListener("click", () => {
-    // Aktives Geschlecht auslesen
-    const activeGenderBtn = Array.from(genderButtons).find(btn => btn.classList.contains("active"));
-    const gender = activeGenderBtn ? activeGenderBtn.dataset.value : "mixed";
+    // Aktive Werte speichern
+    let selectedGender = "mixed";
+    let selectedMode = "mixed";
+    let selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"];
 
-    // Modus: Gemischt oder Kategorien wählen?
-    const customModeActive = document.getElementById("wopBtnCustom").classList.contains("active");
+    // Spieler-Daten
+    let players = [];
 
-    // Kategorien auslesen
-    let selectedCategories = [];
+    // --- Funktionen ---
 
-    if (customModeActive) {
-      const checkedBoxes = document.querySelectorAll("#wopCategoryOptions input[type='checkbox']:checked");
-      selectedCategories = Array.from(checkedBoxes).map(cb => cb.value);
-
-      if (selectedCategories.length === 0) {
-        alert("Bitte wähle mindestens eine Kategorie aus!");
-        return; // Weiterleitung abbrechen
-      }
-    } else {
-      // Wenn Gemischt, kannst du hier Default-Kategorien setzen oder einfach leer lassen
-      selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"]; // Beispiel
+    // Modal öffnen (allgemein)
+    function openModal(modal) {
+      modal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+    // Modal schließen (allgemein)
+    function closeModal(modal) {
+      modal.classList.add("hidden");
+      document.body.style.overflow = "";
     }
 
-    // URL-Parameter vorbereiten
-    const params = new URLSearchParams();
-    params.set("gender", gender);
-    params.set("mode", customModeActive ? "custom" : "mixed");
-    params.set("categories", selectedCategories.join(","));
+    // Start: Modal "Wahrheit oder Pflicht" öffnen bei Klick auf Card
+    wopCard.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModal(wopModal);
+      resetWopModal();
+    });
 
-    // Weiterleitung
-    window.location.href = `spiel-wop.html?${params.toString()}`;
-  });
-});
-</script>
+    closeWopModal.addEventListener("click", () => {
+      closeModal(wopModal);
+    });
 
-</body>
-</html>
+    closeWopPlayersModal.addEventListener("click", () => {
+      closeModal(wopPlayersModal);
+    });
+
+    // Geschlechtsauswahl klicken
+    genderButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        genderButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedGender = btn.dataset.value;
+
+        // Wenn Nur Jungs oder Nur Mädchen, schalte Kategorien aus, sonst an
+        if (selectedGender === "male" || selectedGender === "female") {
+          // Optional: hier evtl Kategorien anpassen / einschränken, falls gewünscht
+        }
+      });
+    });
+
+    // Modus Auswahl
+    modeBtnMixed.addEventListener("click", () => {
+      selectedMode = "mixed";
+      modeBtnMixed.classList.add("active");
+      modeBtnCustom.classList.remove("active");
+      categoryOptions.style.display = "none";
+      selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"];
+    });
+
+    modeBtnCustom.addEventListener("click", () => {
+      selectedMode = "custom";
+      modeBtnCustom.classList.add("active");
+      modeBtnMixed.classList.remove("active");
+      categoryOptions.style.display = "flex";
+      // Falls keine Kategorien gewählt: leere Liste
+      selectedCategories = [];
+    });
+
+    // Kategorien Checkboxen auswählen
+    categoryOptions.querySelectorAll("input[type='checkbox']").forEach(cb => {
+      cb.addEventListener("change", () => {
+        selectedCategories = Array.from(categoryOptions.querySelectorAll("input[type='checkbox']:checked")).map(c => c.value);
+      });
+    });
+
+    // Weiter zu Spielern Button
+    wopToPlayerBtn.addEventListener("click", () => {
+      if (selectedMode === "custom" && selectedCategories.length === 0) {
+        alert("Bitte wähle mindestens eine Kategorie aus!");
+        return;
+      }
+      // Kategorien und Geschlecht im localStorage speichern
+      localStorage.setItem("wop_gender", selectedGender);
+      localStorage.setItem("wop_mode", selectedMode);
+      localStorage.setItem("wop_categories", JSON.stringify(selectedCategories));
+
+      closeModal(wopModal);
+      openModal(wopPlayersModal);
+      resetPlayersForm();
+      addInitialPlayers(3); // Start mit 3 Feldern
+    });
+
+    // Spielerformular: Spieler hinzufügen
+    function addPlayer(name = "", gender = selectedGender) {
+      const index = playersList.children.length;
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("player-entry");
+      wrapper.style.display = "flex";
+      wrapper.style.alignItems = "center";
+      wrapper.style.justifyContent = "space-between";
+      wrapper.style.marginBottom = "0.7rem";
+      wrapper.dataset.index = index;
+
+      // Eingabefeld Name
+      const inputName = document.createElement("input");
+      inputName.type = "text";
+      inputName.placeholder = `Spieler ${index + 1} Name`;
+      inputName.value = name;
+      inputName.style.flexGrow = "1";
+      inputName.style.marginRight = "0.5rem";
+      inputName.autocomplete = "off";
+      inputName.required = true;
+      inputName.dataset.index = index;
+
+      // Geschlechtsregler (klein)
+      const genderSwitch = document.createElement("button");
+      genderSwitch.type = "button";
+      genderSwitch.classList.add("gender-btn");
+      genderSwitch.style.padding = "0.3rem
