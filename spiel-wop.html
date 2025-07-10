@@ -265,22 +265,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Neue Version der Überschrift
   function updateChoiceHeading(player = null) {
-  if (player) {
-    currentPlayerNameSpan.textContent = player.name + ",";
-    if (player.gender === "male") {
-      currentPlayerNameSpan.className = "current-player-name player-male";
-    } else if (player.gender === "female") {
-      currentPlayerNameSpan.className = "current-player-name player-female";
-    } else {
-      currentPlayerNameSpan.className = "current-player-name player-mixed";
-    }
-  } else {
-    currentPlayerNameSpan.textContent = "";
-    currentPlayerNameSpan.className = "current-player-name player-mixed";
+  const nameSpan = document.getElementById("currentPlayerName");
+  const textSpan = document.getElementById("questionPromptText");
+
+  if (!player) {
+    nameSpan.textContent = "";
+    nameSpan.className = "current-player-name player-mixed";
+    textSpan.textContent = "Wer ist dran?";
+    return;
   }
 
-  document.getElementById("questionPromptText").textContent = "Wahrheit oder Pflicht?";
-        }
+  nameSpan.textContent = player.name;
+  nameSpan.className = "current-player-name";
+  if (player.gender === "male") nameSpan.classList.add("player-male");
+  else if (player.gender === "female") nameSpan.classList.add("player-female");
+  else nameSpan.classList.add("player-mixed");
+
+  textSpan.textContent = "Wahrheit oder Pflicht?";
+  }
 
   // Namensratter-Effekt
   function nameRattern(duration = 2200, interval = 100) {
