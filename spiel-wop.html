@@ -213,8 +213,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   let pflichtPool = [];
   let currentModeSelected = null;
 
-  // Spieler aus LocalStorage laden
   let wopPlayers = [];
+  let playerQueue = []; // Neu: Reihenfolge
+
+  // Spieler aus LocalStorage laden
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
     if (storedPlayers) {
@@ -226,18 +228,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (!wopPlayers.length) {
     alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
-    // Optional: Redirect zurück zur Startseite oder Modal öffnen
     return;
   }
 
-  // Hilfsfunktion: Spieler zufällig auswählen
-  function getRandomPlayer() {
-    if (wopPlayers.length === 0) return null;
-    const idx = Math.floor(Math.random() * wopPlayers.length);
-    return wopPlayers[idx];
+  // Shuffle-Array Hilfsfunktion
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
-  // Spielername anzeigen (oben und vor Frage)
+  // Initiale Queue bauen
+  function refillQueue() {
+    playerQueue = shuffle([...wopPlayers]);
+  }
+
+  // Nächsten Spieler holen
+  function getNextPlayer() {
+    if (playerQueue.length === 0) refillQueue();
+    return playerQueue.shift();
+  }
+
+  // Spielername anzeigen
   function displayCurrentPlayer(player) {
     if (!player) {
       currentPlayerNameSpan.textContent = "";
@@ -246,31 +260,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     currentPlayerNameSpan.textContent = player.name;
     currentPlayerNameSpan.className = "current-player-name";
-    if (player.gender === "male") {
-      currentPlayerNameSpan.classList.add("player-male");
-    } else if (player.gender === "female") {
-      currentPlayerNameSpan.classList.add("player-female");
-    } else {
-      currentPlayerNameSpan.classList.add("player-mixed");
-    }
+    if (player.gender === "male") currentPlayerNameSpan.classList.add("player-male");
+    else if (player.gender === "female") currentPlayerNameSpan.classList.add("player-female");
+    else currentPlayerNameSpan.classList.add("player-mixed");
   }
 
-  // Überschrift aktualisieren (Text + optional Name)
-  function updateChoiceHeading(text, player = null) {
+  // Neue Version der Überschrift
+  function updateChoiceHeading(text) {
     choiceHeading.textContent = text;
-    if (player) {
-      choiceHeading.textContent += " – ";
-      const span = document.createElement("span");
-      span.textContent = player.name;
-      span.classList.add("current-player-name");
-      if (player.gender === "male") span.classList.add("player-male");
-      else if (player.gender === "female") span.classList.add("player-female");
-      else span.classList.add("player-mixed");
-      choiceHeading.appendChild(span);
-    }
+    currentPlayerNameSpan.textContent = ""; // separate Anzeige nicht mehr nötig
   }
 
-  // Funktion: Rattern der Namen mit Dauer
+  // Namensratter-Effekt
   function nameRattern(duration = 2200, interval = 100) {
     return new Promise(resolve => {
       const startTime = Date.now();
@@ -292,7 +293,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Zoom-Effekt für Namen (Promise-basiert)
+  // Nur fürs Rattern
+  function getRandomPlayer() {
+    return wopPlayers[Math.floor(Math.random() * wopPlayers.length)];
+  }
+
   function zoomInName() {
     return new Promise(resolve => {
       currentPlayerNameSpan.style.transition = "transform 0.6s ease";
@@ -305,27 +310,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Fragen aus JSON laden
   async function loadQuestions() {
     try {
       const res = await fetch("JSON/wop.json");
       if (!res.ok) throw new Error("HTTP-Fehler " + res.status);
-      const data = await res.json();
-      return data;
+      return await res.json();
     } catch (err) {
       alert("Fehler beim Laden der Fragen: " + err.message);
       return null;
     }
   }
 
-  // Zufall aus Array und gleichzeitig entfernen (damit keine Wiederholung)
   function getRandomFromPool(pool) {
     if (!pool.length) return null;
     const idx = Math.floor(Math.random() * pool.length);
     return pool.splice(idx, 1)[0];
   }
 
-  // Frage/Aufgabe anzeigen
   function showQuestion(mode, player) {
     currentModeSelected = mode;
     let question = null;
@@ -340,7 +341,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (!question) {
-      // Alle Fragen aufgebraucht
       updateChoiceHeading("Keine Fragen/Aufgaben mehr.");
       modeSelection.style.display = "none";
       questionView.style.display = "none";
@@ -361,7 +361,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     penaltyBtn.style.display = "inline-block";
     doneBtn.textContent = "Erledigt / Nächste Frage";
 
-    updateChoiceHeading(`Wahrheit oder Pflicht`, player);
+    updateChoiceHeading(`${player.name}, Wahrheit oder Pflicht?`);
 
     modeSelection.classList.add("fade-out");
     modeSelection.style.pointerEvents = "none";
@@ -374,7 +374,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 400);
   }
 
-  // Strafaufgabe anzeigen
   function showPenalty() {
     const alt = currentModeSelected === "truth" ? getRandomFromPool(pflichtPool) : getRandomFromPool(wahrheitPool);
     const text = alt ? (currentModeSelected === "truth" ? alt.text : alt.frage) : "Keine Strafaufgabe verfügbar.";
@@ -386,12 +385,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     doneBtn.textContent = "Zurück zur Auswahl";
   }
 
-  // Start-Sequenz: Name rattert + Zoom + Buttons anzeigen
   async function startNameSelection() {
     updateChoiceHeading("Wer ist dran?");
     currentPlayerNameSpan.textContent = "";
     currentPlayerNameSpan.style.transform = "scale(1)";
-    choiceHeading.className = "choice-heading fade-in";
     choiceHeading.style.display = "flex";
 
     modeSelection.style.display = "none";
@@ -399,16 +396,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await new Promise(r => setTimeout(r, 800));
 
-    const chosenPlayer = await nameRattern();
+    const dummy = await nameRattern();
+    const chosenPlayer = getNextPlayer();
 
     if (!chosenPlayer) {
       alert("Keine Spieler:innen zum Auswählen vorhanden.");
       return null;
     }
 
+    displayCurrentPlayer(chosenPlayer);
     await zoomInName();
 
-    updateChoiceHeading("Wahrheit oder Pflicht", chosenPlayer);
+    updateChoiceHeading(`${chosenPlayer.name}, Wahrheit oder Pflicht?`);
 
     modeSelection.style.display = "flex";
     modeSelection.classList.remove("fade-out");
@@ -418,15 +417,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     return chosenPlayer;
   }
 
-  // Initial laden der Fragen
+  // Initial laden
   wopData = await loadQuestions();
-  if (!wopData) return; // Fehler schon angezeigt
+  if (!wopData) return;
 
-  // Kategorien bestimmen (aus URL oder alle)
   const urlParams = new URLSearchParams(window.location.search);
   selectedCategories = urlParams.get("categories") ? urlParams.get("categories").split(",") : Object.keys(wopData);
 
-  // Pools füllen (Kopien, damit Original nicht verändert wird)
   selectedCategories.forEach(catKey => {
     if (wopData[catKey]) {
       wahrheitPool.push(...wopData[catKey].wahrheit);
@@ -434,10 +431,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Variabel für aktuellen Spieler speichern
   let currentPlayer = null;
 
-  // Klick-Events für Buttons
   document.getElementById("truthBtn").addEventListener("click", () => {
     if (!currentPlayer) return;
     modeSelection.classList.add("fade-out");
@@ -461,14 +456,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   doneBtn.addEventListener("click", async () => {
-    // Wenn gerade eine Strafaufgabe angezeigt wird, zurück zur Modus-Auswahl für gleichen Spieler
     if (penaltyHeading.style.display === "block") {
       penaltyHeading.style.display = "none";
       penaltyBtn.style.display = "inline-block";
       doneBtn.textContent = "Erledigt / Nächste Frage";
-      // Frage wieder anzeigen (gleiche Frage, kein neuer Name)
       questionBox.classList.remove("mystery");
-      // Hier evtl. nochmal Frage anzeigen? Aber wir bleiben erstmal bei Auswahl-Modus:
       modeSelection.style.display = "flex";
       questionView.classList.add("fade-out");
       setTimeout(() => {
@@ -480,14 +472,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // Sonst: Übergang zurück zur Namensauswahl (mit Pause)
     questionView.classList.remove("fade-in");
     questionView.classList.add("fade-out");
     questionView.style.pointerEvents = "none";
 
     setTimeout(async () => {
       questionView.style.display = "none";
-      // Neu: kurz Pause
       await new Promise(r => setTimeout(r, 400));
       currentPlayer = await startNameSelection();
     }, 400);
@@ -497,10 +487,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "index.html";
   });
 
-  // Starte direkt beim Laden mit Namen-Auswahl
+  // Los geht's
+  refillQueue();
   currentPlayer = await startNameSelection();
 });
-</script>
+ </script>
 
 </body>
 </html>
