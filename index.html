@@ -2,15 +2,266 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wahr oder Klar? – Die Spielewebseite für Freunde und Spaß</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="bilder/favicon.svg" />
-  <link rel="shortcut icon" href="bilder/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="bilder/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-title" content="Friendzone Fun" />
-  <link rel="manifest" href="bilder/site.webmanifest" />
+  <style>
+    /* ========== Light Theme (Standard) ========== */
+    body {
+      background: #f2f5fa;
+      color: #222;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    header {
+      background-color: #00509e;
+      color: white;
+      padding: 2.5rem 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+    }
+    .logo {
+      font-size: 2.5rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+    .intro {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background-color: #e0f1ff;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .intro h2 {
+      margin-top: 0;
+    }
+    .grid {
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 0 1rem;
+    }
+    .card {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      text-decoration: none;
+      color: #00509e;
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      background-color: #dff0ff;
+      transform: scale(1.03);
+    }
+    .emoji {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-weight: normal;
+      color: #444;
+      transition: color 0.3s ease;
+    }
+    footer {
+      background-color: #333;
+      color: #ccc;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: auto;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-overlay.hidden {
+      display: none;
+    }
+    .modal {
+      background-color: #fefefe;
+      color: #222;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 520px;
+      width: 90%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+      animation: fadeInScale 0.3s ease-in-out;
+      text-align: center;
+    }
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .modal h2 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+    .close-modal {
+      position: absolute;
+      top: 0.7rem;
+      right: 1rem;
+      font-size: 1.3rem;
+      color: #444;
+      cursor: pointer;
+      transition: transform 0.2s ease, color 0.2s ease;
+      user-select: none;
+    }
+    .close-modal:hover {
+      transform: scale(1.3);
+      color: #0077ff;
+    }
+    .mode-select {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .mode-btn {
+      padding: 0.6rem 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      background: #fafafa;
+      color: #333;
+      font-size: 1rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease, color 0.2s ease;
+      flex: 1;
+      max-width: 140px;
+    }
+    .mode-btn.active {
+      background-color: #3399ff;
+      color: #fff;
+      border-color: #3399ff;
+    }
+    .mode-btn:hover:not(.active) {
+      background-color: #eaeaea;
+    }
+    .category-select {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .category-select.hidden {
+      display: none;
+    }
+    .category-item {
+      font-size: 1rem;
+      background: #dff0ff;
+      color: #333;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .category-item input[type="checkbox"] {
+      accent-color: #3399ff;
+      cursor: pointer;
+    }
+    .start-btn {
+      background-color: #3399ff;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s ease;
+      width: 100%;
+      user-select: none;
+    }
+    .start-btn:hover {
+      background-color: #2b89e0;
+    }
+    .gender-select {
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #222;
+    }
+    .gender-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .gender-btn {
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      border: 1.5px solid #bbb;
+      background-color: transparent;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      color: #222;
+      user-select: none;
+      flex: 1;
+      max-width: 120px;
+    }
+    .gender-btn:hover {
+      background-color: #eee;
+      color: #000;
+    }
+    .gender-btn.active {
+      background-color: #0077ff;
+      color: #fff;
+      border-color: #0077ff;
+    }
+    /* Scrollbar for category select */
+    .category-select::-webkit-scrollbar {
+      width: 8px;
+    }
+    .category-select::-webkit-scrollbar-thumb {
+      background-color: #3399ff;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
 
@@ -28,35 +279,35 @@
 <main>
   <section class="intro">
     <h2>Hey! Schön, dass du da bist 👋</h2>
-    <p>Hier kannst du mit deinen Freunden richtig coole Spiele spielen. <br> Egal ob Klassenfahrt, Geburtstag oder einfach so – such dir einen Spielmodus aus und los geht’s!</p>
+    <p>Hier kannst du mit deinen Freunden richtig coole Spiele spielen.<br>Egal ob Klassenfahrt, Geburtstag oder einfach so – such dir einen Spielmodus aus und los geht’s!</p>
   </section>
 
   <section class="grid">
-    <a class="card" href="#" id="wopCard">
+    <div class="card" id="wopCard" tabindex="0" role="button" aria-pressed="false" aria-label="Wahrheit oder Pflicht auswählen">
       <div class="emoji">🎭</div>
       <h3>Wahrheit oder Pflicht</h3>
       <p>Harmlos oder mutig – du entscheidest!</p>
-    </a>
-    <a class="card" href="#" id="wdeCard">
+    </div>
+    <div class="card" id="wdeCard" tabindex="0" role="button" aria-pressed="false" aria-label="Wer würde eher auswählen">
       <div class="emoji">🤔</div>
       <h3>Wer würde eher...?</h3>
       <p>Lustige Einschätzungen unter Freunden.</p>
-    </a>
-    <a class="card" href="#" id="ihnnCard">
+    </div>
+    <div class="card" id="ihnnCard" tabindex="0" role="button" aria-pressed="false" aria-label="Ich hab noch nie auswählen">
       <div class="emoji">🍻</div>
       <h3>Ich hab noch nie...</h3>
       <p>Geständnisse und Spaß garantiert.</p>
-    </a>
-    <a class="card" href="#" id="ewodCard">
+    </div>
+    <div class="card" id="ewodCard" tabindex="0" role="button" aria-pressed="false" aria-label="Entweder oder auswählen">
       <div class="emoji">⚖️</div>
       <h3>Entweder/Oder</h3>
       <p>Pizza oder Pommes? Entscheide dich!</p>
-    </a>
-    <a class="card" href="#" id="ldtCard">
+    </div>
+    <div class="card" id="ldtCard" tabindex="0" role="button" aria-pressed="false" aria-label="Voting auswählen">
       <div class="emoji">📊</div>
       <h3>Voting</h3>
       <p>Wie denkt die Runde wirklich?</p>
-    </a>
+    </div>
   </section>
 </main>
 
@@ -65,327 +316,377 @@
   Made with 💙 – Spaß garantiert 😄
 </footer>
 
-<!-- Modal "Wahrheit oder Pflicht" -->
-<div class="modal-overlay hidden" id="wopModal">
+<!-- Modal-Vorlage (für alle Spielmodi, nur unterschiedliche Inhalte) -->
+<!-- Wahrheit oder Pflicht Modal -->
+<div class="modal-overlay hidden" id="wopModal" role="dialog" aria-modal="true" aria-labelledby="wopModalTitle" tabindex="-1">
   <div class="modal">
-    <span class="close-modal" id="closeWopModal">❌</span>
-    <h2>Wahrheit oder Pflicht – Kategorien</h2>
+    <button class="close-modal" id="closeWopModal" aria-label="Schließen">❌</button>
+    <h2 id="wopModalTitle">Wahrheit oder Pflicht – Kategorien</h2>
 
     <div class="gender-select">
       <p>Für wen sollen die Aufgaben sein?</p>
       <div class="gender-buttons">
-        <button class="gender-btn active" data-value="mixed">⚧ Gemischt</button>
-        <button class="gender-btn" data-value="male">👦 Nur Jungs</button>
-        <button class="gender-btn" data-value="female">👧 Nur Mädchen</button>
+        <button class="gender-btn active" data-value="mixed" type="button">⚧ Gemischt</button>
+        <button class="gender-btn" data-value="male" type="button">👦 Nur Jungs</button>
+        <button class="gender-btn" data-value="female" type="button">👧 Nur Mädchen</button>
       </div>
     </div>
 
-    <div class="mode-select">
-      <button id="wopBtnMixed" class="mode-btn active">🎨 Gemischt</button>
-      <button id="wopBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
+    <div class="mode-select" role="group" aria-label="Modus auswählen">
+      <button id="wopBtnMixed" class="mode-btn active" type="button">🎨 Gemischt</button>
+      <button id="wopBtnCustom" class="mode-btn" type="button">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="wopCategoryOptions" style="display: none;">
+    <div class="category-select hidden" id="wopCategoryOptions">
       <label class="category-item" data-tooltip="Lustige, harmlose Aufgaben – ideal zum Lockerwerden.">
-        <input type="checkbox" value="funny"> 🧃 Locker & Lustig
-        <div class="mobile-tooltip hidden">Lustige, harmlose Aufgaben – ideal zum Lockerwerden.</div>
+        <input type="checkbox" value="funny" />
+        🧃 Locker & Lustig
       </label>
       <label class="category-item" data-tooltip="Ehrliche Fragen und Challenges für mehr Vertrauen.">
-        <input type="checkbox" value="daring"> 🫱 Vertrauensbasis
-        <div class="mobile-tooltip hidden">Ehrliche Fragen und Challenges für mehr Vertrauen.</div>
+        <input type="checkbox" value="daring" />
+        🫱 Vertrauensbasis
       </label>
       <label class="category-item" data-tooltip="Fantasievolle oder gedanklich tiefere Fragen.">
-        <input type="checkbox" value="mind"> 🧠 Kopfkino
-        <div class="mobile-tooltip hidden">Fantasievolle oder gedanklich tiefere Fragen.</div>
+        <input type="checkbox" value="mind" />
+        🧠 Kopfkino
       </label>
       <label class="category-item" data-tooltip="Gefühle, Beziehungen, Vergangenheit – es wird ernst.">
-        <input type="checkbox" value="deep"> 💌 Deep Talk
-        <div class="mobile-tooltip hidden">Gefühle, Beziehungen, Vergangenheit – es wird ernst.</div>
+        <input type="checkbox" value="deep" />
+        💌 Deep Talk
       </label>
       <label class="category-item" data-tooltip="Mutige Fragen oder Aufgaben mit Nervenkitzel.">
-        <input type="checkbox" value="bold"> 🫣 Mut & Grenzen
-        <div class="mobile-tooltip hidden">Mutige Fragen oder Aufgaben mit Nervenkitzel.</div>
+        <input type="checkbox" value="bold" />
+        🫣 Mut & Grenzen
       </label>
       <label class="category-item" data-tooltip="Peinlich, provokant oder total verrückt – nur für Mutige.">
-        <input type="checkbox" value="taboo"> 🚫 Tabuzone
-        <div class="mobile-tooltip hidden">Peinlich, provokant oder total verrückt – nur für Mutige.</div>
+        <input type="checkbox" value="taboo" />
+        🚫 Tabuzone
       </label>
     </div>
 
-    <button class="start-btn" id="wopStartBtn">Los geht’s!</button>
+    <button class="start-btn" id="wopStartBtn" type="button">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal "Wer würde eher...?" -->
-<div class="modal-overlay hidden" id="wdeModal">
+<!-- Wer würde eher... Modal -->
+<div class="modal-overlay hidden" id="wdeModal" role="dialog" aria-modal="true" aria-labelledby="wdeModalTitle" tabindex="-1">
   <div class="modal">
-    <span class="close-modal" id="closeWdeModal">❌</span>
-    <h2>Wer würde eher...? – Kategorien</h2>
+    <button class="close-modal" id="closeWdeModal" aria-label="Schließen">❌</button>
+    <h2 id="wdeModalTitle">Wer würde eher...? – Kategorien</h2>
 
-    <div class="mode-select">
-      <button id="wdeBtnMixed" class="mode-btn active">🎨 Gemischt</button>
-      <button id="wdeBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
+    <div class="mode-select" role="group" aria-label="Modus auswählen">
+      <button id="wdeBtnMixed" class="mode-btn active" type="button">🎨 Gemischt</button>
+      <button id="wdeBtnCustom" class="mode-btn" type="button">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="wdeCategoryOptions" style="display: none;">
+    <div class="category-select hidden" id="wdeCategoryOptions">
       <label class="category-item" data-tooltip="Lustige, lockere Aussagen – einfach zum Lachen.">
-        <input type="checkbox" value="funny"> 😂 Locker und Lustig
-        <div class="mobile-tooltip hidden">Lustige, lockere Aussagen – einfach zum Lachen.</div>
+        <input type="checkbox" value="funny" />
+        😂 Locker und Lustig
       </label>
       <label class="category-item" data-tooltip="Wer kennt wen wirklich? Vertrauensfragen & ehrliche Einschätzungen.">
-        <input type="checkbox" value="daring"> 🫱 Vertrauensbasis
-        <div class="mobile-tooltip hidden">Wer kennt wen wirklich? Vertrauensfragen & ehrliche Einschätzungen.</div>
+        <input type="checkbox" value="daring" />
+        🫱 Vertrauensbasis
       </label>
       <label class="category-item" data-tooltip="Tiefgründige Einschätzungen zu Charakter und Persönlichkeit.">
-        <input type="checkbox" value="personal"> 🧠 Persönlich & Tiefgründig
-        <div class="mobile-tooltip hidden">Tiefgründige Einschätzungen zu Charakter und Persönlichkeit.</div>
+        <input type="checkbox" value="personal" />
+        🧠 Persönlich & Tiefgründig
       </label>
       <label class="category-item" data-tooltip="Mutige, freizügige Aussagen – nur wenn ihr euch kennt.">
-        <input type="checkbox" value="bold"> 🔥 Wagemutig & Freizügig
-        <div class="mobile-tooltip hidden">Mutige, freizügige Aussagen – nur wenn ihr euch kennt.</div>
+        <input type="checkbox" value="bold" />
+        🔥 Wagemutig & Freizügig
       </label>
       <label class="category-item" data-tooltip="Intime Aussagen über Liebe, Gefühle & private Themen.">
-        <input type="checkbox" value="intimate"> 🔒 Privat & Intim
-        <div class="mobile-tooltip hidden">Intime Aussagen über Liebe, Gefühle & private Themen.</div>
+        <input type="checkbox" value="intimate" />
+        🔒 Privat & Intim
       </label>
       <label class="category-item" data-tooltip="Tabubrüche, Extreme, WTF-Momente.">
-        <input type="checkbox" value="extreme"> ⚡ Extrem & Provokant
-        <div class="mobile-tooltip hidden">Tabubrüche, Extreme, WTF-Momente.</div>
+        <input type="checkbox" value="extreme" />
+        ⚡ Extrem & Provokant
       </label>
     </div>
 
-    <button class="start-btn" id="wdeStartBtn">Los geht’s!</button>
+    <button class="start-btn" id="wdeStartBtn" type="button">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal "Ich hab noch nie..." -->
-<div class="modal-overlay hidden" id="ihnnModal">
+<!-- Ich hab noch nie Modal -->
+<div class="modal-overlay hidden" id="ihnnModal" role="dialog" aria-modal="true" aria-labelledby="ihnnModalTitle" tabindex="-1">
   <div class="modal">
-    <span class="close-modal" id="closeIhnnModal">❌</span>
-    <h2>Ich hab noch nie... – Kategorien</h2>
+    <button class="close-modal" id="closeIhnnModal" aria-label="Schließen">❌</button>
+    <h2 id="ihnnModalTitle">Ich hab noch nie... – Kategorien</h2>
 
-    <div class="mode-select">
-      <button id="ihnnBtnMixed" class="mode-btn active">🎨 Gemischt</button>
-      <button id="ihnnBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
+    <div class="mode-select" role="group" aria-label="Modus auswählen">
+      <button id="ihnnBtnMixed" class="mode-btn active" type="button">🎨 Gemischt</button>
+      <button id="ihnnBtnCustom" class="mode-btn" type="button">🎛️ Kategorien wählen</button>
     </div>
-    <div class="category-select" id="ihnnCategoryOptions" style="display: none;">
+
+    <div class="category-select hidden" id="ihnnCategoryOptions">
       <label class="category-item" data-tooltip="Harmlose, lustige Aussagen – zum Lockerwerden.">
-        <input type="checkbox" value="funny"> 😂 Locker und Lustig
-        <div class="mobile-tooltip hidden">Harmlose, lustige Aussagen – zum Lockerwerden.</div>
+        <input type="checkbox" value="funny" />
+        😂 Locker und Lustig
       </label>
       <label class="category-item" data-tooltip="Aussagen aus Alltag und Leben – relatable!">
-        <input type="checkbox" value="casual"> 😎 Alltag & Erlebnisse
-        <div class="mobile-tooltip hidden">Aussagen aus Alltag und Leben – relatable!</div>
+        <input type="checkbox" value="casual" />
+        😎 Alltag & Erlebnisse
       </label>
       <label class="category-item" data-tooltip="Vertrauensvolle, tiefere Aussagen.">
-        <input type="checkbox" value="daring"> 🫱 Vertrauensbasis
-        <div class="mobile-tooltip hidden">Vertrauensvolle, tiefere Aussagen.</div>
+        <input type="checkbox" value="daring" />
+        🫱 Vertrauensbasis
       </label>
       <label class="category-item" data-tooltip="Eher gewagt und offen – nur für mutige Spieler.">
-        <input type="checkbox" value="personal"> 🔥 Persönlich & Freizügig
-        <div class="mobile-tooltip hidden">Eher gewagt und offen – nur für mutige Spieler.</div>
+        <input type="checkbox" value="personal" />
+        🔥 Persönlich & Freizügig
       </label>
       <label class="category-item" data-tooltip="Liebe, Dates, Gefühle – es wird romantisch.">
-        <input type="checkbox" value="flirty"> 💋 Flirty & Romantisch
-        <div class="mobile-tooltip hidden">Liebe, Dates, Gefühle – es wird romantisch.</div>
+        <input type="checkbox" value="flirty" />
+        💋 Flirty & Romantisch
       </label>
       <label class="category-item" data-tooltip="Schockierend, wild, manchmal peinlich.">
-        <input type="checkbox" value="extreme"> ⚡ Extrem & Provokant
-        <div class="mobile-tooltip hidden">Schockierend, wild, manchmal peinlich.</div>
+        <input type="checkbox" value="extreme" />
+        ⚡ Extrem & Provokant
       </label>
     </div>
 
-    <button class="start-btn" id="ihnnStartBtn">Los geht’s!</button>
+    <button class="start-btn" id="ihnnStartBtn" type="button">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal "Entweder / oder" -->
-<div class="modal-overlay hidden" id="ewodModal">
+<!-- Entweder/Oder Modal -->
+<div class="modal-overlay hidden" id="ewodModal" role="dialog" aria-modal="true" aria-labelledby="ewodModalTitle" tabindex="-1">
   <div class="modal">
-    <span class="close-modal" id="closeEwodModal">❌</span>
-    <h2>Entweder/oder – Kategorien</h2>
+    <button class="close-modal" id="closeEwodModal" aria-label="Schließen">❌</button>
+    <h2 id="ewodModalTitle">Entweder/oder – Kategorien</h2>
 
-    <div class="mode-select">
-      <button id="ewodBtnMixed" class="mode-btn active">🎨 Gemischt</button>
-      <button id="ewodBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
+    <div class="mode-select" role="group" aria-label="Modus auswählen">
+      <button id="ewodBtnMixed" class="mode-btn active" type="button">🎨 Gemischt</button>
+      <button id="ewodBtnCustom" class="mode-btn" type="button">🎛️ Kategorien wählen</button>
     </div>
-    <div class="category-select" id="ewodCategoryOptions" style="display: none;">
+
+    <div class="category-select hidden" id="ewodCategoryOptions">
       <label class="category-item" data-tooltip="Spaßfragen und absurde Entscheidungen.">
-        <input type="checkbox" value="funny"> 😂 Spaß & Albern
-        <div class="mobile-tooltip hidden">Spaßfragen und absurde Entscheidungen.</div>
+        <input type="checkbox" value="funny" />
+        😂 Spaß & Albern
       </label>
       <label class="category-item" data-tooltip="Was würdest du im Alltag wirklich tun?">
-        <input type="checkbox" value="life"> 🌍 Alltag & Leben
-        <div class="mobile-tooltip hidden">Was würdest du im Alltag wirklich tun?</div>
+        <input type="checkbox" value="life" />
+        🌍 Alltag & Leben
       </label>
       <label class="category-item" data-tooltip="Herz oder Kopf? Liebe oder Freiheit?">
-        <input type="checkbox" value="flirty"> 💌 Romantik & Flirt
-        <div class="mobile-tooltip hidden">Herz oder Kopf? Liebe oder Freiheit?</div>
+        <input type="checkbox" value="flirty" />
+        💌 Romantik & Flirt
       </label>
       <label class="category-item" data-tooltip="Spannende Extreme – oft unangenehm, immer lustig.">
-        <input type="checkbox" value="extreme"> ⚡ Extrem & Provokant
-        <div class="mobile-tooltip hidden">Spannende Extreme – oft unangenehm, immer lustig.</div>
+        <input type="checkbox" value="extreme" />
+        ⚡ Extrem & Provokant
       </label>
     </div>
 
-    <button class="start-btn" id="ewodStartBtn">Los geht’s!</button>
+    <button class="start-btn" id="ewodStartBtn" type="button">Los geht’s!</button>
   </div>
 </div>
 
-<!-- Modal "Voting" -->
-<div class="modal-overlay hidden" id="ldtModal">
+<!-- Voting Modal -->
+<div class="modal-overlay hidden" id="ldtModal" role="dialog" aria-modal="true" aria-labelledby="ldtModalTitle" tabindex="-1">
   <div class="modal">
-    <span class="close-modal" id="closeLdtModal">❌</span>
-    <h2>Voting – Kategorien</h2>
+    <button class="close-modal" id="closeLdtModal" aria-label="Schließen">❌</button>
+    <h2 id="ldtModalTitle">Voting – Kategorien</h2>
 
-    <div class="mode-select">
-      <button id="ldtBtnMixed" class="mode-btn active">🎨 Gemischt</button>
-      <button id="ldtBtnCustom" class="mode-btn">🎛️ Kategorien wählen</button>
+    <div class="mode-select" role="group" aria-label="Modus auswählen">
+      <button id="ldtBtnMixed" class="mode-btn active" type="button">🎨 Gemischt</button>
+      <button id="ldtBtnCustom" class="mode-btn" type="button">🎛️ Kategorien wählen</button>
     </div>
 
-    <div class="category-select" id="ldtCategoryOptions" style="display: none;">
+    <div class="category-select hidden" id="ldtCategoryOptions">
       <label class="category-item" data-tooltip="Lustige und absurde Aussagen zum Schmunzeln.">
-        <input type="checkbox" value="funny"> 😂 Spaß & Albern
-        <div class="mobile-tooltip hidden">Lustige und absurde Aussagen zum Schmunzeln.</div>
+        <input type="checkbox" value="funny" />
+        😂 Spaß & Albern
       </label>
       <label class="category-item" data-tooltip="Geheime Wahrheiten kommen ans Licht.">
-        <input type="checkbox" value="secrets"> 🤐 Heimliche Wahrheiten
-        <div class="mobile-tooltip hidden">Geheime Wahrheiten kommen ans Licht.</div>
+        <input type="checkbox" value="secrets" />
+        🤐 Heimliche Wahrheiten
       </label>
       <label class="category-item" data-tooltip="Freunde, Gefühle und Beziehungen einschätzen.">
-        <input type="checkbox" value="personal"> 💘 Freundschaft & Romantik
-        <div class="mobile-tooltip hidden">Freunde, Gefühle und Beziehungen einschätzen.</div>
+        <input type="checkbox" value="personal" />
+        💘 Freundschaft & Romantik
       </label>
       <label class="category-item" data-tooltip="Wie siehst du dich selbst – und wie sehen dich andere?">
-        <input type="checkbox" value="identity"> 🎭 Wer bist du wirklich?
-        <div class="mobile-tooltip hidden">Wie siehst du dich selbst – und wie sehen dich andere?</div>
+        <input type="checkbox" value="identity" />
+        🎭 Wer bist du wirklich?
       </label>
-      <label class="category-item" data-tooltip="Ein Thema – Verschiedene Meinungen">
-        <input type="checkbox" value="opinion"> 💡 Meinungssache
-        <div class="mobile-tooltip hidden">Kontroverse Aussagen – Diskussionspotenzial!</div>
+      <label class="category-item" data-tooltip="Kontroverse Aussagen – Diskussionspotenzial!">
+        <input type="checkbox" value="opinion" />
+        💡 Meinungssache
       </label>
     </div>
 
-    <button class="start-btn" id="ldtStartBtn">Los geht’s!</button>
+    <button class="start-btn" id="ldtStartBtn" type="button">Los geht’s!</button>
   </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Karten-IDs und Modal-IDs koppeln
-  const modalMap = {
-    wopCard: "wopModal",
-    wdeCard: "wdeModal",
-    ihnnCard: "ihnnModal",
-    ewodCard: "ewodModal",
-    ldtCard: "ldtModal",
-  };
+  document.addEventListener("DOMContentLoaded", () => {
+    // Hilfsfunktion: Modal öffnen/schließen
+    const openModal = modal => {
+      modal.classList.remove("hidden");
+      modal.focus();
+      document.body.style.overflow = "hidden"; // Scroll verhindern
+    };
+    const closeModal = modal => {
+      modal.classList.add("hidden");
+      document.body.style.overflow = ""; // Scroll wieder erlauben
+    };
 
-  // Modal-Buttons für "Gemischt" und "Kategorien wählen"
-  const modeButtonsMap = {
-    wopModal: { mixed: "wopBtnMixed", custom: "wopBtnCustom", categories: "wopCategoryOptions" },
-    wdeModal: { mixed: "wdeBtnMixed", custom: "wdeBtnCustom", categories: "wdeCategoryOptions" },
-    ihnnModal: { mixed: "ihnnBtnMixed", custom: "ihnnBtnCustom", categories: "ihnnCategoryOptions" },
-    ewodModal: { mixed: "ewodBtnMixed", custom: "ewodBtnCustom", categories: "ewodCategoryOptions" },
-    ldtModal: { mixed: "ldtBtnMixed", custom: "ldtBtnCustom", categories: "ldtCategoryOptions" },
-  };
+    // Alle Modals in Objekt
+    const modals = {
+      wop: document.getElementById("wopModal"),
+      wde: document.getElementById("wdeModal"),
+      ihnn: document.getElementById("ihnnModal"),
+      ewod: document.getElementById("ewodModal"),
+      ldt: document.getElementById("ldtModal"),
+    };
 
-  // Karten anklickbar machen: öffnet entsprechendes Modal
-  Object.entries(modalMap).forEach(([cardId, modalId]) => {
-    const card = document.getElementById(cardId);
-    const modal = document.getElementById(modalId);
+    // Karten => Modals zuordnen
+    const cards = {
+      wopCard: modals.wop,
+      wdeCard: modals.wde,
+      ihnnCard: modals.ihnn,
+      ewodCard: modals.ewod,
+      ldtCard: modals.ldt,
+    };
 
-    if (card && modal) {
-      card.addEventListener("click", (e) => {
-        e.preventDefault();
-        modal.classList.remove("hidden");
-      });
-
-      // Modal schließen mit ❌
-      const closeBtn = modal.querySelector(".close-modal");
-      if (closeBtn) {
-        closeBtn.addEventListener("click", () => {
-          modal.classList.add("hidden");
-        });
-      }
-
-      // Mode Buttons (Gemischt / Kategorien wählen)
-      const { mixed, custom, categories } = modeButtonsMap[modalId];
-      const btnMixed = document.getElementById(mixed);
-      const btnCustom = document.getElementById(custom);
-      const categoryOptions = document.getElementById(categories);
-
-      if (btnMixed && btnCustom && categoryOptions) {
-        btnMixed.addEventListener("click", () => {
-          btnMixed.classList.add("active");
-          btnCustom.classList.remove("active");
-          categoryOptions.style.display = "none";
-        });
-        btnCustom.addEventListener("click", () => {
-          btnCustom.classList.add("active");
-          btnMixed.classList.remove("active");
-          categoryOptions.style.display = "block";
-        });
-      }
-
-      // Geschlechtsauswahl Buttons (sofern vorhanden)
-      const genderBtns = modal.querySelectorAll(".gender-btn");
-      if (genderBtns.length > 0) {
-        genderBtns.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            genderBtns.forEach((b) => b.classList.remove("active"));
-            btn.classList.add("active");
-          });
-        });
-      }
-
-      // Start-Button: nur für Wahrheit oder Pflicht Beispiel (kann erweitert werden)
-      const startBtn = modal.querySelector(".start-btn");
-      if (startBtn) {
-        startBtn.addEventListener("click", () => {
-          // Beispiel: nur Wahrheit oder Pflicht Modal - Übergabe via URL
-          if (modalId === "wopModal") {
-            // Aktives Geschlecht auslesen
-            let gender = "mixed";
-            if (genderBtns.length > 0) {
-              const activeGender = Array.from(genderBtns).find((b) => b.classList.contains("active"));
-              if (activeGender) gender = activeGender.dataset.value;
-            }
-
-            // Mode: Gemischt oder Kategorien wählen?
-            const isCustom = btnCustom.classList.contains("active");
-
-            // Kategorien sammeln wenn custom
-            let selectedCategories = [];
-            if (isCustom) {
-              const checkedBoxes = categoryOptions.querySelectorAll("input[type=checkbox]:checked");
-              selectedCategories = Array.from(checkedBoxes).map((cb) => cb.value);
-
-              if (selectedCategories.length === 0) {
-                alert("Bitte wähle mindestens eine Kategorie aus!");
-                return;
-              }
-            } else {
-              selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"];
-            }
-
-            // URL-Parameter bauen
-            const params = new URLSearchParams();
-            params.set("gender", gender);
-            params.set("mode", isCustom ? "custom" : "mixed");
-            params.set("categories", selectedCategories.join(","));
-
-            // Weiterleitung zur Spieleseite
-            window.location.href = `spiel-wop.html?${params.toString()}`;
+    // Karten Klick öffnet passendes Modal
+    Object.entries(cards).forEach(([cardId, modal]) => {
+      const card = document.getElementById(cardId);
+      if (card) {
+        card.addEventListener("click", () => openModal(modal));
+        // Für Tastatur (Enter/Space)
+        card.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openModal(modal);
           }
-          // Hier können weitere Start-Button-Logiken für andere Modals ergänzt werden
         });
       }
-    }
+    });
+
+    // Close-Buttons Event
+    Object.values(modals).forEach(modal => {
+      const closeBtn = modal.querySelector(".close-modal");
+      closeBtn.addEventListener("click", () => closeModal(modal));
+
+      // Esc-Taste schließt Modal
+      modal.addEventListener("keydown", e => {
+        if (e.key === "Escape") {
+          closeModal(modal);
+        }
+      });
+    });
+
+    // --- Mode-Button Toggle (Gemischt / Kategorien wählen) ---
+    const modeButtonHandler = (modalId, btnMixedId, btnCustomId, categoryOptionsId) => {
+      const btnMixed = document.getElementById(btnMixedId);
+      const btnCustom = document.getElementById(btnCustomId);
+      const categoryOptions = document.getElementById(categoryOptionsId);
+
+      btnMixed.addEventListener("click", () => {
+        btnMixed.classList.add("active");
+        btnCustom.classList.remove("active");
+        categoryOptions.classList.add("hidden");
+      });
+      btnCustom.addEventListener("click", () => {
+        btnCustom.classList.add("active");
+        btnMixed.classList.remove("active");
+        categoryOptions.classList.remove("hidden");
+      });
+    };
+
+    modeButtonHandler("wopModal", "wopBtnMixed", "wopBtnCustom", "wopCategoryOptions");
+    modeButtonHandler("wdeModal", "wdeBtnMixed", "wdeBtnCustom", "wdeCategoryOptions");
+    modeButtonHandler("ihnnModal", "ihnnBtnMixed", "ihnnBtnCustom", "ihnnCategoryOptions");
+    modeButtonHandler("ewodModal", "ewodBtnMixed", "ewodBtnCustom", "ewodCategoryOptions");
+    modeButtonHandler("ldtModal", "ldtBtnMixed", "ldtBtnCustom", "ldtCategoryOptions");
+
+    // --- Geschlechtsauswahl WOP Modal ---
+    const wopGenderButtons = document.querySelectorAll("#wopModal .gender-btn");
+    wopGenderButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        wopGenderButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    // --- Start-Buttons: Kategorie-Auswahl prüfen + URL bauen + weiterleiten ---
+    const setupStartButton = (modal, startBtnId, genderSelector, categoryOptionsId, defaultCats) => {
+      const startBtn = document.getElementById(startBtnId);
+      startBtn.addEventListener("click", () => {
+        // Wenn Modal hat Geschlechtsauswahl (nur WOP)
+        let gender = "mixed";
+        if (genderSelector) {
+          const activeGenderBtn = modal.querySelector(`${genderSelector}.active`);
+          if (activeGenderBtn) gender = activeGenderBtn.dataset.value;
+        }
+
+        const btnMixed = modal.querySelector(".mode-btn.active");
+        const isCustom = btnMixed && btnMixed.id.endsWith("Custom") && btnMixed.classList.contains("active");
+
+        let categories = [];
+
+        if (isCustom) {
+          const checkedBoxes = modal.querySelectorAll(`#${categoryOptionsId} input[type="checkbox"]:checked`);
+          categories = Array.from(checkedBoxes).map(cb => cb.value);
+          if (categories.length === 0) {
+            alert("Bitte wähle mindestens eine Kategorie aus!");
+            return;
+          }
+        } else {
+          categories = defaultCats;
+        }
+
+        // Modus aus Modal ID (z.B. "wopModal" => "wop")
+        const mode = modal.id.replace("Modal", "");
+
+        // URL-Parameter bauen
+        const params = new URLSearchParams();
+        params.set("gender", gender);
+        params.set("mode", isCustom ? "custom" : "mixed");
+        params.set("categories", categories.join(","));
+
+        // Ziel-URL bestimmen
+        // Beispiel: spiel-wop.html, spiel-wde.html, spiel-ihnn.html, spiel-ewod.html, spiel-ldt.html
+        let targetPage = "";
+        switch (mode) {
+          case "wop":
+            targetPage = "spiel-wop.html";
+            break;
+          case "wde":
+            targetPage = "spiel-wde.html";
+            break;
+          case "ihnn":
+            targetPage = "spiel-ihnn.html";
+            break;
+          case "ewod":
+            targetPage = "spiel-ewod.html";
+            break;
+          case "ldt":
+            targetPage = "spiel-voting.html"; // Voting wird hier mit "spiel-voting.html" angenommen
+            break;
+          default:
+            targetPage = "index.html";
+        }
+
+        // Weiterleitung
+        window.location.href = `${targetPage}?${params.toString()}`;
+      });
+    };
+
+    // Setup Start-Button für alle Modals mit passenden Defaults
+    setupStartButton(modals.wop, "wopStartBtn", ".gender-btn", "wopCategoryOptions", ["funny", "daring", "mind", "deep", "bold", "taboo"]);
+    setupStartButton(modals.wde, "wdeStartBtn", null, "wdeCategoryOptions", ["funny", "daring", "personal", "bold", "intimate", "extreme"]);
+    setupStartButton(modals.ihnn, "ihnnStartBtn", null, "ihnnCategoryOptions", ["funny", "casual", "daring", "personal", "flirty", "extreme"]);
+    setupStartButton(modals.ewod, "ewodStartBtn", null, "ewodCategoryOptions", ["funny", "life", "flirty", "extreme"]);
+    setupStartButton(modals.ldt, "ldtStartBtn", null, "ldtCategoryOptions", ["funny", "secrets", "personal", "identity", "opinion"]);
+
   });
-
-});
 </script>
-
-</body>
-</html>
+        
