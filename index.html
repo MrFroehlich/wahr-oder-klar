@@ -379,7 +379,70 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // === 4. Weitere Zeile bei Texteingabe
+<script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const genderButtons = document.querySelectorAll(".gender-btn");
+  const startBtn = document.getElementById("wopStartBtn");
+  const playerModal = document.getElementById("playerModal");
+  const playerList = document.getElementById("playerList");
+  const startGameBtn = document.getElementById("startGameBtn");
+  const closePlayerModal = document.getElementById("closePlayerModal");
+
+  let lockedGender = null;
+
+  // === 1. Geschlechter-Auswahl im ersten Modal ===
+  genderButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      genderButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  // === 2. Start-Button → Spieler:innen-Modal öffnen ===
+  startBtn.addEventListener("click", () => {
+    const activeGender = document.querySelector(".gender-btn.active")?.dataset.value || "mixed";
+    const isCustom = document.getElementById("wopBtnCustom").classList.contains("active");
+
+    const checkedCategories = Array.from(document.querySelectorAll("#wopCategoryOptions input:checked")).map(cb => cb.value);
+    const selectedCategories = isCustom ? checkedCategories : ["funny", "daring", "mind", "deep", "bold", "taboo"];
+
+    if (isCustom && selectedCategories.length === 0) {
+      alert("Bitte wähle mindestens eine Kategorie aus!");
+      return;
+    }
+
+    localStorage.setItem("wopGender", activeGender);
+    localStorage.setItem("wopMode", isCustom ? "custom" : "mixed");
+    localStorage.setItem("wopCategories", JSON.stringify(selectedCategories));
+
+    // Modal vorbereiten
+    playerList.innerHTML = "";
+    lockedGender = (activeGender === "male" || activeGender === "female") ? activeGender : null;
+    addNewPlayerRow();
+
+    playerModal.classList.remove("hidden");
+    document.body.classList.add("modal-open");
+  });
+
+  // === 3. Neue Spieler-Reihe hinzufügen ===
+  function addNewPlayerRow() {
+    const row = document.createElement("div");
+    row.classList.add("player-row");
+
+    row.innerHTML = `
+      <input type="text" placeholder="Name eingeben" class="player-name" />
+      <div class="gender-toggle" data-gender="${lockedGender || 'mixed'}">
+        <button class="gender-option${!lockedGender ? ' active' : lockedGender === 'mixed' ? ' active' : ''}" data-value="mixed"${lockedGender ? ' disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>⚧</button>
+        <button class="gender-option${lockedGender === 'male' ? ' active' : ''}" data-value="male"${lockedGender ? ' disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>👦</button>
+        <button class="gender-option${lockedGender === 'female' ? ' active' : ''}" data-value="female"${lockedGender ? ' disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>👧</button>
+      </div>
+    `;
+
+    playerList.appendChild(row);
+  }
+
+  // === 4. Bei Texteingabe: neue Reihe erzeugen ===
   playerList.addEventListener("input", () => {
     const rows = playerList.querySelectorAll(".player-row");
     const lastRow = rows[rows.length - 1];
@@ -390,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === 5. Geschlecht per Button auswählbar (außer bei Lock)
+  // === 5. Geschlecht per Button auswählen (sofern nicht gelockt) ===
   playerList.addEventListener("click", e => {
     if (e.target.classList.contains("gender-option") && !e.target.disabled) {
       const parent = e.target.closest(".gender-toggle");
@@ -400,14 +463,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === 6. Speichern & Weiterleiten
+  // === 6. Spiel starten: Daten speichern & weiterleiten ===
   startGameBtn.addEventListener("click", () => {
     const rows = playerList.querySelectorAll(".player-row");
     const players = [];
 
     rows.forEach(row => {
       const name = row.querySelector("input").value.trim();
-      const gender = lockedGender ?? row.querySelector(".gender-toggle").dataset.gender || "mixed";
+      const gender = lockedGender || row.querySelector(".gender-toggle").dataset.gender || "mixed";
       if (name) players.push({ name, gender });
     });
 
@@ -420,14 +483,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "spiel-wop.html";
   });
 
-  // === 7. Modal schließen & Reset
+  // === 7. ❌ Modal schließen ===
   closePlayerModal.addEventListener("click", () => {
     playerModal.classList.add("hidden");
     document.body.classList.remove("modal-open");
     playerList.innerHTML = "";
   });
+
+  // === 8. Beim Neuladen: Felder zurücksetzen ===
+  playerList.innerHTML = "";
 });
 </script>
-
-</body>
-</html>
