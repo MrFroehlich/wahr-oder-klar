@@ -296,24 +296,6 @@
 
 <!-- ========== SCRIPTS ========== -->
 <script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const genderButtons = document.querySelectorAll(".gender-btn");
-  const startBtn = document.getElementById("wopStartBtn");
-  const playerModal = document.getElementById("playerModal");
-  const playerFields = document.getElementById("playerFields");
-  const closePlayerModal = document.getElementById("closePlayerModal");
-
-  // === Geschlechter-Auswahl: aktivieren ===
-  genderButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      genderButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
-  });
-
-  // === Start-Button im WOP-Modal: öffnet Spieler:innen-Modal ===
-  startBtn.addEventListener("click", () => {
 <!-- ========== SCRIPTS ========== -->
 <script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
 <script>
@@ -325,6 +307,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const startGameBtn = document.getElementById("startGameBtn");
   const closePlayerModal = document.getElementById("closePlayerModal");
 
+  let lockedGender = null; // gemischt | male | female
+
   // === 1. Geschlechterauswahl im ersten Modal ===
   genderButtons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -333,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // === 2. Öffnen des Spieler:innen-Modals ===
+  // === 2. Spieler:innen-Modal öffnen ===
   startBtn.addEventListener("click", () => {
     const activeGender = document.querySelector(".gender-btn.active")?.dataset.value || "mixed";
     const isCustom = document.getElementById("wopBtnCustom").classList.contains("active");
@@ -350,34 +334,65 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("wopMode", isCustom ? "custom" : "mixed");
     localStorage.setItem("wopCategories", JSON.stringify(selectedCategories));
 
+    // === 2a. Spieler-Modal vorbereiten ===
+    lockedGender = (activeGender === "male" || activeGender === "female") ? activeGender : null;
+    playerList.innerHTML = ""; // Reset Namefelder
+    addNewPlayerRow();
+
     playerModal.classList.remove("hidden");
     document.body.classList.add("modal-open");
   });
 
   // === 3. Dynamisch neue Spieler:innen-Reihe hinzufügen ===
+  function addNewPlayerRow() {
+    const row = document.createElement("div");
+    row.classList.add("player-row");
+
+    const genderButtonsHTML = `
+      <button class="gender-option" data-value="mixed">⚧</button>
+      <button class="gender-option" data-value="male">👦</button>
+      <button class="gender-option" data-value="female">👧</button>
+    `;
+
+    let active = lockedGender ?? "mixed";
+
+    row.innerHTML = `
+      <input type="text" placeholder="Name eingeben" class="player-name" />
+      <div class="gender-toggle" data-gender="${active}">
+        ${genderButtonsHTML}
+      </div>
+    `;
+    playerList.appendChild(row);
+
+    // Gender-Buttons setzen
+    const toggle = row.querySelector(".gender-toggle");
+    toggle.querySelectorAll(".gender-option").forEach(btn => {
+      if (btn.dataset.value === active) {
+        btn.classList.add("active");
+      }
+
+      if (lockedGender) {
+        btn.disabled = true;
+        btn.style.opacity = btn.dataset.value === lockedGender ? "1" : "0.4";
+        btn.style.cursor = "not-allowed";
+      }
+    });
+  }
+
+  // === 4. Weitere Zeile bei Texteingabe
   playerList.addEventListener("input", () => {
     const rows = playerList.querySelectorAll(".player-row");
     const lastRow = rows[rows.length - 1];
     const nameInput = lastRow.querySelector("input");
 
     if (nameInput && nameInput.value.trim() !== "") {
-      const newRow = document.createElement("div");
-      newRow.classList.add("player-row");
-      newRow.innerHTML = `
-        <input type="text" placeholder="Name eingeben" class="player-name" />
-        <div class="gender-toggle" data-gender="mixed">
-          <button class="gender-option active" data-value="mixed">⚧</button>
-          <button class="gender-option" data-value="male">👦</button>
-          <button class="gender-option" data-value="female">👧</button>
-        </div>
-      `;
-      playerList.appendChild(newRow);
+      addNewPlayerRow();
     }
   });
 
-  // === 4. Geschlecht bei Spieler:innen per Button auswählbar ===
+  // === 5. Geschlecht per Button auswählbar (außer bei Lock)
   playerList.addEventListener("click", e => {
-    if (e.target.classList.contains("gender-option")) {
+    if (e.target.classList.contains("gender-option") && !e.target.disabled) {
       const parent = e.target.closest(".gender-toggle");
       parent.querySelectorAll(".gender-option").forEach(btn => btn.classList.remove("active"));
       e.target.classList.add("active");
@@ -385,14 +400,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === 5. Spieler:innen speichern & zur Spieleseite wechseln ===
+  // === 6. Speichern & Weiterleiten
   startGameBtn.addEventListener("click", () => {
     const rows = playerList.querySelectorAll(".player-row");
     const players = [];
 
     rows.forEach(row => {
       const name = row.querySelector("input").value.trim();
-      const gender = row.querySelector(".gender-toggle").dataset.gender || "mixed";
+      const gender = lockedGender ?? row.querySelector(".gender-toggle").dataset.gender || "mixed";
       if (name) players.push({ name, gender });
     });
 
@@ -405,15 +420,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "spiel-wop.html";
   });
 
-  // === ❌ Modal schließen ===
+  // === 7. Modal schließen & Reset
   closePlayerModal.addEventListener("click", () => {
     playerModal.classList.add("hidden");
     document.body.classList.remove("modal-open");
+    playerList.innerHTML = "";
   });
 });
 </script>
 
 </body>
 </html>
-
-  
