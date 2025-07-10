@@ -155,6 +155,8 @@
       font-weight: 900;
       font-size: clamp(1.4rem, 4vw, 2.5rem);
       white-space: nowrap;
+      display: inline-block;
+      transform-origin: center bottom;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -183,19 +185,19 @@
   <div class="container">
 
     <!-- Überschrift Container mit Name -->
-    <div class="choice-heading-container">
+    <div class="choice-heading-container" aria-live="polite" aria-atomic="true">
       <h2 id="choiceHeading" class="choice-heading fade-in">
         Wahrheit oder Pflicht? 
         <span id="currentPlayerName" class="current-player-name player-mixed"></span>
       </h2>
     </div>
 
-    <div id="modeSelection" class="mode-selection fade-in" aria-live="polite">
+    <div id="modeSelection" class="mode-selection fade-out" aria-live="polite" aria-atomic="true" style="display:none;">
       <button id="truthBtn" type="button">Wahrheit</button>
       <button id="dareBtn" type="button">Pflicht</button>
     </div>
 
-    <div id="questionView" class="question-view fade-out" style="display:none;">
+    <div id="questionView" class="question-view fade-out" style="display:none;" aria-live="polite" aria-atomic="true">
       <div class="category-label" id="categoryLabel"></div>
       <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
       <div class="question-box" id="questionBox">Frage erscheint hier...</div>
@@ -204,7 +206,7 @@
         <button id="penaltyBtn" class="action-btn strafaufgabe">Strafaufgabe</button>
       </div>
     </div>
-    <button id="backBtn" class="back-button">Zurück zur Startseite</button>
+    <button id="backBtn" class="back-button" style="margin-top:2rem;">Zurück zur Startseite</button>
   </div>
 </main>
 
@@ -270,8 +272,8 @@
     }
 
     // Überschrift ein-/ausblenden
-    function updateChoiceHeadingVisibility() {
-      if (modeSelection.style.display !== "none") {
+    function updateChoiceHeadingVisibility(show = true) {
+      if (show) {
         choiceHeading.classList.remove("fade-out");
         choiceHeading.classList.add("fade-in");
         choiceHeading.style.display = "flex";
@@ -310,8 +312,54 @@
       return pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
     }
 
+    // --- NEU: Namen rattert ---
+    async function nameRattern(duration = 2000, interval = 100) {
+      return new Promise(resolve => {
+        let elapsed = 0;
+        let currentName = null;
+        const ratterInterval = setInterval(() => {
+          const player = getRandomPlayer();
+          if (!player) return;
+          currentPlayerNameSpan.textContent = `– ${player.name}`;
+          currentPlayerNameSpan.className = "current-player-name";
+          if (player.gender === "male") {
+            currentPlayerNameSpan.classList.add("player-male");
+          } else if (player.gender === "female") {
+            currentPlayerNameSpan.classList.add("player-female");
+          } else {
+            currentPlayerNameSpan.classList.add("player-mixed");
+          }
+          currentName = player;
+          elapsed += interval;
+          if (elapsed >= duration) {
+            clearInterval(ratterInterval);
+            resolve(currentName);
+          }
+        }, interval);
+      });
+    }
+
+    // Zoom-In Animation für Namen
+    function zoomInName() {
+      return new Promise(resolve => {
+        currentPlayerNameSpan.style.transition = "transform 0.6s ease";
+        currentPlayerNameSpan.style.transformOrigin = "center bottom";
+        currentPlayerNameSpan.style.transform = "scale(1.3)";
+        setTimeout(() => {
+          // Rücksetzen der Skalierung auf normal nach kurzer Zeit
+          currentPlayerNameSpan.style.transform = "scale(1)";
+          setTimeout(() => resolve(), 400);
+        }, 600);
+      });
+    }
+
+    // Überschrift setzen für Auswahlmodus (mit oder ohne Name)
+    function setChoiceHeading(text) {
+      choiceHeading.innerHTML = text + ' <span id="currentPlayerName" class="current-player-name player-mixed"></span>';
+    }
+
     // Frage/Aufgabe anzeigen mit Spielername davor
-    function showQuestion(mode) {
+    function showQuestion(mode, player) {
       currentModeSelected = mode;
       let question, categoryKey = "";
 
@@ -323,7 +371,6 @@
         categoryKey = Object.keys(wopData).find(key => wopData[key].pflicht.includes(question));
       }
 
-      const player = getRandomPlayer();
       displayCurrentPlayer(player);
 
       const baseText = question ? (mode === "truth" ? question.frage : question.text) : "Keine Fragen/Aufgaben mehr.";
@@ -344,15 +391,26 @@
       penaltyBtn.style.display = question ? "inline-block" : "none";
       doneBtn.textContent = question ? "Erledigt / Nächste Frage" : "Zurück zur Auswahl";
 
+      // Überschrift anpassen mit Name
+      choiceHeading.textContent = `Wahrheit oder Pflicht – ${player.name}`;
+      if (player.gender === "male") {
+        choiceHeading.className = "choice-heading player-male fade-in";
+      } else if (player.gender === "female") {
+        choiceHeading.className = "choice-heading player-female fade-in";
+      } else {
+        choiceHeading.className = "choice-heading player-mixed fade-in";
+      }
+
       modeSelection.classList.add("fade-out");
       modeSelection.style.display = "none";
       questionView.style.display = "flex";
       questionView.classList.remove("fade-out");
       questionView.classList.add("fade-in");
 
-      updateChoiceHeadingVisibility();
+      updateChoiceHeadingVisibility(true);
     }
 
+    // Strafaufgabe anzeigen
     function showPenalty() {
       const alt = currentModeSelected === "truth" ? getRandom(pflichtPool) : getRandom(wahrheitPool);
       const text = alt ? (currentModeSelected === "truth" ? alt.text : alt.frage) : "Keine Strafaufgabe verfügbar.";
@@ -364,37 +422,107 @@
       doneBtn.textContent = "Zurück zur Auswahl";
     }
 
-    document.getElementById("truthBtn").addEventListener("click", () => showQuestion("truth"));
-    document.getElementById("dareBtn").addEventListener("click", () => showQuestion("dare"));
+    // Ablauf nach Seitenladen und nach "Erledigt"
+    async function startNameSelection() {
+      // Erst Überschrift „Wer ist dran?“ + Name ausblenden
+      setChoiceHeading("Wer ist dran?");
+      currentPlayerNameSpan.textContent = "";
+      currentPlayerNameSpan.style.transform = "scale(1)";
+      choiceHeading.className = "choice-heading fade-in";
+      choiceHeading.style.display = "flex";
+
+      modeSelection.style.display = "none";
+      questionView.style.display = "none";
+
+      // Kurze Pause vor Rattern
+      await new Promise(r => setTimeout(r, 800));
+
+      // Namen rattert
+      const chosenPlayer = await nameRattern();
+
+      // Zoom-In Effekt auf den Namen
+      await zoomInName();
+
+      // Überschrift auf „Wahrheit oder Pflicht – [Name]“
+      choiceHeading.textContent = `Wahrheit oder Pflicht – ${chosenPlayer.name}`;
+      if (chosenPlayer.gender === "male") {
+        choiceHeading.className = "choice-heading player-male fade-in";
+      } else if (chosenPlayer.gender === "female") {
+        choiceHeading.className = "choice-heading player-female fade-in";
+      } else {
+        choiceHeading.className = "choice-heading player-mixed fade-in";
+      }
+
+      // Namen nochmal setzen, damit er sichtbar bleibt
+      currentPlayerNameSpan.textContent = "";
+      currentPlayerNameSpan.style.transform = "scale(1)";
+
+      // Kurze Pause vor Buttons
+      await new Promise(r => setTimeout(r, 500));
+
+      // Buttons anzeigen
+      modeSelection.style.display = "flex";
+      modeSelection.classList.remove("fade-out");
+      modeSelection.classList.add("fade-in");
+
+      questionView.style.display = "none";
+
+      return chosenPlayer;
+    }
+
+    // Aktueller Spieler, global gespeichert
+    let currentPlayer = null;
+
+    // Buttons "Wahrheit" / "Pflicht" Klick
+    document.getElementById("truthBtn").addEventListener("click", () => {
+      modeSelection.classList.add("fade-out");
+      modeSelection.style.pointerEvents = "none";
+
+      setTimeout(() => {
+        showQuestion("truth", currentPlayer);
+      }, 400);
+    });
+
+    document.getElementById("dareBtn").addEventListener("click", () => {
+      modeSelection.classList.add("fade-out");
+      modeSelection.style.pointerEvents = "none";
+
+      setTimeout(() => {
+        showQuestion("dare", currentPlayer);
+      }, 400);
+    });
+
     penaltyBtn.addEventListener("click", showPenalty);
 
-    doneBtn.addEventListener("click", () => {
+    // Button „Erledigt / Nächste Frage“
+    doneBtn.addEventListener("click", async () => {
       questionView.classList.remove("fade-in");
       questionView.classList.add("fade-out");
 
-      function onTransitionEnd() {
-        questionView.style.display = "none";
+      await new Promise(r => setTimeout(r, 400));
 
-        modeSelection.style.display = "flex";
-        modeSelection.classList.remove("fade-out");
-        modeSelection.classList.add("fade-in");
-        penaltyHeading.style.display = "none";
-        penaltyBtn.style.display = "inline-block";
-        questionBox.textContent = "Frage erscheint hier...";
-        questionBox.classList.remove("mystery");
-        currentPlayerNameSpan.textContent = ""; // Name ausblenden wenn zurück
+      questionView.style.display = "none";
 
-        updateChoiceHeadingVisibility();
+      // Reset
+      categoryLabel.textContent = "";
+      penaltyHeading.style.display = "none";
+      penaltyBtn.style.display = "inline-block";
+      questionBox.textContent = "Frage erscheint hier...";
+      questionBox.classList.remove("mystery");
+      currentPlayerNameSpan.textContent = "";
 
-        questionView.removeEventListener("transitionend", onTransitionEnd);
-      }
+      // Kurz warten
+      await new Promise(r => setTimeout(r, 600));
 
-      questionView.addEventListener("transitionend", onTransitionEnd);
+      // Start Name Auswahl neu (Pause + Rattern + Zoom + Buttons)
+      currentPlayer = await startNameSelection();
     });
 
     backBtn.addEventListener("click", () => window.location.href = "index.html");
 
-    updateChoiceHeadingVisibility();
+    // Seite initial starten
+    currentPlayer = await startNameSelection();
+
   });
 </script>
 </body>
