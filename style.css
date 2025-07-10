@@ -721,3 +721,7 @@ body.modal-open {
     color: crimson;
   }
    }
+
+body.modal-open {
+  overflow: hidden;
+   }
