@@ -368,6 +368,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
+    categoryKey = question._cat;
+
     displayCurrentPlayer(player);
 
     const baseText = mode === "truth" ? question.frage : question.text;
@@ -445,13 +447,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   selectedCategories = urlParams.get("categories") ? urlParams.get("categories").split(",") : Object.keys(wopData);
 
+  
   selectedCategories.forEach(catKey => {
-    if (wopData[catKey]) {
-      wahrheitPool.push(...wopData[catKey].wahrheit);
-      pflichtPool.push(...wopData[catKey].pflicht);
-    }
-  });
+  if (wopData[catKey]) {
+    wopData[catKey].wahrheit.forEach(q => {
+      q._cat = catKey;
+      wahrheitPool.push(q);
+    });
+    wopData[catKey].pflicht.forEach(q => {
+      q._cat = catKey;
+      pflichtPool.push(q);
+    });
+  }
+});
 
+  
   let currentPlayer = null;
 
   document.getElementById("truthBtn").addEventListener("click", () => {
