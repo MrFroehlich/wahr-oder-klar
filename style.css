@@ -725,3 +725,11 @@ body.modal-open {
 body.modal-open {
   overflow: hidden;
    }
+
+
+.gender-option.active {
+  background-color: var(--accent-color);
+  color: #fff;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
