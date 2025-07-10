@@ -168,12 +168,11 @@
 <main>
   <div class="container">
 
-    <div class="choice-heading-container">
-      <h2 id="choiceHeading" class="choice-heading fade-in">
-        Wahrheit oder Pflicht? 
-        <span id="currentPlayerName" class="current-player-name player-mixed"></span>
-      </h2>
-    </div>
+    <h2 id="choiceHeading" class="choice-heading fade-in">
+  <span id="currentPlayerName" class="current-player-name player-mixed"></span>
+  <br />
+  <span id="questionPromptText">Wahrheit oder Pflicht?</span>
+    </h2>
 
     <div id="modeSelection" class="mode-selection fade-in" aria-live="polite">
       <button id="truthBtn" type="button">Wahrheit</button>
@@ -266,10 +265,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Neue Version der Überschrift
-  function updateChoiceHeading(text) {
-    choiceHeading.textContent = text;
-    currentPlayerNameSpan.textContent = ""; // separate Anzeige nicht mehr nötig
+  function updateChoiceHeading(player = null) {
+  if (player) {
+    currentPlayerNameSpan.textContent = player.name + ",";
+    if (player.gender === "male") {
+      currentPlayerNameSpan.className = "current-player-name player-male";
+    } else if (player.gender === "female") {
+      currentPlayerNameSpan.className = "current-player-name player-female";
+    } else {
+      currentPlayerNameSpan.className = "current-player-name player-mixed";
+    }
+  } else {
+    currentPlayerNameSpan.textContent = "";
+    currentPlayerNameSpan.className = "current-player-name player-mixed";
   }
+
+  document.getElementById("questionPromptText").textContent = "Wahrheit oder Pflicht?";
+        }
 
   // Namensratter-Effekt
   function nameRattern(duration = 2200, interval = 100) {
@@ -407,7 +419,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayCurrentPlayer(chosenPlayer);
     await zoomInName();
 
-    updateChoiceHeading(`${chosenPlayer.name}, Wahrheit oder Pflicht?`);
+    updateChoiceHeading(chosenPlayer);
 
     modeSelection.style.display = "flex";
     modeSelection.classList.remove("fade-out");
