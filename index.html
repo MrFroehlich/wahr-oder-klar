@@ -429,52 +429,158 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ========== Spieler:innen Modal ==========
   const playerList = document.getElementById("playerList");
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // === Modal-Logik Allgemein ===
+  const body = document.body;
+  const modals = document.querySelectorAll(".modal-overlay");
+  const closeButtons = document.querySelectorAll(".close-modal");
 
-  playerList.addEventListener("input", () => {
-    const rows = document.querySelectorAll("#playerList .player-row");
-    const lastRow = rows[rows.length - 1];
-    const input = lastRow.querySelector(".player-name");
-    if (input.value.trim() !== "") {
-      const newRow = lastRow.cloneNode(true);
-      newRow.querySelector(".player-name").value = "";
-      newRow.querySelectorAll(".gender-option").forEach(btn => btn.classList.remove("active"));
-      newRow.querySelector(".gender-option[data-value='mixed']").classList.add("active");
-      newRow.querySelector(".gender-toggle").dataset.gender = "mixed";
-      playerList.appendChild(newRow);
-    }
+  function showModal(modal) {
+    modals.forEach(m => m.classList.add("hidden")); // alle anderen ausblenden
+    modal.classList.remove("hidden");
+    modal.classList.add("show");
+    body.classList.add("modal-open");
+  }
+
+  function hideModal(modal) {
+    modal.classList.remove("show");
+    modal.classList.add("hidden");
+    body.classList.remove("modal-open");
+  }
+
+  closeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const modal = btn.closest(".modal-overlay");
+      hideModal(modal);
+    });
   });
 
-  // ========== Geschlecht-Button pro Person ==========
-  document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("gender-option")) {
-      const group = e.target.closest(".gender-toggle");
-      group.querySelectorAll(".gender-option").forEach(btn => btn.classList.remove("active"));
-      e.target.classList.add("active");
-      group.dataset.gender = e.target.dataset.value;
-    }
+  // === WOP Modal öffnen ===
+  document.getElementById("wopCard")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    showModal(document.getElementById("wopModal"));
   });
 
-  // ========== Spiel starten & localStorage speichern ==========
-  document.getElementById("startGameBtn").addEventListener("click", () => {
+  // === Geschlechterauswahl im ersten Modal ===
+  const genderButtons = document.querySelectorAll("#wopModal .gender-btn");
+  let selectedGender = "mixed";
+
+  genderButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      genderButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedGender = btn.dataset.value;
+    });
+  });
+
+  // === Kategorieauswahl-Umschaltung ===
+  const wopBtnMixed = document.getElementById("wopBtnMixed");
+  const wopBtnCustom = document.getElementById("wopBtnCustom");
+  const wopCategoryOptions = document.getElementById("wopCategoryOptions");
+
+  wopBtnMixed?.addEventListener("click", () => {
+    wopBtnMixed.classList.add("active");
+    wopBtnCustom.classList.remove("active");
+    wopCategoryOptions.style.display = "none";
+  });
+
+  wopBtnCustom?.addEventListener("click", () => {
+    wopBtnCustom.classList.add("active");
+    wopBtnMixed.classList.remove("active");
+    wopCategoryOptions.style.display = "flex";
+  });
+
+  // === Start-Button -> Weiter zu Modal 2 (Spieler:innen-Eingabe) ===
+  const startBtn = document.getElementById("wopStartBtn");
+  const secondModal = document.getElementById("playerModal");
+
+  startBtn?.addEventListener("click", () => {
+    // Kategorien prüfen
+    const customMode = wopBtnCustom.classList.contains("active");
+    let selectedCategories = [];
+
+    if (customMode) {
+      const checked = document.querySelectorAll("#wopCategoryOptions input[type='checkbox']:checked");
+      selectedCategories = Array.from(checked).map(cb => cb.value);
+      if (selectedCategories.length === 0) {
+        alert("Bitte wähle mindestens eine Kategorie aus!");
+        return;
+      }
+    } else {
+      selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"];
+    }
+
+    // Infos speichern
+    localStorage.setItem("wop_gender", selectedGender);
+    localStorage.setItem("wop_categories", JSON.stringify(selectedCategories));
+
+    // Modal 2 öffnen
+    showModal(secondModal);
+  });
+
+  // === Spielerfeld: Automatisch neues Feld hinzufügen ===
+  const playerList = document.getElementById("playerList");
+
+  function createPlayerField() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "player-entry";
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Name";
+    input.className = "player-name";
+
+    const genderSlider = document.createElement("select");
+    genderSlider.className = "player-gender";
+    genderSlider.innerHTML = `
+      <option value="mixed">⚧</option>
+      <option value="male">👦</option>
+      <option value="female">👧</option>
+    `;
+
+    input.addEventListener("input", () => {
+      const allFilled = [...playerList.querySelectorAll("input")].every(i => i.value.trim() !== "");
+      if (allFilled) createPlayerField();
+    });
+
+    wrapper.appendChild(input);
+    wrapper.appendChild(genderSlider);
+    playerList.appendChild(wrapper);
+  }
+
+  // Modal 2: Schließen / Zurück
+  document.getElementById("closePlayerModal")?.addEventListener("click", () => {
+    hideModal(secondModal);
+    // ggf. Eingaben zurücksetzen
+    playerList.innerHTML = "";
+    createPlayerField();
+  });
+
+  // Spiel starten aus Modal 2
+  document.getElementById("startGameBtn")?.addEventListener("click", () => {
     const players = [];
-    document.querySelectorAll("#playerList .player-row").forEach(row => {
-      const name = row.querySelector(".player-name").value.trim();
-      const gender = row.querySelector(".gender-toggle").dataset.gender;
+    const inputs = playerList.querySelectorAll(".player-entry");
+
+    inputs.forEach(entry => {
+      const name = entry.querySelector("input").value.trim();
+      const gender = entry.querySelector("select").value;
       if (name !== "") {
         players.push({ name, gender });
       }
     });
 
-    if (players.length === 0) {
-      alert("Bitte gib mindestens einen Namen ein!");
+    if (players.length < 2) {
+      alert("Bitte gib mindestens zwei Namen ein.");
       return;
     }
 
-    localStorage.setItem("players", JSON.stringify(players));
+    localStorage.setItem("wop_players", JSON.stringify(players));
     window.location.href = "spiel-wop.html";
   });
+
+  // Erste Spielerzeile einfügen beim Laden
+  createPlayerField();
 });
 </script>
-
-</body>
 </html>
