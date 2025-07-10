@@ -486,14 +486,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     showPenalty();
   });
 
-  doneBtn.addEventListener("click", async () => {
-    if (penaltyHeading.style.display === "block") {
-  penaltyHeading.style.display = "none";
-  penaltyBtn.style.display = "inline-block";
-  doneBtn.textContent = "Erledigt / Nächste Frage";
-  questionBox.classList.remove("mystery");
+doneBtn.addEventListener("click", async () => {
+  if (penaltyHeading.style.display === "block") {
+    penaltyHeading.style.display = "none";
+    penaltyBtn.style.display = "inline-block";
+    doneBtn.textContent = "Erledigt / Nächste Frage";
+    questionBox.classList.remove("mystery");
 
-  // Statt nur die Auswahl zu zeigen, neuen Spieler starten:
+    questionView.classList.add("fade-out");
+    questionView.style.pointerEvents = "none";
+
+    setTimeout(async () => {
+      questionView.style.display = "none";
+      currentPlayer = await startNameSelection();
+    }, 400);
+    return;
+  }
+
+  // Normaler Ablauf ohne Strafaufgabe
   questionView.classList.add("fade-out");
   questionView.style.pointerEvents = "none";
 
@@ -501,9 +511,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     questionView.style.display = "none";
     currentPlayer = await startNameSelection();
   }, 400);
-  return;
-  }
-  });
+});
 
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
