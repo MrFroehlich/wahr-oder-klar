@@ -354,12 +354,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     let categoryKey = null;
 
     if (mode === "truth") {
-      question = getRandomFromPool(wahrheitPool);
-      categoryKey = Object.keys(wopData).find(key => wopData[key].wahrheit.includes(question));
-    } else {
-      question = getRandomFromPool(pflichtPool);
-      categoryKey = Object.keys(wopData).find(key => wopData[key].pflicht.includes(question));
-    }
+  question = getRandomFromPool(wahrheitPool);
+} else {
+  question = getRandomFromPool(pflichtPool);
+}
+categoryKey = question?._cat;
 
     if (!question) {
       updateChoiceHeading("Keine Fragen/Aufgaben mehr.");
@@ -367,8 +366,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       questionView.style.display = "none";
       return;
     }
-
-    categoryKey = question._cat;
 
     displayCurrentPlayer(player);
 
