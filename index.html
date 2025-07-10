@@ -302,8 +302,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("wopStartBtn");
   const playerModal = document.getElementById("playerModal");
   const playerFields = document.getElementById("playerFields");
+  const closePlayerModal = document.getElementById("closePlayerModal");
 
-  // Geschlecht-Auswahl bei WOP
+  // === Geschlechter-Auswahl: aktivieren ===
   genderButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       genderButtons.forEach(b => b.classList.remove("active"));
@@ -311,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Aufruf 2. Modal
+  // === Start-Button im WOP-Modal: öffnet Spieler:innen-Modal ===
   startBtn.addEventListener("click", () => {
     const activeGender = document.querySelector(".gender-btn.active")?.dataset.value || "mixed";
     const isCustom = document.getElementById("wopBtnCustom").classList.contains("active");
@@ -324,16 +325,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Hier kannst du diese Daten speichern (z.B. in localStorage)
+    // Werte in localStorage speichern
     localStorage.setItem("wopGender", activeGender);
     localStorage.setItem("wopMode", isCustom ? "custom" : "mixed");
     localStorage.setItem("wopCategories", JSON.stringify(selectedCategories));
 
-    // Spieler:innen-Modal anzeigen
+    // Spieler:innen-Modal öffnen
     playerModal.classList.remove("hidden");
+    document.body.classList.add("modal-open");
   });
 
-  // Spieler:innen dynamisch hinzufügen
+  // === Dynamisch Spieler:innen hinzufügen ===
   playerFields.addEventListener("input", () => {
     const rows = playerFields.querySelectorAll(".player-row");
     const lastRow = rows[rows.length - 1];
@@ -354,233 +356,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Formular absenden
+  // === Spieler:innen abspeichern & weiterleiten ===
   document.getElementById("playerForm").addEventListener("submit", e => {
     e.preventDefault();
 
-    const names = Array.from(document.querySelectorAll("input[name='player<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // ========== WOP-Modal: Geschlechtsauswahl ==========
-  const genderButtons = document.querySelectorAll("#wopModal .gender-btn");
-  genderButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      genderButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
-  });
+    const names = Array.from(document.querySelectorAll("input[name='playerName']")).map(input => input.value.trim()).filter(name => name);
+    const genders = Array.from(document.querySelectorAll("select[name='playerGender']")).map(select => select.value);
 
-  // ========== WOP-Modal: Modusauswahl ==========
-  const wopBtnMixed = document.getElementById("wopBtnMixed");
-  const wopBtnCustom = document.getElementById("wopBtnCustom");
-  const categoryOptions = document.getElementById("wopCategoryOptions");
-
-  wopBtnMixed.addEventListener("click", () => {
-    wopBtnMixed.classList.add("active");
-    wopBtnCustom.classList.remove("active");
-    categoryOptions.style.display = "none";
-  });
-
-  wopBtnCustom.addEventListener("click", () => {
-    wopBtnMixed.classList.remove("active");
-    wopBtnCustom.classList.add("active");
-    categoryOptions.style.display = "flex";
-  });
-
-  // ========== WOP-Start: Öffnet Modal 2 ==========
-  document.getElementById("wopStartBtn").addEventListener("click", () => {
-    const activeGenderBtn = Array.from(genderButtons).find(btn => btn.classList.contains("active"));
-    const gender = activeGenderBtn ? activeGenderBtn.dataset.value : "mixed";
-    const customModeActive = wopBtnCustom.classList.contains("active");
-
-    let selectedCategories = [];
-
-    if (customModeActive) {
-      const checkedBoxes = document.querySelectorAll("#wopCategoryOptions input[type='checkbox']:checked");
-      selectedCategories = Array.from(checkedBoxes).map(cb => cb.value);
-      if (selectedCategories.length === 0) {
-        alert("Bitte wähle mindestens eine Kategorie aus!");
-        return;
-      }
-    } else {
-      selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"];
-    }
-
-    // Werte zwischenspeichern
-    localStorage.setItem("wop_gender", gender);
-    localStorage.setItem("wop_mode", customModeActive ? "custom" : "mixed");
-    localStorage.setItem("wop_categories", selectedCategories.join(","));
-
-    // Weiter zum zweiten Modal (Spieler:innen)
-    document.getElementById("wopModal").classList.add("hidden");
-    document.getElementById("playerModal").classList.remove("hidden");
-    document.getElementById("playerModal").classList.add("show");
-    document.body.classList.add("modal-open");
-  });
-
-  // ========== Modal-Schließen (global) ==========
-  document.querySelectorAll(".close-modal").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const modal = btn.closest(".modal-overlay");
-      modal.classList.add("hidden");
-      modal.classList.remove("show");
-      document.body.classList.remove("modal-open");
-    });
-  });
-
-  // ========== Spieler:innen Modal ==========
-  const playerList = document.getElementById("playerList");
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // === Modal-Logik Allgemein ===
-  const body = document.body;
-  const modals = document.querySelectorAll(".modal-overlay");
-  const closeButtons = document.querySelectorAll(".close-modal");
-
-  function showModal(modal) {
-    modals.forEach(m => m.classList.add("hidden")); // alle anderen ausblenden
-    modal.classList.remove("hidden");
-    modal.classList.add("show");
-    body.classList.add("modal-open");
-  }
-
-  function hideModal(modal) {
-    modal.classList.remove("show");
-    modal.classList.add("hidden");
-    body.classList.remove("modal-open");
-  }
-
-  closeButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const modal = btn.closest(".modal-overlay");
-      hideModal(modal);
-    });
-  });
-
-  // === WOP Modal öffnen ===
-  document.getElementById("wopCard")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    showModal(document.getElementById("wopModal"));
-  });
-
-  // === Geschlechterauswahl im ersten Modal ===
-  const genderButtons = document.querySelectorAll("#wopModal .gender-btn");
-  let selectedGender = "mixed";
-
-  genderButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      genderButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      selectedGender = btn.dataset.value;
-    });
-  });
-
-  // === Kategorieauswahl-Umschaltung ===
-  const wopBtnMixed = document.getElementById("wopBtnMixed");
-  const wopBtnCustom = document.getElementById("wopBtnCustom");
-  const wopCategoryOptions = document.getElementById("wopCategoryOptions");
-
-  wopBtnMixed?.addEventListener("click", () => {
-    wopBtnMixed.classList.add("active");
-    wopBtnCustom.classList.remove("active");
-    wopCategoryOptions.style.display = "none";
-  });
-
-  wopBtnCustom?.addEventListener("click", () => {
-    wopBtnCustom.classList.add("active");
-    wopBtnMixed.classList.remove("active");
-    wopCategoryOptions.style.display = "flex";
-  });
-
-  // === Start-Button -> Weiter zu Modal 2 (Spieler:innen-Eingabe) ===
-  const startBtn = document.getElementById("wopStartBtn");
-  const secondModal = document.getElementById("playerModal");
-
-  startBtn?.addEventListener("click", () => {
-    // Kategorien prüfen
-    const customMode = wopBtnCustom.classList.contains("active");
-    let selectedCategories = [];
-
-    if (customMode) {
-      const checked = document.querySelectorAll("#wopCategoryOptions input[type='checkbox']:checked");
-      selectedCategories = Array.from(checked).map(cb => cb.value);
-      if (selectedCategories.length === 0) {
-        alert("Bitte wähle mindestens eine Kategorie aus!");
-        return;
-      }
-    } else {
-      selectedCategories = ["funny", "daring", "mind", "deep", "bold", "taboo"];
-    }
-
-    // Infos speichern
-    localStorage.setItem("wop_gender", selectedGender);
-    localStorage.setItem("wop_categories", JSON.stringify(selectedCategories));
-
-    // Modal 2 öffnen
-    showModal(secondModal);
-  });
-
-  // === Spielerfeld: Automatisch neues Feld hinzufügen ===
-  const playerList = document.getElementById("playerList");
-
-  function createPlayerField() {
-    const wrapper = document.createElement("div");
-    wrapper.className = "player-entry";
-
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "Name";
-    input.className = "player-name";
-
-    const genderSlider = document.createElement("select");
-    genderSlider.className = "player-gender";
-    genderSlider.innerHTML = `
-      <option value="mixed">⚧</option>
-      <option value="male">👦</option>
-      <option value="female">👧</option>
-    `;
-
-    input.addEventListener("input", () => {
-      const allFilled = [...playerList.querySelectorAll("input")].every(i => i.value.trim() !== "");
-      if (allFilled) createPlayerField();
-    });
-
-    wrapper.appendChild(input);
-    wrapper.appendChild(genderSlider);
-    playerList.appendChild(wrapper);
-  }
-
-  // Modal 2: Schließen / Zurück
-  document.getElementById("closePlayerModal")?.addEventListener("click", () => {
-    hideModal(secondModal);
-    // ggf. Eingaben zurücksetzen
-    playerList.innerHTML = "";
-    createPlayerField();
-  });
-
-  // Spiel starten aus Modal 2
-  document.getElementById("startGameBtn")?.addEventListener("click", () => {
-    const players = [];
-    const inputs = playerList.querySelectorAll(".player-entry");
-
-    inputs.forEach(entry => {
-      const name = entry.querySelector("input").value.trim();
-      const gender = entry.querySelector("select").value;
-      if (name !== "") {
-        players.push({ name, gender });
-      }
-    });
-
-    if (players.length < 2) {
-      alert("Bitte gib mindestens zwei Namen ein.");
+    if (names.length === 0) {
+      alert("Bitte gib mindestens einen Namen ein.");
       return;
     }
 
-    localStorage.setItem("wop_players", JSON.stringify(players));
+    const players = names.map((name, i) => ({ name, gender: genders[i] }));
+    localStorage.setItem("wopPlayers", JSON.stringify(players));
+
+    // Weiterleitung zur Spieleseite
     window.location.href = "spiel-wop.html";
   });
 
-  // Erste Spielerzeile einfügen beim Laden
-  createPlayerField();
+  // === ❌ Button zum Schließen des 2. Modals ===
+  closePlayerModal.addEventListener("click", () => {
+    playerModal.classList.add("hidden");
+    document.body.classList.remove("modal-open");
+  });
 });
 </script>
 </html>
