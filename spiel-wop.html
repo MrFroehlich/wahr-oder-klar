@@ -437,15 +437,18 @@ categoryKey = question?._cat;
     return chosenPlayer;
   }
 
-  // Initial laden
-  wopData = await loadQuestions();
-  if (!wopData) return;
+  // Nach erfolgreichem Laden der Fragen
+wopData = await loadQuestions();
+if (!wopData) return;
 
-  const urlParams = new URLSearchParams(window.location.search);
-  selectedCategories = urlParams.get("categories") ? urlParams.get("categories").split(",") : Object.keys(wopData);
+// CATEGORIES AUS URL LADEN
+const urlParams = new URLSearchParams(window.location.search);
+selectedCategories = urlParams.get("categories")
+  ? urlParams.get("categories").split(",")
+  : Object.keys(wopData); // fallback: alle
 
-  
-  selectedCategories.forEach(catKey => {
+// POOLS AUFBAUEN NACH KATEGORIEN
+selectedCategories.forEach(catKey => {
   if (wopData[catKey]) {
     wopData[catKey].wahrheit.forEach(q => {
       q._cat = catKey;
