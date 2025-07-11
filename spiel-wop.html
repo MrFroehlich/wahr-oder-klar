@@ -471,34 +471,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // ✅ DEBUG-BOX
-  const debugBox = document.createElement("div");
-  debugBox.style.position = "fixed";
-  debugBox.style.bottom = "10px";
-  debugBox.style.left = "10px";
-  debugBox.style.backgroundColor = "#111";
-  debugBox.style.color = "#0f0";
-  debugBox.style.padding = "10px";
-  debugBox.style.fontSize = "12px";
-  debugBox.style.zIndex = "9999";
-  debugBox.style.maxWidth = "95vw";
-  debugBox.style.whiteSpace = "pre-wrap";
-  debugBox.style.border = "1px solid limegreen";
-  debugBox.style.borderRadius = "5px";
-
-  let exampleTruth = wahrheitPool[0]?.frage || "Keine";
-  let exampleDare = pflichtPool[0]?.text || "Keine";
-
-  debugBox.textContent =
-    "🎯 Kategorie-Parameter:\n" + categoryParam + "\n\n" +
-    "📦 Geladene Kategorien:\n" + selectedCategories.join(", ") + "\n\n" +
-    "🧠 Anzahl Wahrheit: " + wahrheitPool.length + "\n" +
-    "🔥 Beispiel Wahrheit: " + exampleTruth + "\n\n" +
-    "🧨 Anzahl Pflicht: " + pflichtPool.length + "\n" +
-    "💥 Beispiel Pflicht: " + exampleDare;
-
-  document.body.appendChild(debugBox);
-
   // Los geht's
   refillQueue();
   let currentPlayer = await startNameSelection();
