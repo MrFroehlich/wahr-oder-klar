@@ -441,24 +441,26 @@ categoryKey = question?._cat;
 wopData = await loadQuestions();
 if (!wopData) return;
 
-// CATEGORIES AUS URL LADEN
+// CATEGORIES AUS URL LADEN – MUSS NACHDEM wopData verfügbar ist
 const urlParams = new URLSearchParams(window.location.search);
-selectedCategories = urlParams.get("categories")
-  ? urlParams.get("categories").split(",")
-  : Object.keys(wopData); // fallback: alle
+const categoryParam = urlParams.get("categories");
 
-// POOLS AUFBAUEN NACH KATEGORIEN
+selectedCategories = categoryParam
+  ? categoryParam.split(",")
+  : Object.keys(wopData); // Wenn keine Kategorien übergeben: alle nehmen
+
+// POOLS aufbauen
 selectedCategories.forEach(catKey => {
-  if (wopData[catKey]) {
-    wopData[catKey].wahrheit.forEach(q => {
-      q._cat = catKey;
-      wahrheitPool.push(q);
-    });
-    wopData[catKey].pflicht.forEach(q => {
-      q._cat = catKey;
-      pflichtPool.push(q);
-    });
-  }
+  const category = wopData[catKey];
+  if (!category) return;
+  category.wahrheit.forEach(q => {
+    q._cat = catKey;
+    wahrheitPool.push(q);
+  });
+  category.pflicht.forEach(q => {
+    q._cat = catKey;
+    pflichtPool.push(q);
+  });
 });
 
   
