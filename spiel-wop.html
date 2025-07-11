@@ -446,8 +446,11 @@ const urlParams = new URLSearchParams(window.location.search);
 const categoryParam = urlParams.get("categories");
 
 selectedCategories = categoryParam
-  ? categoryParam.split(",")
-  : Object.keys(wopData); // Wenn keine Kategorien übergeben: alle nehmen
+  ? categoryParam.split(",").map(cat => cat.trim())
+  : Object.keys(wopData);
+
+  console.log("Gewählte Kategorien:", selectedCategories);
+console.log("Verfügbare Kategorien:", Object.keys(wopData));
 
 // POOLS aufbauen
 selectedCategories.forEach(catKey => {
