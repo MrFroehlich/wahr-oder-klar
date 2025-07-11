@@ -463,23 +463,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === 6. Spiel starten: Daten speichern & weiterleiten ===
   startGameBtn.addEventListener("click", () => {
-    const rows = playerList.querySelectorAll(".player-row");
-    const players = [];
+  const rows = playerList.querySelectorAll(".player-row");
+  const players = [];
 
-    rows.forEach(row => {
-      const name = row.querySelector("input").value.trim();
-      const gender = lockedGender || row.querySelector(".gender-toggle").dataset.gender || "mixed";
-      if (name) players.push({ name, gender });
-    });
-
-    if (players.length === 0) {
-      alert("Bitte gib mindestens einen Namen ein.");
-      return;
-    }
-
-    localStorage.setItem("wopPlayers", JSON.stringify(players));
-    window.location.href = "spiel-wop.html";
+  rows.forEach(row => {
+    const name = row.querySelector("input").value.trim();
+    const gender = lockedGender || row.querySelector(".gender-toggle").dataset.gender || "mixed";
+    if (name) players.push({ name, gender });
   });
+
+  if (players.length === 0) {
+    alert("Bitte gib mindestens einen Namen ein.");
+    return;
+  }
+
+  localStorage.setItem("wopPlayers", JSON.stringify(players));
+
+  // NEU: Kategorien aus LocalStorage holen und in URL übergeben
+  const selectedCategories = JSON.parse(localStorage.getItem("wopCategories") || "[]");
+  const query = selectedCategories.length
+    ? "?categories=" + encodeURIComponent(selectedCategories.join(","))
+    : "";
+
+  window.location.href = "spiel-wop.html" + query;
+});
 
   // === 7. ❌ Modal schließen ===
   closePlayerModal.addEventListener("click", () => {
