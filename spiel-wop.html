@@ -515,6 +515,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   refillQueue();
   currentPlayer = await startNameSelection();
 });
+
+
+  const debugBox = document.createElement("div");
+debugBox.style.position = "fixed";
+debugBox.style.bottom = "10px";
+debugBox.style.left = "10px";
+debugBox.style.backgroundColor = "#000";
+debugBox.style.color = "#fff";
+debugBox.style.padding = "10px";
+debugBox.style.fontSize = "12px";
+debugBox.style.zIndex = "9999";
+debugBox.style.maxWidth = "90vw";
+debugBox.style.whiteSpace = "pre-wrap";
+document.body.appendChild(debugBox);
+
+debugBox.textContent =
+  "Kategorie-Param: " + categoryParam + "\n" +
+  "Spieler im LocalStorage: " + localStorage.getItem("wopPlayers") + "\n" +
+  "Geladene Kategorien: " + selectedCategories.join(", ");
+  
 </script>
 
 </body>
