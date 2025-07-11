@@ -232,19 +232,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   window.onerror = function(message, source, lineno, colno, error) {
-  const errBox = document.createElement("div");
-  errBox.style.position = "fixed";
-  errBox.style.bottom = "0";
-  errBox.style.left = "0";
-  errBox.style.right = "0";
-  errBox.style.background = "darkred";
-  errBox.style.color = "white";
-  errBox.style.padding = "10px";
-  errBox.style.fontSize = "14px";
-  errBox.style.zIndex = 9999;
-  errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
-  document.body.appendChild(errBox);
-};
+    const errBox = document.createElement("div");
+    errBox.style.position = "fixed";
+    errBox.style.bottom = "0";
+    errBox.style.left = "0";
+    errBox.style.right = "0";
+    errBox.style.background = "darkred";
+    errBox.style.color = "white";
+    errBox.style.padding = "10px";
+    errBox.style.fontSize = "14px";
+    errBox.style.zIndex = 9999;
+    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
+    document.body.appendChild(errBox);
+  };
 
   if (!wopPlayers.length) {
     alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
@@ -447,18 +447,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     return chosenPlayer;
   }
 
-  // Jetzt laden wir die Daten
+  // Daten laden & vorbereiten
   wopData = await loadQuestions();
   if (!wopData) return;
 
   const urlParams = new URLSearchParams(window.location.search);
   const categoryParam = urlParams.get("categories");
 
-  selectedCategories = categoryParam
-    ? categoryParam.split(",").map(cat => cat.trim())
+  selectedCategories = categoryParam && categoryParam.trim()
+    ? categoryParam.split(",").map(cat => cat.trim()).filter(Boolean)
     : Object.keys(wopData);
 
-  // Fragen/Tasks vorbereiten
   selectedCategories.forEach(catKey => {
     const category = wopData[catKey];
     if (!category) return;
@@ -472,24 +471,46 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  let currentPlayer = null;
+  // ✅ DEBUG-BOX
+  const debugBox = document.createElement("div");
+  debugBox.style.position = "fixed";
+  debugBox.style.bottom = "10px";
+  debugBox.style.left = "10px";
+  debugBox.style.backgroundColor = "#111";
+  debugBox.style.color = "#0f0";
+  debugBox.style.padding = "10px";
+  debugBox.style.fontSize = "12px";
+  debugBox.style.zIndex = "9999";
+  debugBox.style.maxWidth = "95vw";
+  debugBox.style.whiteSpace = "pre-wrap";
+  debugBox.style.border = "1px solid limegreen";
+  debugBox.style.borderRadius = "5px";
+
+  let exampleTruth = wahrheitPool[0]?.frage || "Keine";
+  let exampleDare = pflichtPool[0]?.text || "Keine";
+
+  debugBox.textContent =
+    "🎯 Kategorie-Parameter:\n" + categoryParam + "\n\n" +
+    "📦 Geladene Kategorien:\n" + selectedCategories.join(", ") + "\n\n" +
+    "🧠 Anzahl Wahrheit: " + wahrheitPool.length + "\n" +
+    "🔥 Beispiel Wahrheit: " + exampleTruth + "\n\n" +
+    "🧨 Anzahl Pflicht: " + pflichtPool.length + "\n" +
+    "💥 Beispiel Pflicht: " + exampleDare;
+
+  document.body.appendChild(debugBox);
+
+  // Los geht's
+  refillQueue();
+  let currentPlayer = await startNameSelection();
 
   document.getElementById("truthBtn").addEventListener("click", () => {
     if (!currentPlayer) return;
-    modeSelection.classList.add("fade-out");
-    modeSelection.style.pointerEvents = "none";
-    setTimeout(() => {
-      showQuestion("truth", currentPlayer);
-    }, 400);
+    showQuestion("truth", currentPlayer);
   });
 
   document.getElementById("dareBtn").addEventListener("click", () => {
     if (!currentPlayer) return;
-    modeSelection.classList.add("fade-out");
-    modeSelection.style.pointerEvents = "none";
-    setTimeout(() => {
-      showQuestion("dare", currentPlayer);
-    }, 400);
+    showQuestion("dare", currentPlayer);
   });
 
   penaltyBtn.addEventListener("click", () => {
@@ -525,31 +546,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
   });
-
-  // Los geht's
-  refillQueue();
-  currentPlayer = await startNameSelection();
 });
-
-
-  const debugBox = document.createElement("div");
-debugBox.style.position = "fixed";
-debugBox.style.bottom = "10px";
-debugBox.style.left = "10px";
-debugBox.style.backgroundColor = "#000";
-debugBox.style.color = "#fff";
-debugBox.style.padding = "10px";
-debugBox.style.fontSize = "12px";
-debugBox.style.zIndex = "9999";
-debugBox.style.maxWidth = "90vw";
-debugBox.style.whiteSpace = "pre-wrap";
-document.body.appendChild(debugBox);
-
-debugBox.textContent =
-  "Kategorie-Param: " + categoryParam + "\n" +
-  "Spieler im LocalStorage: " + localStorage.getItem("wopPlayers") + "\n" +
-  "Geladene Kategorien: " + selectedCategories.join(", ");
-  
 </script>
 
 </body>
