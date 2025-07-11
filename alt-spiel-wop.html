@@ -277,179 +277,352 @@
   </div>
 </main>
 <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const genderToggle = document.getElementById("genderToggle");
-    const genderSwitch = document.getElementById("genderSwitch");
-    const modeSelection = document.getElementById("modeSelection");
-    const questionView = document.getElementById("questionView");
-    const categoryLabel = document.getElementById("categoryLabel");
-    const penaltyHeading = document.getElementById("penaltyHeading");
-    const questionBox = document.getElementById("questionBox");
-    const doneBtn = document.getElementById("doneBtn");
-    const penaltyBtn = document.getElementById("penaltyBtn");
-    const backBtn = document.getElementById("backBtn");
-    const choiceHeading = document.getElementById("choiceHeading");
+document.addEventListener("DOMContentLoaded", async () => {
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const penaltyHeading = document.getElementById("penaltyHeading");
+  const questionBox = document.getElementById("questionBox");
+  const doneBtn = document.getElementById("doneBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
+  const backBtn = document.getElementById("backBtn");
+  const choiceHeading = document.getElementById("choiceHeading");
+  const currentPlayerNameSpan = document.getElementById("currentPlayerName");
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const gender = urlParams.get("gender") || "mixed";
-    const mode = urlParams.get("mode") || "mixed";
-    const categories = urlParams.get("categories") ? urlParams.get("categories").split(",") : [];
+  let wopData = {};
+  let selectedCategories = [];
+  let wahrheitPool = [];
+  let pflichtPool = [];
+  let currentModeSelected = null;
 
-    if (gender === "mixed") {
-      genderToggle.classList.add("visible");
-      const storedGender = sessionStorage.getItem("currentGender") || "male";
-      setGenderClass(storedGender);
-    } else {
-      genderToggle.classList.remove("visible");
-      sessionStorage.setItem("currentGender", gender);
-      setGenderClass(gender);
+  let wopPlayers = [];
+  let playerQueue = [];
+
+  try {
+    const storedPlayers = localStorage.getItem("wopPlayers");
+    if (storedPlayers) {
+      wopPlayers = JSON.parse(storedPlayers);
     }
+  } catch {
+    wopPlayers = [];
+  }
 
-    function setGenderClass(g) {
-      genderSwitch.classList.remove("male", "female");
-      genderSwitch.classList.add(g);
-      sessionStorage.setItem("currentGender", g);
-      genderSwitch.setAttribute("aria-pressed", g === "female" ? "true" : "false");
-      console.log("Gender-Klasse gesetzt:", genderSwitch.className);
+  window.onerror = function(message, source, lineno, colno, error) {
+    const errBox = document.createElement("div");
+    errBox.style.position = "fixed";
+    errBox.style.bottom = "0";
+    errBox.style.left = "0";
+    errBox.style.right = "0";
+    errBox.style.background = "darkred";
+    errBox.style.color = "white";
+    errBox.style.padding = "10px";
+    errBox.style.fontSize = "14px";
+    errBox.style.zIndex = 9999;
+    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
+    document.body.appendChild(errBox);
+  };
+
+  if (!wopPlayers.length) {
+    alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
+    return;
+  }
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
+  }
 
-    if (genderToggle.classList.contains("visible")) {
-      genderSwitch.addEventListener("click", () => {
-        const current = sessionStorage.getItem("currentGender") || "male";
-        const next = current === "male" ? "female" : "male";
-        setGenderClass(next);
-      });
-      genderSwitch.addEventListener("keydown", (e) => {
-        if (e.key === " " || e.key === "Enter") {
-          e.preventDefault();
-          genderSwitch.click();
-        }
-      });
+  function refillQueue() {
+    playerQueue = shuffle([...wopPlayers]);
+  }
+
+  function getNextPlayer() {
+    if (playerQueue.length === 0) refillQueue();
+    return playerQueue.shift();
+  }
+
+  function displayCurrentPlayer(player) {
+    if (!player) {
+      currentPlayerNameSpan.textContent = "";
+      currentPlayerNameSpan.className = "current-player-name player-mixed";
+      return;
     }
+    currentPlayerNameSpan.textContent = player.name;
+    currentPlayerNameSpan.className = "current-player-name";
+    if (player.gender === "male") currentPlayerNameSpan.classList.add("player-male");
+    else if (player.gender === "female") currentPlayerNameSpan.classList.add("player-female");
+    else currentPlayerNameSpan.classList.add("player-mixed");
+  }
 
-    // Funktion um Überschrift ein-/auszublenden
-    function updateChoiceHeadingVisibility() {
-      if (modeSelection.style.display !== "none") {
-        // Buttons sichtbar → Überschrift einblenden (fade-in)
-        choiceHeading.classList.remove("fade-out");
-        choiceHeading.classList.add("fade-in");
-        choiceHeading.style.display = "block";
-      } else {
-        // Buttons versteckt → Überschrift ausblenden (fade-out)
-        choiceHeading.classList.remove("fade-in");
-        choiceHeading.classList.add("fade-out");
-        setTimeout(() => {
-          choiceHeading.style.display = "none";
-        }, 400);
-      }
-    }
+  function updateChoiceHeading(player = null) {
+    const nameSpan = document.getElementById("currentPlayerName");
+    const textSpan = document.getElementById("questionPromptText");
 
-    // Fragen aus JSON laden
-    let wopData = {};
-    try {
-      const res = await fetch("JSON/wop.json");
-      wopData = await res.json();
-    } catch (e) {
-      alert("Fehler beim Laden der Fragen.");
+    if (!player) {
+      nameSpan.textContent = "";
+      nameSpan.className = "current-player-name player-mixed";
+      textSpan.textContent = "Wer ist dran?";
       return;
     }
 
-    const selectedCategories = categories.length > 0 ? categories : Object.keys(wopData);
+    nameSpan.textContent = player.name;
+    nameSpan.className = "current-player-name";
+    if (player.gender === "male") nameSpan.classList.add("player-male");
+    else if (player.gender === "female") nameSpan.classList.add("player-female");
+    else nameSpan.classList.add("player-mixed");
 
-    let wahrheitPool = [];
-    let pflichtPool = [];
-    selectedCategories.forEach(catKey => {
-      if (wopData[catKey]) {
-        wahrheitPool.push(...wopData[catKey].wahrheit);
-        pflichtPool.push(...wopData[catKey].pflicht);
-      }
+    textSpan.textContent = "Wahrheit oder Pflicht?";
+  }
+
+  function nameRattern(duration = 2200, interval = 100) {
+    return new Promise(resolve => {
+      const startTime = Date.now();
+      let currentName = null;
+
+      const ratterInterval = setInterval(() => {
+        currentName = getRandomPlayer();
+        if (!currentName) {
+          clearInterval(ratterInterval);
+          resolve(null);
+          return;
+        }
+        displayCurrentPlayer(currentName);
+        if (Date.now() - startTime >= duration) {
+          clearInterval(ratterInterval);
+          resolve(currentName);
+        }
+      }, interval);
     });
+  }
 
-    let currentModeSelected = null;
-    function getRandom(pool) {
-      if (pool.length === 0) return null;
-      return pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+  function getRandomPlayer() {
+    return wopPlayers[Math.floor(Math.random() * wopPlayers.length)];
+  }
+
+  function zoomInName() {
+    return new Promise(resolve => {
+      currentPlayerNameSpan.style.transition = "transform 0.6s ease";
+      currentPlayerNameSpan.style.transformOrigin = "center bottom";
+      currentPlayerNameSpan.style.transform = "scale(1.3)";
+      setTimeout(() => {
+        currentPlayerNameSpan.style.transform = "scale(1)";
+        setTimeout(() => resolve(), 400);
+      }, 600);
+    });
+  }
+
+  async function loadQuestions() {
+    try {
+      const res = await fetch("JSON/wop.json");
+      if (!res.ok) throw new Error("HTTP-Fehler " + res.status);
+      return await res.json();
+    } catch (err) {
+      alert("Fehler beim Laden der Fragen: " + err.message);
+      return null;
+    }
+  }
+
+  function getRandomFromPool(pool) {
+    if (!pool.length) return null;
+    const idx = Math.floor(Math.random() * pool.length);
+    return pool.splice(idx, 1)[0];
+  }
+
+  function showQuestion(mode, player) {
+    currentModeSelected = mode;
+    let question = null;
+    let categoryKey = null;
+
+    if (mode === "truth") {
+      question = getRandomFromPool(wahrheitPool);
+    } else {
+      question = getRandomFromPool(pflichtPool);
     }
 
-    function showQuestion(mode) {
-      currentModeSelected = mode;
-      let question, categoryKey = "";
+    if (!question) {
+      updateChoiceHeading("Keine Fragen/Aufgaben mehr.");
+      modeSelection.style.display = "none";
+      questionView.style.display = "none";
+      return;
+    }
 
-      if (mode === "truth") {
-        question = getRandom(wahrheitPool);
-        categoryKey = Object.keys(wopData).find(key => wopData[key].wahrheit.includes(question));
-      } else {
-        question = getRandom(pflichtPool);
-        categoryKey = Object.keys(wopData).find(key => wopData[key].pflicht.includes(question));
-      }
+    categoryKey = question._cat;
 
-      const text = question ? (mode === "truth" ? question.frage : question.text) : "Keine Fragen/Aufgaben mehr.";
-      const label = question
-        ? `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`
-        : (mode === "truth" ? "Wahrheit" : "Pflicht");
+    displayCurrentPlayer(player);
 
-      categoryLabel.textContent = label;
+    const baseText = mode === "truth" ? question.frage : question.text;
+    const fullText = `${player.name}, ${baseText}`;
+    const labelText = `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`;
 
-      penaltyHeading.style.display = "none";
-      questionBox.textContent = text;
-      questionBox.classList.remove("mystery");
+    categoryLabel.textContent = labelText;
+    penaltyHeading.style.display = "none";
+    questionBox.textContent = fullText;
+    questionBox.classList.remove("mystery");
 
-      penaltyBtn.style.display = question ? "inline-block" : "none";
-      doneBtn.textContent = question ? "Erledigt / Nächste Frage" : "Zurück zur Auswahl";
+    penaltyBtn.style.display = "inline-block";
+    doneBtn.textContent = "Erledigt / Nächste Frage";
 
-      modeSelection.classList.add("fade-out");
+    updateChoiceHeading(player);
+
+    modeSelection.classList.add("fade-out");
+    modeSelection.style.pointerEvents = "none";
+    setTimeout(() => {
       modeSelection.style.display = "none";
       questionView.style.display = "flex";
       questionView.classList.remove("fade-out");
       questionView.classList.add("fade-in");
+      questionView.style.pointerEvents = "auto";
+    }, 400);
+  }
 
-      updateChoiceHeadingVisibility();  // Überschrift anpassen
-    }
+  function showPenalty() {
+    const alt = currentModeSelected === "truth"
+      ? getRandomFromPool(pflichtPool)
+      : getRandomFromPool(wahrheitPool);
+    const text = alt ? (currentModeSelected === "truth" ? alt.text : alt.frage) : "Keine Strafaufgabe verfügbar.";
 
-    function showPenalty() {
-      const alt = currentModeSelected === "truth" ? getRandom(pflichtPool) : getRandom(wahrheitPool);
-      const text = alt ? (currentModeSelected === "truth" ? alt.text : alt.frage) : "Keine Strafaufgabe verfügbar.";
+    penaltyHeading.style.display = "block";
+    questionBox.textContent = text;
+    questionBox.classList.add("mystery");
+    penaltyBtn.style.display = "none";
+    doneBtn.textContent = "Zurück zur Auswahl";
+  }
 
-      penaltyHeading.style.display = "block";
-      questionBox.textContent = text;
-      questionBox.classList.add("mystery");
-      penaltyBtn.style.display = "none";
-      doneBtn.textContent = "Zurück zur Auswahl";
-    }
+  async function startNameSelection() {
+    updateChoiceHeading("Wer ist dran?");
+    currentPlayerNameSpan.textContent = "";
+    currentPlayerNameSpan.style.transform = "scale(1)";
+    choiceHeading.style.display = "flex";
 
-    document.getElementById("truthBtn").addEventListener("click", () => showQuestion("truth"));
-    document.getElementById("dareBtn").addEventListener("click", () => showQuestion("dare"));
-    penaltyBtn.addEventListener("click", showPenalty);
-doneBtn.addEventListener("click", () => {
-  questionView.classList.remove("fade-in");
-  questionView.classList.add("fade-out");
-
-  // Warte auf Ende der Transition, dann display:none setzen
-  function onTransitionEnd() {
+    modeSelection.style.display = "none";
     questionView.style.display = "none";
+
+    await new Promise(r => setTimeout(r, 800));
+
+    const dummy = await nameRattern();
+    const chosenPlayer = getNextPlayer();
+
+    if (!chosenPlayer) {
+      alert("Keine Spieler:innen zum Auswählen vorhanden.");
+      return null;
+    }
+
+    displayCurrentPlayer(chosenPlayer);
+    await zoomInName();
+
+    updateChoiceHeading(chosenPlayer);
 
     modeSelection.style.display = "flex";
     modeSelection.classList.remove("fade-out");
     modeSelection.classList.add("fade-in");
-    penaltyHeading.style.display = "none";
-    penaltyBtn.style.display = "inline-block";
-    questionBox.textContent = "Frage erscheint hier...";
-    questionBox.classList.remove("mystery");
+    modeSelection.style.pointerEvents = "auto";
 
-    updateChoiceHeadingVisibility();  // Überschrift anpassen
-
-    // Eventlistener entfernen, damit er nicht mehrfach feuert
-    questionView.removeEventListener("transitionend", onTransitionEnd);
+    return chosenPlayer;
   }
 
-  questionView.addEventListener("transitionend", onTransitionEnd);
-});
+  // Daten laden & vorbereiten
+  wopData = await loadQuestions();
+  if (!wopData) return;
 
-    backBtn.addEventListener("click", () => window.location.href = "index.html");
+  const urlParams = new URLSearchParams(window.location.search);
+  const categoryParam = urlParams.get("categories");
 
-    // Initial Zustand Überschrift setzen
-    updateChoiceHeadingVisibility();
+  selectedCategories = categoryParam && categoryParam.trim()
+    ? categoryParam.split(",").map(cat => cat.trim()).filter(Boolean)
+    : Object.keys(wopData);
+
+  selectedCategories.forEach(catKey => {
+    const category = wopData[catKey];
+    if (!category) return;
+    category.wahrheit?.forEach(q => {
+      q._cat = catKey;
+      wahrheitPool.push(q);
+    });
+    category.pflicht?.forEach(q => {
+      q._cat = catKey;
+      pflichtPool.push(q);
+    });
   });
+
+  // ✅ DEBUG-BOX
+  const debugBox = document.createElement("div");
+  debugBox.style.position = "fixed";
+  debugBox.style.bottom = "10px";
+  debugBox.style.left = "10px";
+  debugBox.style.backgroundColor = "#111";
+  debugBox.style.color = "#0f0";
+  debugBox.style.padding = "10px";
+  debugBox.style.fontSize = "12px";
+  debugBox.style.zIndex = "9999";
+  debugBox.style.maxWidth = "95vw";
+  debugBox.style.whiteSpace = "pre-wrap";
+  debugBox.style.border = "1px solid limegreen";
+  debugBox.style.borderRadius = "5px";
+
+  let exampleTruth = wahrheitPool[0]?.frage || "Keine";
+  let exampleDare = pflichtPool[0]?.text || "Keine";
+
+  debugBox.textContent =
+    "🎯 Kategorie-Parameter:\n" + categoryParam + "\n\n" +
+    "📦 Geladene Kategorien:\n" + selectedCategories.join(", ") + "\n\n" +
+    "🧠 Anzahl Wahrheit: " + wahrheitPool.length + "\n" +
+    "🔥 Beispiel Wahrheit: " + exampleTruth + "\n\n" +
+    "🧨 Anzahl Pflicht: " + pflichtPool.length + "\n" +
+    "💥 Beispiel Pflicht: " + exampleDare;
+
+  document.body.appendChild(debugBox);
+
+  // Los geht's
+  refillQueue();
+  let currentPlayer = await startNameSelection();
+
+  document.getElementById("truthBtn").addEventListener("click", () => {
+    if (!currentPlayer) return;
+    showQuestion("truth", currentPlayer);
+  });
+
+  document.getElementById("dareBtn").addEventListener("click", () => {
+    if (!currentPlayer) return;
+    showQuestion("dare", currentPlayer);
+  });
+
+  penaltyBtn.addEventListener("click", () => {
+    showPenalty();
+  });
+
+  doneBtn.addEventListener("click", async () => {
+    if (penaltyHeading.style.display === "block") {
+      penaltyHeading.style.display = "none";
+      penaltyBtn.style.display = "inline-block";
+      doneBtn.textContent = "Erledigt / Nächste Frage";
+      questionBox.classList.remove("mystery");
+
+      questionView.classList.add("fade-out");
+      questionView.style.pointerEvents = "none";
+
+      setTimeout(async () => {
+        questionView.style.display = "none";
+        currentPlayer = await startNameSelection();
+      }, 400);
+      return;
+    }
+
+    questionView.classList.add("fade-out");
+    questionView.style.pointerEvents = "none";
+
+    setTimeout(async () => {
+      questionView.style.display = "none";
+      currentPlayer = await startNameSelection();
+    }, 400);
+  });
+
+  backBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+});
 </script>
 </body>
 </html>
