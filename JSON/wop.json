@@ -167,7 +167,7 @@
       { "frage": "Hast du schon mal über etwas gelacht, obwohl du gar nicht wusstest, warum?", "gender": "all" },
       { "frage": "Was war der komischste Moment in deinem letzten Urlaub?", "gender": "all" },
       { "frage": "Welche Comedy-Szene bringt dich IMMER zum Lachen – egal wie oft du sie siehst?", "gender": "all" },
-      { "frage": "Was war der dümmste Moment in deinem letzten Videocall?", "gender": "all" }
+      { "frage": "Was war der dümmste Moment in deinem letzten Videocall?", "gender": "all" },
       { "frage": "Was war dein dümmster Moment im Freibad?", "gender": "all" },
       { "frage": "Welche Kinderserie würdest du heute heimlich immer noch schauen?", "gender": "all" },
       { "frage": "Was ist das Unlogischste, das du als Kind geglaubt hast?", "gender": "all" },
@@ -216,7 +216,7 @@
       { "frage": "Was war das Unnötigste, das du je bestellt hast – und nie benutzt?", "gender": "all" },
       { "frage": "Was ist das Blödeste, was du beim Autofahren / Fahrradfahren gemacht hast?", "gender": "all" },
       { "frage": "Was war dein bescheuertster Moment im Kino?", "gender": "all" },
-      { "frage": "Was ist die sinnloseste Fähigkeit, auf die du heimlich stolz bist?", "gender": "all" }
+      { "frage": "Was ist die sinnloseste Fähigkeit, auf die du heimlich stolz bist?", "gender": "all" },
       { "frage": "Was ist das Albernste, worüber du je ernsthaft diskutiert hast?", "gender": "all" },
       { "frage": "Welche App benutzt du am meisten, obwohl du sie eigentlich hasst?", "gender": "all" },
       { "frage": "Welches Wort kannst du einfach nicht aussprechen, ohne zu lachen?", "gender": "all" },
@@ -340,7 +340,7 @@
       { "text": "Stell dir vor, du wärst der Bürgermeister – begrüße die Anwesenden!", "gender": "all" },
       { "text": "Tu so, als müsstest du eine Waschmaschine verkaufen – total überzeugt.", "gender": "all" },
       { "text": "Mach Werbung für einen völlig sinnlosen Gegenstand.", "gender": "all" },
-      { "text": "Tu so, als wärst du eine Figur aus einem Märchen – und fluchst dabei modern.", "gender": "all" }
+      { "text": "Tu so, als wärst du eine Figur aus einem Märchen – und fluchst dabei modern.", "gender": "all" },
       { "text": "Mach 3 verschiedene Lachgeräusche hintereinander – die anderen müssen erraten, welches echt ist.", "gender": "all" },
       { "text": "Erzähl einen Witz, der so schlecht ist, dass er wieder lustig wird.", "gender": "all" },
       { "text": "Mach 20 Sekunden lang so, als würdest du eine Nachrichtensendung moderieren.", "gender": "all" },
@@ -387,7 +387,7 @@
       { "text": "Tu so, als würdest du in einer Talkshow sitzen.", "gender": "all" },
       { "text": "Mach eine 15-sekündige Werbung für einen unsichtbaren Hund.", "gender": "all" },
       { "text": "Erzähl, wie du einen Tag lang ein Tier sein würdest.", "gender": "all" },
-      { "text": "Mach eine Szene, als wärst du ein Regisseur auf dem Filmset.", "gender": "all" }
+      { "text": "Mach eine Szene, als wärst du ein Regisseur auf dem Filmset.", "gender": "all" },
       { "text": "Tu so, als wärst du ein Lehrer, der über Einhörner doziert.", "gender": "all" },
       { "text": "Mach einen dramatischen Abschied von deinem Getränk – mit Küsschen und letzter Umarmung.", "gender": "all" },
       { "text": "Stell dich auf einen Stuhl und halte eine Motivationsrede für Socken.", "gender": "all" },
@@ -437,7 +437,7 @@
       { "text": "Stell dir vor, dein Handy hat Gefühle – was sagt es dir gerade?", "gender": "all" },
       { "text": "Erfinde eine neue Begrüßung – inklusive Bewegung.", "gender": "all" },
       { "text": "Tu so, als würdest du dein Spiegelbild zum ersten Mal sehen.", "gender": "all" },
-      { "text": "Sag einen Zungenbrecher so schnell, wie du kannst – improvisiert.", "gender": "all" }
+      { "text": "Sag einen Zungenbrecher so schnell, wie du kannst – improvisiert.", "gender": "all" },
       { "text": "Tu so, als wärst du ein Staubsauger mit Persönlichkeit – und schimpfe über deine Arbeit.", "gender": "all" },
       { "text": "Stell ein Bewerbungsgespräch als 'Lachtherapeut' nach – und versuch alle zum Lachen zu bringen.", "gender": "all" },
       { "text": "Mach einen Rückblick auf deinen Tag wie in einer kitschigen Doku-Soap.", "gender": "all" },
@@ -1495,8 +1495,7 @@
       {"text": "Sag etwas, das du oft denkst, aber nie laut aussprichst – bis jetzt.", "gender": "all"},
       {"text": "Beantworte: Welcher Gedanke gibt dir Kraft, wenn alles zu viel wird?", "gender": "all"},
       {"text": "Stell dir vor, jemand könnte eine Stunde lang deine Gedanken hören – was wäre das Peinlichste?", "gender": "all"},
-      {"text": "Gib zu, welchen Gedanken du zuletzt verdrängt hast – und warum.", "gender": "all"},
-      
+      {"text": "Gib zu, welchen Gedanken du zuletzt verdrängt hast – und warum.", "gender": "all"}
     ]
 },
 
