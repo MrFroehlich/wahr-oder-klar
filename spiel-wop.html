@@ -160,6 +160,28 @@
     #modeSelection button:hover, #doneBtn:hover {
       background-color: var(--btn-bg-hover);
     }
+
+
+    #currentPlayerName,
+    #questionPromptText {
+      transition: all 0.4s ease;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    #questionPromptText.hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    #currentPlayerName.shifted-up {
+      transform: translateY(-20px);
+    } 
+    
   </style>
 </head>
 <body>
@@ -361,7 +383,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     categoryKey = question._cat;
 
-    currentPlayerNameSpan.style.display = "none"; // ← Verstecke den Namen über der Frage
+    // Frage anzeigen: Überschrift (questionPromptText) ausblenden
+    const questionPromptText = document.getElementById("questionPromptText");
+    const currentPlayerNameSpan = document.getElementById("currentPlayerName");
+
+    questionPromptText.classList.add("hidden");      // Überschrift ausblenden
+    currentPlayerNameSpan.classList.add("shifted-up"); // Spielername nach oben rutschen
 
     const baseText = mode === "truth" ? question.frage : question.text;
     const fullText = `${player.name}, ${baseText}`;
@@ -402,7 +429,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    currentPlayerNameSpan.style.display = "inline"; // ← Spielername wieder einblenden
+    questionPromptText.classList.remove("hidden");        // Überschrift ausblenden
+    currentPlayerNameSpan.classList.remove("shifted-up"); // Namen wieder nach oben rutschen
     updateChoiceHeading("Wer ist dran?");
     currentPlayerNameSpan.textContent = "";
     currentPlayerNameSpan.style.transform = "scale(1)";
