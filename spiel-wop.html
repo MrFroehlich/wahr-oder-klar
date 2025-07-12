@@ -387,8 +387,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const questionPromptText = document.getElementById("questionPromptText");
     const currentPlayerNameSpan = document.getElementById("currentPlayerName");
 
-    questionPromptText.classList.add("hidden");      // Überschrift ausblenden
-    currentPlayerNameSpan.classList.add("shifted-up"); // Spielername nach oben rutschen
+    currentPlayerNameSpan.classList.add("hidden");      // Überschrift ausblenden
+    questionPromptText.classList.add("shifted-up"); // Spielername nach oben rutschen
 
     const baseText = mode === "truth" ? question.frage : question.text;
     const fullText = `${player.name}, ${baseText}`;
@@ -429,8 +429,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    questionPromptText.classList.remove("hidden");        // Überschrift ausblenden
-    currentPlayerNameSpan.classList.remove("shifted-up"); // Namen wieder nach oben rutschen
+    currentPlayerNameSpan.classList.remove("hidden");        // Überschrift ausblenden
+    questionPromptText.classList.remove("shifted-up"); // Namen wieder nach oben rutschen
     updateChoiceHeading("Wer ist dran?");
     currentPlayerNameSpan.textContent = "";
     currentPlayerNameSpan.style.transform = "scale(1)";
