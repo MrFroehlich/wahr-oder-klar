@@ -160,28 +160,6 @@
     #modeSelection button:hover, #doneBtn:hover {
       background-color: var(--btn-bg-hover);
     }
-
-
-    #currentPlayerName,
-    #questionPromptText {
-      transition: all 0.4s ease;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    #questionPromptText.hidden {
-      opacity: 0;
-      transform: translateY(20px);
-      height: 0;
-      overflow: hidden;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    #currentPlayerName.shifted-up {
-      transform: translateY(-20px);
-    } 
-    
   </style>
 </head>
 <body>
@@ -253,6 +231,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     wopPlayers = [];
   }
 
+  window.onerror = function(message, source, lineno, colno, error) {
+    const errBox = document.createElement("div");
+    errBox.style.position = "fixed";
+    errBox.style.bottom = "0";
+    errBox.style.left = "0";
+    errBox.style.right = "0";
+    errBox.style.background = "darkred";
+    errBox.style.color = "white";
+    errBox.style.padding = "10px";
+    errBox.style.fontSize = "14px";
+    errBox.style.zIndex = 9999;
+    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
+    document.body.appendChild(errBox);
+  };
+
   if (!wopPlayers.length) {
     alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
     return;
@@ -301,7 +294,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     nameSpan.textContent = player.name;
     nameSpan.className = "current-player-name";
-    nameSpan.style.display = "inline"; // ← Wieder einblenden
     if (player.gender === "male") nameSpan.classList.add("player-male");
     else if (player.gender === "female") nameSpan.classList.add("player-female");
     else nameSpan.classList.add("player-mixed");
@@ -383,12 +375,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     categoryKey = question._cat;
 
-    // Frage anzeigen: Überschrift (questionPromptText) ausblenden
-    const questionPromptText = document.getElementById("questionPromptText");
-    const currentPlayerNameSpan = document.getElementById("currentPlayerName");
-
-    currentPlayerNameSpan.classList.add("hidden");      // Überschrift ausblenden
-    questionPromptText.classList.add("shifted-up"); // Spielername nach oben rutschen
+    displayCurrentPlayer(player);
 
     const baseText = mode === "truth" ? question.frage : question.text;
     const fullText = `${player.name}, ${baseText}`;
@@ -429,8 +416,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    currentPlayerNameSpan.classList.remove("hidden");        // Überschrift ausblenden
-    questionPromptText.classList.remove("shifted-up"); // Namen wieder nach oben rutschen
     updateChoiceHeading("Wer ist dran?");
     currentPlayerNameSpan.textContent = "";
     currentPlayerNameSpan.style.transform = "scale(1)";
@@ -486,7 +471,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // Spiel starten
+  // Los geht's
   refillQueue();
   let currentPlayer = await startNameSelection();
 
@@ -534,7 +519,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "index.html";
   });
 });
-    </script>
+</script>
 
 </body>
-</html>
+  </html>
