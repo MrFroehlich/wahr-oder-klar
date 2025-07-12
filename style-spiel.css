@@ -12,6 +12,12 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 header {
   background-color: #00509e;
   color: white;
@@ -49,6 +55,9 @@ header h1 {
   align-items: center;
   gap: 2rem;
   transition: background-color 0.3s ease;
+  flex: 1;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .mode-selection {
