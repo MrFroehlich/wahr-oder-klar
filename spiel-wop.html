@@ -557,22 +557,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Globaler Fehlerhandler
-  window.onerror = function(message, source, lineno, colno, error) {
-    const errBox = document.createElement("div");
-    errBox.style.position = "fixed";
-    errBox.style.bottom = "0";
-    errBox.style.left = "0";
-    errBox.style.right = "0";
-    errBox.style.background = "darkred";
-    errBox.style.color = "white";
-    errBox.style.padding = "10px";
-    errBox.style.fontSize = "14px";
-    errBox.style.zIndex = 9999;
-    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
-    document.body.appendChild(errBox);
-  };
-
   wopData = await loadQuestions();
   if (!wopData) return;
 
