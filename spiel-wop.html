@@ -159,7 +159,68 @@
     }
     #modeSelection button:hover, #doneBtn:hover {
       background-color: var(--btn-bg-hover);
-    } 
+    }
+
+
+    /* Smooth transition + animation für kompakten Header-Modus */
+body.compact-header header {
+  padding: 0.8rem 0;
+  animation: headerShrink 0.4s ease forwards;
+  transition: padding 0.4s ease;
+}
+
+body.compact-header .header-inner .logo,
+body.compact-header .header-inner .icon-right {
+  font-size: 1.6rem;
+  transition: font-size 0.4s ease;
+}
+
+body.compact-header header h1 {
+  font-size: 1.3rem;
+  transition: font-size 0.4s ease;
+}
+
+body.compact-header .title-group .subtitle {
+  display: none;
+}
+
+body.compact-header .container {
+  margin-top: 1.2rem;
+  transition: margin-top 0.3s ease;
+}
+
+body.compact-header .question-box {
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  transition: padding 0.3s ease, font-size 0.3s ease;
+}
+
+@keyframes headerShrink {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.92);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-height: 600px) and (min-width: 768px) {
+  body.compact-header header {
+    padding: 0.6rem 0;
+  }
+
+  body.compact-header header h1 {
+    font-size: 1.1rem;
+  }
+
+  body.compact-header .question-box {
+    font-size: 1.05rem;
+    padding: 1rem;
+  }
+    }
+    
   </style>
 </head>
 <body>
@@ -377,6 +438,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     displayCurrentPlayer(player);
 
+    document.body.classList.add("compact-header");
+
     const baseText = mode === "truth" ? question.frage : question.text;
     const fullText = `${player.name}, ${baseText}`;
     const labelText = `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`;
@@ -416,6 +479,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
+    document.body.classList.remove("compact-header");
     updateChoiceHeading("Wer ist dran?");
     currentPlayerNameSpan.textContent = "";
     currentPlayerNameSpan.style.transform = "scale(1)";
