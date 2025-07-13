@@ -162,7 +162,7 @@
     }
 
 
-    /* Smooth transition + animation für kompakten Header-Modus */
+/* Kompakter Header: Schrumpft sanft */
 body.compact-header header {
   padding: 0.8rem 0;
   animation: headerShrink 0.4s ease forwards;
@@ -195,17 +195,30 @@ body.compact-header .question-box {
   transition: padding 0.3s ease, font-size 0.3s ease;
 }
 
+/* Rückanimation bei Entfernen der Klasse */
+body:not(.compact-header) header.shrink-active {
+  animation: headerUnshrink 0.4s ease forwards;
+}
+
 @keyframes headerShrink {
-  0% {
+  from {
     transform: scaleY(1);
-    opacity: 1;
   }
-  100% {
+  to {
     transform: scaleY(0.92);
-    opacity: 1;
   }
 }
 
+@keyframes headerUnshrink {
+  from {
+    transform: scaleY(0.92);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Extra kompakt bei ganz flachen Tablet-Screens */
 @media screen and (max-height: 600px) and (min-width: 768px) {
   body.compact-header header {
     padding: 0.6rem 0;
@@ -219,7 +232,7 @@ body.compact-header .question-box {
     font-size: 1.05rem;
     padding: 1rem;
   }
-    }
+}
     
   </style>
 </head>
