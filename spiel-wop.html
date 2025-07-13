@@ -265,27 +265,6 @@
     animation: textWipeIn 0.4s ease forwards;
   }
 
-
-  @keyframes slideOutLeft {
-    from { opacity: 1; transform: translateX(0); }
-    to { opacity: 0; transform: translateX(-40px); }
-  }
-
-  @keyframes slideInRight {
-    from { opacity: 0; transform: translateX(40px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  .slide-out-left {
-    animation: slideOutLeft 0.4s ease forwards;
-  }
-
-  .slide-in-right {
-    animation: slideInRight 0.4s ease forwards;
-  }
-
-  
-
   @media (prefers-color-scheme: dark) {
     .choice-heading {
       color: var(--choice-text-color-dark);
@@ -355,7 +334,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let wopPlayers = [];
   let playerQueue = [];
-  let currentPlayer = null;
 
   function animateHeadingChange(newText) {
     if (questionPromptText.textContent === newText) return;
@@ -368,24 +346,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 400);
   }
 
-  function transitionOut(elements) {
-    elements.forEach(el => {
-      el.classList.remove("fade-slide-in");
-      el.classList.add("fade-slide-out");
-      el.style.pointerEvents = "none";
-    });
+  function applyFadeTransition(outEl, inEl) {
+    outEl.classList.remove("fade-slide-in");
+    outEl.classList.add("fade-slide-out");
+    outEl.style.pointerEvents = "none";
+
     setTimeout(() => {
-      elements.forEach(el => el.style.display = "none");
+      outEl.style.display = "none";
+      inEl.style.display = "flex";
+      inEl.classList.remove("fade-slide-out");
+      inEl.classList.add("fade-slide-in");
+      inEl.style.pointerEvents = "auto";
     }, 400);
   }
 
-  function transitionIn(elements) {
-    elements.forEach(el => {
-      el.style.display = "flex";
-      el.classList.remove("fade-slide-out");
-      el.classList.add("fade-slide-in");
-      el.style.pointerEvents = "auto";
-    });
+  function showElement(el) {
+    el.style.display = "flex";
+    el.classList.remove("fade-slide-out");
+    el.classList.add("fade-slide-in");
+    el.style.pointerEvents = "auto";
+  }
+
+  function hideElement(el) {
+    el.classList.remove("fade-slide-in");
+    el.classList.add("fade-slide-out");
+    el.style.pointerEvents = "none";
+    setTimeout(() => {
+      el.style.display = "none";
+    }, 400);
   }
 
   function shuffle(array) {
@@ -430,6 +418,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return new Promise(resolve => {
       const startTime = Date.now();
       let currentName = null;
+
       const ratterInterval = setInterval(() => {
         currentName = getRandomPlayer();
         if (!currentName) {
@@ -457,29 +446,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    animateHeadingChange("Wer ist dran?");
-    displayCurrentPlayer(null);
-    currentPlayerNameSpan.style.transform = "scale(1)";
-    choiceHeading.style.display = "flex";
+  animateHeadingChange("Wer ist dran?");
+  displayCurrentPlayer(null);
+  currentPlayerNameSpan.style.transform = "scale(1)";
+  choiceHeading.style.display = "flex";
 
-    transitionOut([modeSelection, questionView, choiceHeading]);
-    await new Promise(r => setTimeout(r, 600));
+  hideElement(modeSelection);
+  hideElement(questionView);
 
-    const chosenPlayer = await nameRattern();
-    if (!chosenPlayer) {
-      alert("Keine Spieler:innen zum Auswählen vorhanden.");
-      return null;
-    }
+  await new Promise(r => setTimeout(r, 800));
 
-    displayCurrentPlayer(chosenPlayer);
-    await zoomInName();
+  await nameRattern();
+  const chosenPlayer = getNextPlayer();
 
-    animateHeadingChange("Wahrheit oder Pflicht?");
-    updateChoiceHeading(chosenPlayer);
-
-    transitionIn([modeSelection, choiceHeading]);
-    return chosenPlayer;
+  if (!chosenPlayer) {
+    alert("Keine Spieler:innen zum Auswählen vorhanden.");
+    return null;
   }
+
+  displayCurrentPlayer(chosenPlayer);
+  await zoomInName();
+
+  animateHeadingChange("Wahrheit oder Pflicht?");
+  updateChoiceHeading(chosenPlayer);
+
+  showElement(modeSelection); // <--- statt modeSelection.style.display = "flex"
+
+  return chosenPlayer;
+}
 
   function getRandomFromPool(pool) {
     if (!pool.length) return null;
@@ -489,10 +483,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function showQuestion(mode, player) {
     currentModeSelected = mode;
-    const question = mode === "truth" ? getRandomFromPool(wahrheitPool) : getRandomFromPool(pflichtPool);
+    let question = null;
+
+    if (mode === "truth") {
+      question = getRandomFromPool(wahrheitPool);
+    } else {
+      question = getRandomFromPool(pflichtPool);
+    }
+
     if (!question) {
       animateHeadingChange("Keine Fragen mehr");
-      transitionOut([modeSelection, questionView, choiceHeading]);
+      modeSelection.style.display = "none";
+      questionView.style.display = "none";
       return;
     }
 
@@ -501,21 +503,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const fullText = `${player.name}, ${baseText}`;
 
     categoryLabel.textContent = labelText;
-    questionBox.textContent = fullText;
     penaltyHeading.style.display = "none";
+    questionBox.textContent = fullText;
     questionBox.classList.remove("mystery");
+
     penaltyBtn.style.display = "inline-block";
     doneBtn.textContent = "Erledigt / Nächste Frage";
 
     animateHeadingChange("Wahrheit oder Pflicht?");
     updateChoiceHeading(player);
 
-    transitionOut([modeSelection]);
-    transitionIn([questionView]);
+    applyFadeTransition(modeSelection, questionView);
   }
 
   function showPenalty() {
-    const alt = currentModeSelected === "truth" ? getRandomFromPool(pflichtPool) : getRandomFromPool(wahrheitPool);
+    const alt = currentModeSelected === "truth"
+      ? getRandomFromPool(pflichtPool)
+      : getRandomFromPool(wahrheitPool);
+
     const text = alt
       ? (currentModeSelected === "truth" ? alt.text : alt.frage)
       : "Keine Strafaufgabe verfügbar.";
@@ -539,7 +544,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Spieler laden
+  // Spieler aus localStorage laden
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
     if (storedPlayers) wopPlayers = JSON.parse(storedPlayers);
@@ -551,6 +556,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
     return;
   }
+
+  // Globaler Fehlerhandler
+  window.onerror = function(message, source, lineno, colno, error) {
+    const errBox = document.createElement("div");
+    errBox.style.position = "fixed";
+    errBox.style.bottom = "0";
+    errBox.style.left = "0";
+    errBox.style.right = "0";
+    errBox.style.background = "darkred";
+    errBox.style.color = "white";
+    errBox.style.padding = "10px";
+    errBox.style.fontSize = "14px";
+    errBox.style.zIndex = 9999;
+    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
+    document.body.appendChild(errBox);
+  };
 
   wopData = await loadQuestions();
   if (!wopData) return;
@@ -576,7 +597,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   refillQueue();
-  currentPlayer = await startNameSelection();
+  let currentPlayer = await startNameSelection();
 
   document.getElementById("truthBtn").addEventListener("click", () => {
     if (!currentPlayer) return;
@@ -599,8 +620,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       penaltyBtn.style.display = "inline-block";
       doneBtn.textContent = "Erledigt / Nächste Frage";
       questionBox.classList.remove("mystery");
+
+      hideElement(questionView);
+      currentPlayer = await startNameSelection();
+      return;
     }
-    transitionOut([questionView, choiceHeading]);
+
+    hideElement(questionView);
     currentPlayer = await startNameSelection();
   });
 
@@ -609,6 +635,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 </script>
+
 
 
 
