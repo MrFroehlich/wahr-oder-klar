@@ -54,6 +54,7 @@ header h1 {
     gap 0.4s ease,
     max-height 0.4s ease;
   overflow: hidden;
+  min-height: clamp(283px, 80vh, 604px);
 }
 
 .mode-selection {
