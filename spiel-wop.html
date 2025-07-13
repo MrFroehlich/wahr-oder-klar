@@ -191,7 +191,6 @@ body.compact-header .container {
 
 body.compact-header .question-box {
   padding: 1.2rem;
-  font-size: 1.2rem;
   transition: padding 0.3s ease, font-size 0.3s ease;
 }
 
@@ -317,14 +316,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   let playerQueue = [];
 
   function animateHeadingChange(newText) {
-    questionPromptText.classList.remove("prompt-text-anim-in", "prompt-text-anim-out");
-    questionPromptText.classList.add("prompt-text-anim-out");
-    setTimeout(() => {
-      questionPromptText.textContent = newText;
-      questionPromptText.classList.remove("prompt-text-anim-out");
-      questionPromptText.classList.add("prompt-text-anim-in");
-    }, 350);
-  }
+  if (questionPromptText.textContent === newText) return; // Nichts ändern
+
+  questionPromptText.classList.remove("prompt-text-anim-in", "prompt-text-anim-out");
+  questionPromptText.classList.add("prompt-text-anim-out");
+  setTimeout(() => {
+    questionPromptText.textContent = newText;
+    questionPromptText.classList.remove("prompt-text-anim-out");
+    questionPromptText.classList.add("prompt-text-anim-in");
+  }, 400);
+}
 
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
