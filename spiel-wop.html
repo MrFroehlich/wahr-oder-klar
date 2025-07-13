@@ -431,10 +431,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     currentPlayerNameSpan.style.transform = "scale(1)";
     choiceHeading.style.display = "flex";
 
-    hideElement(modeSelection);
-    hideElement(questionView);
+    // Sichtbarkeit steuern
+    modeSelection.style.display = "none";
+    questionView.style.display = "none";
 
-    await new Promise(r => setTimeout(r, 800)); // Kurze Pause
+    await new Promise(r => setTimeout(r, 800)); // kurze Pause vor Rattern
 
     await nameRattern();
     const chosenPlayer = getNextPlayer();
@@ -449,7 +450,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     animateHeadingChange("Wahrheit oder Pflicht?");
     updateChoiceHeading(chosenPlayer);
-    showElement(modeSelection);
+
+    modeSelection.style.display = "flex";
 
     return chosenPlayer;
   }
@@ -523,7 +525,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Initiale Daten laden
+  // Spieler aus localStorage laden
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
     if (storedPlayers) wopPlayers = JSON.parse(storedPlayers);
@@ -536,6 +538,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  // Globaler Fehlerhandler
   window.onerror = function(message, source, lineno, colno, error) {
     const errBox = document.createElement("div");
     errBox.style.position = "fixed";
@@ -613,6 +616,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 </script>
+
 
 
 
