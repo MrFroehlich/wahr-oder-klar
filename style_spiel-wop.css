@@ -39,6 +39,7 @@ header h1 {
 
 .container {
   max-width: 800px;
+  min-height: 283px;
   margin: 3rem auto;
   background: white;
   padding: 2rem;
@@ -54,7 +55,6 @@ header h1 {
     gap 0.4s ease,
     max-height 0.4s ease;
   overflow: hidden;
-  min-height: clamp(283px, 80vh, 604px);
 }
 
 .mode-selection {
