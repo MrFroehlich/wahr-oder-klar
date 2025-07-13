@@ -767,19 +767,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
+  // 1. Heading ändern und zurücksetzen
   animateHeadingChange("Wer ist dran?");
   displayCurrentPlayer(null);
   currentPlayerNameSpan.style.transform = "scale(1)";
-  
-  // Erstmal alles ausblenden
-  await fadeOutElement(modeSelection);
-  await fadeOutElement(questionView);
 
-  choiceHeading.style.display = "flex";
+  // 2. Alles ausblenden
+  modeSelection.style.display = "none";
   questionView.style.display = "none";
+  modeSelection.classList.remove("fade-slide-in", "fade-in");
+  modeSelection.classList.add("fade-slide-out");
 
-  await new Promise(r => setTimeout(r, 500)); // kurze Pause
+  // 3. Kurze Pause fürs "Rattern"
+  await new Promise(r => setTimeout(r, 300));
 
+  // 4. Spieler durchrasseln
   const dummy = await nameRattern();
   const chosenPlayer = getNextPlayer();
 
@@ -788,18 +790,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     return null;
   }
 
+  // 5. Spieler anzeigen mit Zoom
   displayCurrentPlayer(chosenPlayer);
   await zoomInName();
 
+  // 6. Heading aktualisieren
   animateHeadingChange("Wahrheit oder Pflicht?");
   updateChoiceHeading(chosenPlayer);
 
-  // Modus-Auswahl sauber einblenden
+  // 7. Jetzt Buttons wieder sichtbar & einblenden
   modeSelection.style.display = "flex";
-  await fadeInElement(modeSelection);
-
+  await fadeInElement(modeSelection); // sanft einblenden, inkl. pointer-events & opacity
   return chosenPlayer;
-}
+    }
 
   // Daten laden & vorbereiten
   wopData = await loadQuestions();
