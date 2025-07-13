@@ -751,35 +751,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     doneBtn.textContent = "Zurück zur Auswahl";
   }
 
+  function fadeInElement(element) {
+  return new Promise(resolve => {
+    element.classList.remove("fade-out", "fade-in");
+    element.style.display = "none";
+    setTimeout(() => {
+      element.style.display = "flex";
+      requestAnimationFrame(() => {
+        element.classList.add("fade-in");
+        element.style.pointerEvents = "auto";
+        resolve();
+      });
+    }, 20);
+  });
+  }
+
   async function startNameSelection() {
-    animateHeadingChange("Wer ist dran?");
-    displayCurrentPlayer(null);
-    currentPlayerNameSpan.style.transform = "scale(1)";
-    choiceHeading.style.display = "flex";
+  animateHeadingChange("Wer ist dran?");
+  displayCurrentPlayer(null);
+  currentPlayerNameSpan.style.transform = "scale(1)";
+  choiceHeading.style.display = "flex";
 
-    questionView.style.display = "none";
-    modeSelection.style.display = "none";
+  questionView.style.display = "none";
+  modeSelection.style.display = "none";
 
-    await new Promise(r => setTimeout(r, 800));
+  await new Promise(r => setTimeout(r, 800));
 
-    const dummy = await nameRattern();
-    const chosenPlayer = getNextPlayer();
+  const dummy = await nameRattern();
+  const chosenPlayer = getNextPlayer();
 
-    if (!chosenPlayer) {
-      alert("Keine Spieler:innen zum Auswählen vorhanden.");
-      return null;
-    }
+  if (!chosenPlayer) {
+    alert("Keine Spieler:innen zum Auswählen vorhanden.");
+    return null;
+  }
 
-    displayCurrentPlayer(chosenPlayer);
-    await zoomInName();
+  displayCurrentPlayer(chosenPlayer);
+  await zoomInName();
 
-    animateHeadingChange("Wahrheit oder Pflicht?");
-    updateChoiceHeading(chosenPlayer);
+  animateHeadingChange("Wahrheit oder Pflicht?");
+  updateChoiceHeading(chosenPlayer);
 
-    modeSelection.style.display = "flex";
-    await fadeInElement(modeSelection);
+  await fadeInElement(modeSelection);
 
-    return chosenPlayer;
+  return chosenPlayer;
   }
 
   // Daten laden & vorbereiten
