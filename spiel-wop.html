@@ -356,6 +356,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   let wopPlayers = [];
   let playerQueue = [];
 
+  let currentPlayer = null;
+
   function animateHeadingChange(newText) {
     if (questionPromptText.textContent === newText) return;
     questionPromptText.classList.remove("prompt-text-anim-in", "prompt-text-anim-out");
@@ -367,34 +369,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 400);
   }
 
-  function applyFadeTransition(outEl, inEl) {
-    outEl.classList.remove("fade-slide-in");
-    outEl.classList.add("fade-slide-out");
-    outEl.style.pointerEvents = "none";
-
+  function transitionGroupOut(elements, callback) {
+    elements.forEach(el => {
+      el.classList.remove("fade-slide-in");
+      el.classList.add("fade-slide-out");
+    });
     setTimeout(() => {
-      outEl.style.display = "none";
-      inEl.style.display = "flex";
-      inEl.classList.remove("fade-slide-out");
-      inEl.classList.add("fade-slide-in");
-      inEl.style.pointerEvents = "auto";
+      elements.forEach(el => (el.style.display = "none"));
+      if (callback) callback();
     }, 400);
   }
 
-  function showElement(el) {
-    el.style.display = "flex";
-    el.classList.remove("fade-slide-out");
-    el.classList.add("fade-slide-in");
-    el.style.pointerEvents = "auto";
-  }
-
-  function hideElement(el) {
-    el.classList.remove("fade-slide-in");
-    el.classList.add("fade-slide-out");
-    el.style.pointerEvents = "none";
-    setTimeout(() => {
-      el.style.display = "none";
-    }, 400);
+  function transitionGroupIn(elements) {
+    elements.forEach(el => {
+      el.style.display = "flex";
+      el.classList.remove("fade-slide-out");
+      el.classList.add("fade-slide-in");
+    });
   }
 
   function shuffle(array) {
@@ -439,7 +430,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return new Promise(resolve => {
       const startTime = Date.now();
       let currentName = null;
-
       const ratterInterval = setInterval(() => {
         currentName = getRandomPlayer();
         if (!currentName) {
@@ -467,46 +457,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-  animateHeadingChange("Wer ist dran?");
-  displayCurrentPlayer(null);
-  currentPlayerNameSpan.style.transform = "scale(1)";
-  choiceHeading.style.display = "flex";
+    // Wischen alle aktuellen Elemente raus
+    transitionGroupOut([choiceHeading, modeSelection, questionView]);
 
-  // Slide-out modeSelection + questionView
-  modeSelection.style.display = "none";
-  questionView.style.display = "none";
+    await new Promise(r => setTimeout(r, 400));
+    animateHeadingChange("Wer ist dran?");
+    displayCurrentPlayer(null);
 
-  await new Promise(r => setTimeout(r, 800));
+    choiceHeading.style.display = "flex";
+    choiceHeading.classList.add("fade-slide-in");
 
-  await nameRattern();
-  const chosenPlayer = getNextPlayer();
+    await new Promise(r => setTimeout(r, 800));
 
-  if (!chosenPlayer) {
-    alert("Keine Spieler:innen zum Auswählen vorhanden.");
-    return null;
+    const selected = await nameRattern();
+    if (!selected) {
+      alert("Keine Spieler:innen vorhanden!");
+      return null;
+    }
+
+    displayCurrentPlayer(selected);
+    await zoomInName();
+
+    currentPlayer = selected;
+    animateHeadingChange("Wahrheit oder Pflicht?");
+    updateChoiceHeading(currentPlayer);
+    transitionGroupIn([choiceHeading, modeSelection]);
+
+    return currentPlayer;
   }
-
-  displayCurrentPlayer(chosenPlayer);
-  await zoomInName();
-
-  animateHeadingChange("Wahrheit oder Pflicht?");
-  updateChoiceHeading(chosenPlayer);
-
-  // Slide-in modeSelection
-  modeSelection.classList.add("slide-in-right");
-  modeSelection.style.display = "flex";
-  setTimeout(() => {
-    modeSelection.classList.remove("slide-in-right");
-  }, 400);
-
-  // Slide-in choiceHeading
-  choiceHeading.classList.add("slide-in-right");
-  setTimeout(() => {
-    choiceHeading.classList.remove("slide-in-right");
-  }, 400);
-
-  return chosenPlayer;
-}
 
   function getRandomFromPool(pool) {
     if (!pool.length) return null;
@@ -516,14 +494,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function showQuestion(mode, player) {
     currentModeSelected = mode;
-    let question = null;
-
-    if (mode === "truth") {
-      question = getRandomFromPool(wahrheitPool);
-    } else {
-      question = getRandomFromPool(pflichtPool);
-    }
-
+    const question = mode === "truth" ? getRandomFromPool(wahrheitPool) : getRandomFromPool(pflichtPool);
     if (!question) {
       animateHeadingChange("Keine Fragen mehr");
       modeSelection.style.display = "none";
@@ -536,24 +507,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const fullText = `${player.name}, ${baseText}`;
 
     categoryLabel.textContent = labelText;
-    penaltyHeading.style.display = "none";
     questionBox.textContent = fullText;
+    penaltyHeading.style.display = "none";
     questionBox.classList.remove("mystery");
-
     penaltyBtn.style.display = "inline-block";
     doneBtn.textContent = "Erledigt / Nächste Frage";
 
     animateHeadingChange("Wahrheit oder Pflicht?");
     updateChoiceHeading(player);
-
-    applyFadeTransition(modeSelection, questionView);
+    transitionGroupOut([modeSelection], () => {
+      transitionGroupIn([questionView]);
+    });
   }
 
   function showPenalty() {
-    const alt = currentModeSelected === "truth"
-      ? getRandomFromPool(pflichtPool)
-      : getRandomFromPool(wahrheitPool);
-
+    const alt = currentModeSelected === "truth" ? getRandomFromPool(pflichtPool) : getRandomFromPool(wahrheitPool);
     const text = alt
       ? (currentModeSelected === "truth" ? alt.text : alt.frage)
       : "Keine Strafaufgabe verfügbar.";
@@ -577,7 +545,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Spieler aus localStorage laden
+  // Spieler laden
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
     if (storedPlayers) wopPlayers = JSON.parse(storedPlayers);
@@ -589,22 +557,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
     return;
   }
-
-  // Globaler Fehlerhandler
-  window.onerror = function(message, source, lineno, colno, error) {
-    const errBox = document.createElement("div");
-    errBox.style.position = "fixed";
-    errBox.style.bottom = "0";
-    errBox.style.left = "0";
-    errBox.style.right = "0";
-    errBox.style.background = "darkred";
-    errBox.style.color = "white";
-    errBox.style.padding = "10px";
-    errBox.style.fontSize = "14px";
-    errBox.style.zIndex = 9999;
-    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
-    document.body.appendChild(errBox);
-  };
 
   wopData = await loadQuestions();
   if (!wopData) return;
@@ -630,7 +582,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   refillQueue();
-  let currentPlayer = await startNameSelection();
+  await startNameSelection();
 
   document.getElementById("truthBtn").addEventListener("click", () => {
     if (!currentPlayer) return;
@@ -642,41 +594,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     showQuestion("dare", currentPlayer);
   });
 
-  penaltyBtn.addEventListener("click", () => {
-    showPenalty();
+  penaltyBtn.addEventListener("click", () => showPenalty());
+
+  doneBtn.addEventListener("click", async () => {
+    if (penaltyHeading.style.display === "block") {
+      penaltyHeading.style.display = "none";
+      penaltyHeading.classList.remove("pulse");
+      penaltyBtn.style.display = "inline-block";
+      doneBtn.textContent = "Erledigt / Nächste Frage";
+      questionBox.classList.remove("mystery");
+    }
+    await startNameSelection();
   });
-
-doneBtn.addEventListener("click", async () => {
-  if (penaltyHeading.style.display === "block") {
-    penaltyHeading.style.display = "none";
-    penaltyHeading.classList.remove("pulse");
-    penaltyBtn.style.display = "inline-block";
-    doneBtn.textContent = "Erledigt / Nächste Frage";
-    questionBox.classList.remove("mystery");
-
-    questionView.classList.add("slide-out-left");
-    setTimeout(async () => {
-      questionView.style.display = "none";
-      questionView.classList.remove("slide-out-left");
-      currentPlayer = await startNameSelection();
-    }, 400);
-    return;
-  }
-
-  questionView.classList.add("slide-out-left");
-  setTimeout(async () => {
-    questionView.style.display = "none";
-    questionView.classList.remove("slide-out-left");
-    currentPlayer = await startNameSelection();
-  }, 400);
-});
 
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
   });
 });
 </script>
-
 
 
 
