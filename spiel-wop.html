@@ -355,7 +355,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let wopPlayers = [];
   let playerQueue = [];
-
   let currentPlayer = null;
 
   function animateHeadingChange(newText) {
@@ -369,22 +368,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 400);
   }
 
-  function transitionGroupOut(elements, callback) {
+  function transitionOut(elements) {
     elements.forEach(el => {
       el.classList.remove("fade-slide-in");
       el.classList.add("fade-slide-out");
+      el.style.pointerEvents = "none";
     });
     setTimeout(() => {
-      elements.forEach(el => (el.style.display = "none"));
-      if (callback) callback();
+      elements.forEach(el => el.style.display = "none");
     }, 400);
   }
 
-  function transitionGroupIn(elements) {
+  function transitionIn(elements) {
     elements.forEach(el => {
       el.style.display = "flex";
       el.classList.remove("fade-slide-out");
       el.classList.add("fade-slide-in");
+      el.style.pointerEvents = "auto";
     });
   }
 
@@ -457,33 +457,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    // Wischen alle aktuellen Elemente raus
-    transitionGroupOut([choiceHeading, modeSelection, questionView]);
-
-    await new Promise(r => setTimeout(r, 400));
     animateHeadingChange("Wer ist dran?");
     displayCurrentPlayer(null);
-
+    currentPlayerNameSpan.style.transform = "scale(1)";
     choiceHeading.style.display = "flex";
-    choiceHeading.classList.add("fade-slide-in");
 
-    await new Promise(r => setTimeout(r, 800));
+    transitionOut([modeSelection, questionView, choiceHeading]);
+    await new Promise(r => setTimeout(r, 600));
 
-    const selected = await nameRattern();
-    if (!selected) {
-      alert("Keine Spieler:innen vorhanden!");
+    const chosenPlayer = await nameRattern();
+    if (!chosenPlayer) {
+      alert("Keine Spieler:innen zum Auswählen vorhanden.");
       return null;
     }
 
-    displayCurrentPlayer(selected);
+    displayCurrentPlayer(chosenPlayer);
     await zoomInName();
 
-    currentPlayer = selected;
     animateHeadingChange("Wahrheit oder Pflicht?");
-    updateChoiceHeading(currentPlayer);
-    transitionGroupIn([choiceHeading, modeSelection]);
+    updateChoiceHeading(chosenPlayer);
 
-    return currentPlayer;
+    transitionIn([modeSelection, choiceHeading]);
+    return chosenPlayer;
   }
 
   function getRandomFromPool(pool) {
@@ -497,8 +492,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const question = mode === "truth" ? getRandomFromPool(wahrheitPool) : getRandomFromPool(pflichtPool);
     if (!question) {
       animateHeadingChange("Keine Fragen mehr");
-      modeSelection.style.display = "none";
-      questionView.style.display = "none";
+      transitionOut([modeSelection, questionView, choiceHeading]);
       return;
     }
 
@@ -515,9 +509,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     animateHeadingChange("Wahrheit oder Pflicht?");
     updateChoiceHeading(player);
-    transitionGroupOut([modeSelection], () => {
-      transitionGroupIn([questionView]);
-    });
+
+    transitionOut([modeSelection]);
+    transitionIn([questionView]);
   }
 
   function showPenalty() {
@@ -582,7 +576,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   refillQueue();
-  await startNameSelection();
+  currentPlayer = await startNameSelection();
 
   document.getElementById("truthBtn").addEventListener("click", () => {
     if (!currentPlayer) return;
@@ -594,7 +588,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     showQuestion("dare", currentPlayer);
   });
 
-  penaltyBtn.addEventListener("click", () => showPenalty());
+  penaltyBtn.addEventListener("click", () => {
+    showPenalty();
+  });
 
   doneBtn.addEventListener("click", async () => {
     if (penaltyHeading.style.display === "block") {
@@ -604,7 +600,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       doneBtn.textContent = "Erledigt / Nächste Frage";
       questionBox.classList.remove("mystery");
     }
-    await startNameSelection();
+    transitionOut([questionView, choiceHeading]);
+    currentPlayer = await startNameSelection();
   });
 
   backBtn.addEventListener("click", () => {
