@@ -6,218 +6,276 @@
   <title>Wahrheit oder Pflicht – Spiel</title>
   <link rel="stylesheet" href="style_spiel-wop.css" />
   <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
-  <style>
+<style>
+  :root {
+    --btn-bg: #346bc2;
+    --btn-bg-hover: #2959a8;
+    --btn-text: #fff;
+    --penalty-color: #c0392b;
+    --choice-line-color-light: var(--btn-bg);
+    --choice-line-color-dark: rgba(255, 255, 255, 0.75);
+    --choice-text-color-light: var(--btn-bg);
+    --choice-text-color-dark: rgba(255, 255, 255, 0.9);
+    --male-color: #4A90E2;
+    --female-color: #E94A84;
+    --mixed-color: #777777;
+  }
+
+  @media (prefers-color-scheme: dark) {
     :root {
-      --btn-bg: #346bc2;
-      --btn-bg-hover: #2959a8;
-      --btn-text: #fff;
-      --penalty-color: #c0392b;
-      --choice-line-color-light: var(--btn-bg);
+      --btn-bg: #2d4c7f;
+      --btn-bg-hover: #3a5a99;
+      --penalty-color: #e74c3c;
+      --choice-line-color-light: #356890;
       --choice-line-color-dark: rgba(255, 255, 255, 0.75);
-      --choice-text-color-light: var(--btn-bg);
+      --choice-text-color-light: #356890;
       --choice-text-color-dark: rgba(255, 255, 255, 0.9);
-      --male-color: #4A90E2;
-      --female-color: #E94A84;
-      --mixed-color: #777777;
     }
+  }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --btn-bg: #2d4c7f;
-        --btn-bg-hover: #3a5a99;
-        --penalty-color: #e74c3c;
-        --choice-line-color-light: #356890;
-        --choice-line-color-dark: rgba(255, 255, 255, 0.75);
-        --choice-text-color-light: #356890;
-        --choice-text-color-dark: rgba(255, 255, 255, 0.9);
-        --male-color: #4A90E2;
-        --female-color: #E94A84;
-        --mixed-color: #aaa;
-      }
-    }
+  .player-male { color: var(--male-color); }
+  .player-female { color: var(--female-color); }
+  .player-mixed { color: var(--mixed-color); }
 
-    .player-male { color: var(--male-color); }
-    .player-female { color: var(--female-color); }
-    .player-mixed { color: var(--mixed-color); }
+  .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: auto;
+  }
 
-    .fade-in {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
+  .fade-out {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
 
-    .fade-out {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      pointer-events: none;
-      user-select: none;
-    }
+  .fade-slide-in {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.4s ease;
+  }
 
-    .fade-scale-in {
-      animation: fadeScaleIn 0.45s ease forwards;
-    }
+  .fade-slide-out {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.4s ease;
+  }
 
-    .fade-scale-out {
-      animation: fadeScaleOut 0.4s ease forwards;
-    }
+  .mystery {
+    animation: mysteryFade 0.6s ease forwards;
+  }
 
-    @keyframes fadeScaleIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
+  @keyframes mysteryFade {
+    0% { opacity: 0; transform: scale(0.95) rotate(-2deg); filter: blur(4px); }
+    60% { opacity: 0.5; transform: scale(1.02) rotate(1deg); filter: blur(2px); }
+    100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+  }
 
-    @keyframes fadeScaleOut {
-      from { opacity: 1; transform: scale(1); }
-      to { opacity: 0; transform: scale(0.9); }
-    }
+  .pulse {
+    animation: pulseAnim 1.2s ease infinite;
+  }
 
-    .mystery {
-      animation: mysteryFade 0.6s ease forwards;
-    }
+  @keyframes pulseAnim {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.7; }
+  }
 
-    .mystery-box {
-      animation: mysteryBoxIn 0.6s ease-out forwards;
-    }
+  .zoom-glow {
+    animation: zoomGlowAnim 1s ease;
+  }
 
-    @keyframes mysteryBoxIn {
-      0% { opacity: 0; transform: scale(0.9) rotate(-2deg); filter: blur(4px); }
-      60% { opacity: 0.6; transform: scale(1.05) rotate(1deg); filter: blur(2px); }
-      100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
-    }
+  @keyframes zoomGlowAnim {
+    0% { transform: scale(1); text-shadow: none; }
+    50% { transform: scale(1.3); text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+    100% { transform: scale(1); text-shadow: none; }
+  }
 
-    @keyframes mysteryFade {
-      0% { opacity: 0; transform: scale(0.95) rotate(-2deg); filter: blur(4px); }
-      60% { opacity: 0.5; transform: scale(1.02) rotate(1deg); filter: blur(2px); }
-      100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
-    }
+  #truthBtn, #dareBtn, #doneBtn {
+    padding: 0.7rem 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
 
-    .straf-label {
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      font-weight: bold;
-      color: red;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
+  #truthBtn:hover, #dareBtn:hover, #doneBtn:hover {
+    background-color: var(--btn-bg-hover);
+    transform: scale(1.03);
+  }
 
-    .action-btn.strafaufgabe {
-      background-color: transparent;
-      color: #555;
-      font-size: 0.9rem;
-      padding: 0.4rem 1rem;
-      border-radius: 0.4rem;
-      border: 1.5px solid #aaa;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      align-self: center;
-      max-width: 150px;
-    }
+  #penaltyBtn {
+    background-color: transparent;
+    border: 2.5px solid var(--penalty-color);
+    color: var(--penalty-color);
+    font-weight: 700;
+    max-width: 160px;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
 
-    .action-btn.strafaufgabe:hover {
-      background-color: #eee;
-      color: #222;
-      border-color: #888;
-    }
+  #penaltyBtn:hover {
+    background-color: var(--penalty-color);
+    color: white;
+  }
 
-    #penaltyBtn {
-      background-color: transparent;
-      border: 2.5px solid var(--penalty-color);
-      color: var(--penalty-color);
-      font-weight: 700;
-      max-width: 160px;
-    }
+  .straf-label {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: bold;
+    color: red;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
 
-    #penaltyBtn:hover,
-    #penaltyBtn:focus {
-      background-color: var(--penalty-color);
-      color: white;
-      outline: none;
-    }
+  .choice-heading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    width: 100%;
+  }
 
-    .choice-heading-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1.5rem;
-      width: 100%;
-    }
+  .choice-heading-container::before,
+  .choice-heading-container::after {
+    content: "";
+    flex-grow: 1;
+    height: 4px;
+    background-color: var(--choice-line-color-light);
+    border-radius: 2px;
+  }
 
+  .choice-heading {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--choice-text-color-light);
+    white-space: nowrap;
+    margin: 0;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
     .choice-heading-container::before,
     .choice-heading-container::after {
-      content: "";
-      flex-grow: 1;
-      height: 4px;
-      background-color: var(--choice-line-color-light);
-      border-radius: 2px;
+      background-color: var(--choice-line-color-dark);
     }
 
     .choice-heading {
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 700;
-      color: var(--choice-text-color-light);
-      white-space: nowrap;
-      margin: 0;
-      padding: 0 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      color: var(--choice-text-color-dark);
+    }
+  }
+
+  .current-player-name {
+    font-weight: 900;
+    font-size: clamp(1.4rem, 4vw, 2.5rem);
+    white-space: nowrap;
+  }
+
+  .action-btn.strafaufgabe {
+    background-color: transparent;
+    color: #555;
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    border: 1.5px solid #aaa;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    align-self: center;
+    max-width: 150px;
+  }
+
+  .action-btn.strafaufgabe:hover {
+    background-color: #eee;
+    color: #222;
+    border-color: #888;
+  }
+
+  /* Header-Optimierung */
+  body.compact-header header {
+    padding: 0.8rem 0;
+    animation: headerShrink 0.4s ease forwards;
+    transition: padding 0.4s ease;
+  }
+
+  body.compact-header .header-inner .logo,
+  body.compact-header .header-inner .icon-right {
+    font-size: 1.6rem;
+    transition: font-size 0.4s ease;
+  }
+
+  body.compact-header header h1 {
+    font-size: 1.3rem;
+    transition: font-size 0.4s ease;
+  }
+
+  body.compact-header .title-group .subtitle {
+    display: none;
+  }
+
+  body.compact-header .container {
+    margin-top: 1.2rem;
+    transition: margin-top 0.3s ease;
+  }
+
+  body.compact-header .question-box {
+    padding: 1.2rem;
+    transition: padding 0.3s ease, font-size 0.3s ease;
+  }
+
+  @keyframes headerShrink {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(0.92); }
+  }
+
+  @keyframes headerUnshrink {
+    from { transform: scaleY(0.92); }
+    to { transform: scaleY(1); }
+  }
+
+  @media screen and (max-height: 600px) and (min-width: 768px) {
+    body.compact-header header {
+      padding: 0.6rem 0;
     }
 
-    .current-player-name {
-      font-weight: 900;
-      font-size: clamp(1.4rem, 4vw, 2.5rem);
-      white-space: nowrap;
+    body.compact-header header h1 {
+      font-size: 1.1rem;
     }
 
-    @media (prefers-color-scheme: dark) {
-      .choice-heading-container::before,
-      .choice-heading-container::after {
-        background-color: var(--choice-line-color-dark);
-      }
-      .choice-heading {
-        color: var(--choice-text-color-dark);
-      }
-    }
-
-    #modeSelection button,
-    #doneBtn {
-      padding: 0.6rem 1.4rem;
+    body.compact-header .question-box {
       font-size: 1.05rem;
-      font-weight: 600;
-      border-radius: 8px;
-      border: none;
-      background-color: var(--btn-bg);
-      color: var(--btn-text);
-      cursor: pointer;
-      margin: 0 0.5rem;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      padding: 1rem;
     }
+  }
 
-    #modeSelection button:hover,
-    #doneBtn:hover {
-      background-color: var(--btn-bg-hover);
-      transform: scale(1.05);
-    }
+  @keyframes textWipeOut {
+    0% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(-40px); }
+  }
 
-    @keyframes textWipeOut {
-      0%   { opacity: 1; transform: translateX(0); }
-      100% { opacity: 0; transform: translateX(-40px); }
-    }
+  @keyframes textWipeIn {
+    0% { opacity: 0; transform: translateX(40px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
 
-    @keyframes textWipeIn {
-      0%   { opacity: 0; transform: translateX(40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
+  .prompt-text-anim-out {
+    animation: textWipeOut 0.35s ease forwards;
+  }
 
-    .prompt-text-anim-out {
-      animation: textWipeOut 0.35s ease forwards;
-    }
-
-    .prompt-text-anim-in {
-      animation: textWipeIn 0.4s ease forwards;
-    }
-  </style>
+  .prompt-text-anim-in {
+    animation: textWipeIn 0.4s ease forwards;
+  }
+</style>
 </head>
 <body>
   <header>
@@ -322,35 +380,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 400);
   }
 
-  try {
-    const storedPlayers = localStorage.getItem("wopPlayers");
-    if (storedPlayers) {
-      wopPlayers = JSON.parse(storedPlayers);
-    }
-  } catch {
-    wopPlayers = [];
-  }
-
-  window.onerror = function(message, source, lineno, colno, error) {
-    const errBox = document.createElement("div");
-    errBox.style.position = "fixed";
-    errBox.style.bottom = "0";
-    errBox.style.left = "0";
-    errBox.style.right = "0";
-    errBox.style.background = "darkred";
-    errBox.style.color = "white";
-    errBox.style.padding = "10px";
-    errBox.style.fontSize = "14px";
-    errBox.style.zIndex = 9999;
-    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
-    document.body.appendChild(errBox);
-  };
-
-  if (!wopPlayers.length) {
-    alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
-    return;
-  }
-
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -366,6 +395,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   function getNextPlayer() {
     if (playerQueue.length === 0) refillQueue();
     return playerQueue.shift();
+  }
+
+  function getRandomPlayer() {
+    return wopPlayers[Math.floor(Math.random() * wopPlayers.length)];
   }
 
   function displayCurrentPlayer(player) {
@@ -406,10 +439,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  function getRandomPlayer() {
-    return wopPlayers[Math.floor(Math.random() * wopPlayers.length)];
-  }
-
   function zoomInName() {
     return new Promise(resolve => {
       currentPlayerNameSpan.classList.add("zoom-glow");
@@ -420,15 +449,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  async function loadQuestions() {
-    try {
-      const res = await fetch("JSON/wop.json");
-      if (!res.ok) throw new Error("HTTP-Fehler " + res.status);
-      return await res.json();
-    } catch (err) {
-      alert("Fehler beim Laden der Fragen: " + err.message);
+  async function startNameSelection() {
+    animateHeadingChange("Wer ist dran?");
+    displayCurrentPlayer(null);
+    currentPlayerNameSpan.style.transform = "scale(1)";
+    choiceHeading.style.display = "flex";
+
+    hideElement(modeSelection);
+    hideElement(questionView);
+
+    await new Promise(r => setTimeout(r, 800)); // Kurze Pause
+
+    await nameRattern();
+    const chosenPlayer = getNextPlayer();
+
+    if (!chosenPlayer) {
+      alert("Keine Spieler:innen zum Auswählen vorhanden.");
       return null;
     }
+
+    displayCurrentPlayer(chosenPlayer);
+    await zoomInName();
+
+    animateHeadingChange("Wahrheit oder Pflicht?");
+    updateChoiceHeading(chosenPlayer);
+    showElement(modeSelection);
+
+    return chosenPlayer;
   }
 
   function getRandomFromPool(pool) {
@@ -489,36 +536,45 @@ document.addEventListener("DOMContentLoaded", async () => {
     doneBtn.textContent = "Zurück zur Auswahl";
   }
 
-  async function startNameSelection() {
-    animateHeadingChange("Wer ist dran?");
-    displayCurrentPlayer(null);
-    currentPlayerNameSpan.style.transform = "scale(1)";
-    choiceHeading.style.display = "flex";
-
-    hideElement(modeSelection);
-    hideElement(questionView);
-
-    await new Promise(r => setTimeout(r, 800));
-
-    await nameRattern();
-    const chosenPlayer = getNextPlayer();
-
-    if (!chosenPlayer) {
-      alert("Keine Spieler:innen zum Auswählen vorhanden.");
+  async function loadQuestions() {
+    try {
+      const res = await fetch("JSON/wop.json");
+      if (!res.ok) throw new Error("HTTP-Fehler " + res.status);
+      return await res.json();
+    } catch (err) {
+      alert("Fehler beim Laden der Fragen: " + err.message);
       return null;
     }
-
-    displayCurrentPlayer(chosenPlayer);
-    await zoomInName();
-
-    animateHeadingChange("Wahrheit oder Pflicht?");
-    updateChoiceHeading(chosenPlayer);
-    showElement(modeSelection);
-
-    return chosenPlayer;
   }
 
-  // Fragen vorbereiten
+  // Initiale Daten laden
+  try {
+    const storedPlayers = localStorage.getItem("wopPlayers");
+    if (storedPlayers) wopPlayers = JSON.parse(storedPlayers);
+  } catch {
+    wopPlayers = [];
+  }
+
+  if (!wopPlayers.length) {
+    alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
+    return;
+  }
+
+  window.onerror = function(message, source, lineno, colno, error) {
+    const errBox = document.createElement("div");
+    errBox.style.position = "fixed";
+    errBox.style.bottom = "0";
+    errBox.style.left = "0";
+    errBox.style.right = "0";
+    errBox.style.background = "darkred";
+    errBox.style.color = "white";
+    errBox.style.padding = "10px";
+    errBox.style.fontSize = "14px";
+    errBox.style.zIndex = 9999;
+    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
+    document.body.appendChild(errBox);
+  };
+
   wopData = await loadQuestions();
   if (!wopData) return;
 
@@ -581,6 +637,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 </script>
+
 
 
 <script>
