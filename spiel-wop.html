@@ -753,16 +753,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function fadeInElement(element) {
   return new Promise(resolve => {
-    element.classList.remove("fade-out", "fade-in");
-    element.style.display = "none";
-    setTimeout(() => {
-      element.style.display = "flex";
-      requestAnimationFrame(() => {
-        element.classList.add("fade-in");
-        element.style.pointerEvents = "auto";
-        resolve();
-      });
-    }, 20);
+    element.classList.remove("fade-in", "fade-out");
+    element.style.opacity = "0";
+    element.style.display = "flex";
+    element.style.pointerEvents = "auto";
+
+    requestAnimationFrame(() => {
+      element.classList.add("fade-in");
+      element.style.opacity = "1";
+      resolve();
+    });
   });
   }
 
@@ -772,8 +772,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   currentPlayerNameSpan.style.transform = "scale(1)";
   choiceHeading.style.display = "flex";
 
-  questionView.style.display = "none";
-  modeSelection.style.display = "none";
+  questionView.classList.remove("fade-in");
+  questionView.classList.add("fade-out");
+  modeSelection.classList.remove("fade-in");
+  modeSelection.classList.add("fade-out");
+
+  questionView.style.pointerEvents = "none";
+  modeSelection.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    questionView.style.display = "none";
+    modeSelection.style.display = "none";
+  }, 400); // Warte bis Fade-out durch ist
 
   await new Promise(r => setTimeout(r, 800));
 
@@ -794,7 +804,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await fadeInElement(modeSelection);
 
   return chosenPlayer;
-  }
+}
 
   // Daten laden & vorbereiten
   wopData = await loadQuestions();
