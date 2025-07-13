@@ -233,6 +233,25 @@ body:not(.compact-header) header.shrink-active {
     padding: 1rem;
   }
 }
+
+
+    @keyframes textWipeOut {
+  0%   { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-40px); }
+}
+
+@keyframes textWipeIn {
+  0%   { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.prompt-text-anim-out {
+  animation: textWipeOut 0.35s ease forwards;
+}
+
+.prompt-text-anim-in {
+  animation: textWipeIn 0.4s ease forwards;
+}
     
   </style>
 </head>
@@ -286,6 +305,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const backBtn = document.getElementById("backBtn");
   const choiceHeading = document.getElementById("choiceHeading");
   const currentPlayerNameSpan = document.getElementById("currentPlayerName");
+  const questionPromptText = document.getElementById("questionPromptText");
 
   let wopData = {};
   let selectedCategories = [];
@@ -295,6 +315,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let wopPlayers = [];
   let playerQueue = [];
+
+  function animateHeadingChange(newText) {
+    questionPromptText.classList.remove("prompt-text-anim-in", "prompt-text-anim-out");
+    questionPromptText.classList.add("prompt-text-anim-out");
+    setTimeout(() => {
+      questionPromptText.textContent = newText;
+      questionPromptText.classList.remove("prompt-text-anim-out");
+      questionPromptText.classList.add("prompt-text-anim-in");
+    }, 350);
+  }
 
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
@@ -356,23 +386,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function updateChoiceHeading(player = null) {
-    const nameSpan = document.getElementById("currentPlayerName");
-    const textSpan = document.getElementById("questionPromptText");
-
     if (!player) {
-      nameSpan.textContent = "";
-      nameSpan.className = "current-player-name player-mixed";
-      textSpan.textContent = "Wer ist dran?";
+      displayCurrentPlayer(null);
       return;
     }
-
-    nameSpan.textContent = player.name;
-    nameSpan.className = "current-player-name";
-    if (player.gender === "male") nameSpan.classList.add("player-male");
-    else if (player.gender === "female") nameSpan.classList.add("player-female");
-    else nameSpan.classList.add("player-mixed");
-
-    textSpan.textContent = "Wahrheit oder Pflicht?";
+    displayCurrentPlayer(player);
   }
 
   function nameRattern(duration = 2200, interval = 100) {
@@ -441,7 +459,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (!question) {
-      updateChoiceHeading("Keine Fragen/Aufgaben mehr.");
+      animateHeadingChange("Keine Fragen mehr");
       modeSelection.style.display = "none";
       questionView.style.display = "none";
       return;
@@ -463,6 +481,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     penaltyBtn.style.display = "inline-block";
     doneBtn.textContent = "Erledigt / Nächste Frage";
 
+    animateHeadingChange("Wahrheit oder Pflicht?");
     updateChoiceHeading(player);
 
     modeSelection.classList.add("fade-out");
@@ -490,8 +509,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    updateChoiceHeading("Wer ist dran?");
-    currentPlayerNameSpan.textContent = "";
+    animateHeadingChange("Wer ist dran?");
+    displayCurrentPlayer(null);
     currentPlayerNameSpan.style.transform = "scale(1)";
     choiceHeading.style.display = "flex";
 
@@ -511,6 +530,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayCurrentPlayer(chosenPlayer);
     await zoomInName();
 
+    animateHeadingChange("Wahrheit oder Pflicht?");
     updateChoiceHeading(chosenPlayer);
 
     modeSelection.style.display = "flex";
@@ -545,7 +565,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // Los geht's
   refillQueue();
   let currentPlayer = await startNameSelection();
 
