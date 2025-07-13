@@ -767,28 +767,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-  // Zeige "Wer ist dran?" mit Animation
   animateHeadingChange("Wer ist dran?");
   displayCurrentPlayer(null);
   currentPlayerNameSpan.style.transform = "scale(1)";
+  
+  // Erstmal alles ausblenden
+  await fadeOutElement(modeSelection);
+  await fadeOutElement(questionView);
+
   choiceHeading.style.display = "flex";
+  questionView.style.display = "none";
 
-  // Stelle sicher, dass Buttons *komplett* verschwinden
-  modeSelection.classList.remove("fade-in", "fade-out");
-  modeSelection.style.display = "none";
-  modeSelection.style.opacity = "0";
-  modeSelection.style.pointerEvents = "none";
+  await new Promise(r => setTimeout(r, 500)); // kurze Pause
 
-  // Frage-Ansicht sicher ausblenden
-  questionView.classList.remove("fade-in");
-  questionView.classList.add("fade-out");
-  questionView.style.pointerEvents = "none";
-  setTimeout(() => {
-    questionView.style.display = "none";
-  }, 400);
-
-  // Rattern + Spielerwahl
-  await new Promise(r => setTimeout(r, 800));
   const dummy = await nameRattern();
   const chosenPlayer = getNextPlayer();
 
@@ -797,26 +788,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     return null;
   }
 
-  // Spieler anzeigen + ZoomIn
   displayCurrentPlayer(chosenPlayer);
   await zoomInName();
 
-  // Überschrift ändern + Buttons vorbereiten
   animateHeadingChange("Wahrheit oder Pflicht?");
   updateChoiceHeading(chosenPlayer);
 
-  // Buttons korrekt einblenden mit Fade-In
+  // Modus-Auswahl sauber einblenden
   modeSelection.style.display = "flex";
-  modeSelection.style.opacity = "0";
-  modeSelection.style.pointerEvents = "none";
-  requestAnimationFrame(() => {
-    modeSelection.classList.add("fade-in");
-    modeSelection.style.opacity = "1";
-    modeSelection.style.pointerEvents = "auto";
-  });
+  await fadeInElement(modeSelection);
 
   return chosenPlayer;
-  }
+}
 
   // Daten laden & vorbereiten
   wopData = await loadQuestions();
