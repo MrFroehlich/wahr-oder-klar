@@ -751,20 +751,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     doneBtn.textContent = "Zurück zur Auswahl";
   }
 
-  function fadeInElement(element) {
-  return new Promise(resolve => {
-    element.classList.remove("fade-in", "fade-out");
-    element.style.opacity = "0";
-    element.style.display = "flex";
-    element.style.pointerEvents = "auto";
 
-    requestAnimationFrame(() => {
-      element.classList.add("fade-in");
-      element.style.opacity = "1";
-      resolve();
-    });
-  });
-  }
 
   async function startNameSelection() {
   // 1. Heading ändern und zurücksetzen
