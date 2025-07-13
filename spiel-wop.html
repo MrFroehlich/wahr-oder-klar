@@ -40,61 +40,98 @@
     .player-female { color: var(--female-color); }
     .player-mixed { color: var(--mixed-color); }
 
-    /* Überschrift: Text Wisch-Animation */
-    @keyframes textWipeOut {
-      0% { opacity: 1; transform: translateX(0); }
-      100% { opacity: 0; transform: translateX(-40px); }
-    }
-    @keyframes textWipeIn {
-      0% { opacity: 0; transform: translateX(40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-    .prompt-text-anim-out {
-      animation: textWipeOut 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-    .prompt-text-anim-in {
-      animation: textWipeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    .fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    /* Sanfte Fade + Slide für Container-Wechsel */
-    .fade-slide-out {
+    .fade-out {
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.5s ease, transform 0.5s ease;
       pointer-events: none;
       user-select: none;
     }
-    .fade-slide-in {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      pointer-events: auto;
+
+    .fade-scale-in {
+      animation: fadeScaleIn 0.45s ease forwards;
     }
 
-    /* Strafaufgabe Pulsieren */
-    @keyframes pulsePenalty {
-      0%, 100% { transform: scale(1); color: var(--penalty-color); text-shadow: none; }
-      50% { transform: scale(1.1); color: #ff3b3b; text-shadow: 0 0 8px #ff3b3b; }
-    }
-    .straf-label.pulse {
-      animation: pulsePenalty 1.2s ease-in-out infinite;
+    .fade-scale-out {
+      animation: fadeScaleOut 0.4s ease forwards;
     }
 
-    /* Spielername Zoom + Glow */
-    @keyframes nameZoomGlow {
-      0% { transform: scale(1); text-shadow: none; }
-      50% { transform: scale(1.35); text-shadow: 0 0 12px var(--btn-bg); }
-      100% { transform: scale(1); text-shadow: none; }
-    }
-    .current-player-name.zoom-glow {
-      animation: nameZoomGlow 1s ease forwards;
+    @keyframes fadeScaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    /* Button Hover Scale */
-    #modeSelection button:hover,
-    #doneBtn:hover {
-      transform: scale(1.05);
-      transition: transform 0.2s ease;
+    @keyframes fadeScaleOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.9); }
+    }
+
+    .mystery {
+      animation: mysteryFade 0.6s ease forwards;
+    }
+
+    .mystery-box {
+      animation: mysteryBoxIn 0.6s ease-out forwards;
+    }
+
+    @keyframes mysteryBoxIn {
+      0% { opacity: 0; transform: scale(0.9) rotate(-2deg); filter: blur(4px); }
+      60% { opacity: 0.6; transform: scale(1.05) rotate(1deg); filter: blur(2px); }
+      100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+    }
+
+    @keyframes mysteryFade {
+      0% { opacity: 0; transform: scale(0.95) rotate(-2deg); filter: blur(4px); }
+      60% { opacity: 0.5; transform: scale(1.02) rotate(1deg); filter: blur(2px); }
+      100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+    }
+
+    .straf-label {
+      font-size: clamp(1.5rem, 5vw, 3rem);
+      font-weight: bold;
+      color: red;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .action-btn.strafaufgabe {
+      background-color: transparent;
+      color: #555;
+      font-size: 0.9rem;
+      padding: 0.4rem 1rem;
+      border-radius: 0.4rem;
+      border: 1.5px solid #aaa;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      align-self: center;
+      max-width: 150px;
+    }
+
+    .action-btn.strafaufgabe:hover {
+      background-color: #eee;
+      color: #222;
+      border-color: #888;
+    }
+
+    #penaltyBtn {
+      background-color: transparent;
+      border: 2.5px solid var(--penalty-color);
+      color: var(--penalty-color);
+      font-weight: 700;
+      max-width: 160px;
+    }
+
+    #penaltyBtn:hover,
+    #penaltyBtn:focus {
+      background-color: var(--penalty-color);
+      color: white;
+      outline: none;
     }
 
     .choice-heading-container {
@@ -123,10 +160,8 @@
       margin: 0;
       padding: 0 1rem;
       display: flex;
-      align-items: center;
-      gap: 10px;
       flex-direction: column;
-      text-align: center;
+      align-items: center;
     }
 
     .current-player-name {
@@ -145,140 +180,83 @@
       }
     }
 
-    #penaltyBtn {
-      background-color: transparent;
-      border: 2.5px solid var(--penalty-color);
-      color: var(--penalty-color);
-      font-weight: 700;
-      max-width: 160px;
-    }
-    #penaltyBtn:hover,
-    #penaltyBtn:focus {
-      background-color: var(--penalty-color);
-      color: white;
-      outline: none;
-    }
-
-    .action-btn.strafaufgabe {
-      background-color: transparent;
-      color: #555;
-      font-size: 0.9rem;
-      padding: 0.4rem 1rem;
-      border-radius: 0.4rem;
-      border: 1.5px solid #aaa;
+    #modeSelection button,
+    #doneBtn {
+      padding: 0.6rem 1.4rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
       cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      align-self: center;
-      max-width: 150px;
+      margin: 0 0.5rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
-    .action-btn.strafaufgabe:hover {
-      background-color: #eee;
-      color: #222;
-      border-color: #888;
+    #modeSelection button:hover,
+    #doneBtn:hover {
+      background-color: var(--btn-bg-hover);
+      transform: scale(1.05);
     }
 
-    .straf-label {
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      font-weight: bold;
-      color: red;
-      text-align: center;
-      margin-bottom: 0.5rem;
+    @keyframes textWipeOut {
+      0%   { opacity: 1; transform: translateX(0); }
+      100% { opacity: 0; transform: translateX(-40px); }
     }
 
-    /* Kompakter Header */
-    body.compact-header header {
-      padding: 0.8rem 0;
-      animation: headerShrink 0.4s ease forwards;
-      transition: padding 0.4s ease;
-    }
-    @keyframes headerShrink {
-      from { transform: scaleY(1); }
-      to { transform: scaleY(0.92); }
-    }
-    @keyframes headerUnshrink {
-      from { transform: scaleY(0.92); }
-      to { transform: scaleY(1); }
+    @keyframes textWipeIn {
+      0%   { opacity: 0; transform: translateX(40px); }
+      100% { opacity: 1; transform: translateX(0); }
     }
 
-    body.compact-header .header-inner .logo,
-    body.compact-header .header-inner .icon-right {
-      font-size: 1.6rem;
-      transition: font-size 0.4s ease;
+    .prompt-text-anim-out {
+      animation: textWipeOut 0.35s ease forwards;
     }
 
-    body.compact-header header h1 {
-      font-size: 1.3rem;
-      transition: font-size 0.4s ease;
+    .prompt-text-anim-in {
+      animation: textWipeIn 0.4s ease forwards;
     }
-
-    body.compact-header .title-group .subtitle {
-      display: none;
-    }
-
-    body.compact-header .container {
-      margin-top: 1.2rem;
-      transition: margin-top 0.3s ease;
-    }
-
-    body.compact-header .question-box {
-      padding: 1.2rem;
-      transition: padding 0.3s ease, font-size 0.3s ease;
-    }
-
-    @media screen and (max-height: 600px) and (min-width: 768px) {
-      body.compact-header header {
-        padding: 0.6rem 0;
-      }
-
-      body.compact-header header h1 {
-        font-size: 1.1rem;
-      }
-
-      body.compact-header .question-box {
-        font-size: 1.05rem;
-        padding: 1rem;
-      }
-    }
-
   </style>
 </head>
 <body>
-<header>
-  <div class="header-inner" style="display:flex; align-items:center; gap:1rem; padding: 0 1.5rem;">
-    <div class="logo">🔮</div>
-    <div class="title-group">
-      <h1 style="margin:0; font-weight:700; font-size:1.8rem;">Wahrheit oder Pflicht</h1>
-      <p class="subtitle" style="margin:0; opacity:0.85;">Wähle Wahrheit oder Pflicht und lass dich überraschen!</p>
-    </div>
-    <div class="icon-right" style="margin-left:auto; font-size:1.6rem;">🤐</div>
-  </div>
-</header>
-<main>
-  <div class="container">
-    <h2 id="choiceHeading" class="choice-heading fade-slide-in">
-      <span id="currentPlayerName" class="current-player-name player-mixed"></span>
-      <span id="questionPromptText">Wahrheit oder Pflicht?</span>
-    </h2>
-
-    <div id="modeSelection" class="mode-selection fade-slide-in" aria-live="polite">
-      <button id="truthBtn" type="button">Wahrheit</button>
-      <button id="dareBtn" type="button">Pflicht</button>
-    </div>
-
-    <div id="questionView" class="question-view fade-slide-out" style="display:none;">
-      <div class="category-label" id="categoryLabel"></div>
-      <div id="penaltyHeading" class="straf-label" style="display:none;">STRAFAUFGABE</div>
-      <div class="question-box" id="questionBox">Frage erscheint hier...</div>
-      <div class="action-buttons" style="margin-top:1rem; display:flex; justify-content:center; gap:1rem;">
-        <button id="doneBtn">Erledigt / Nächste Frage</button>
-        <button id="penaltyBtn" class="action-btn strafaufgabe">Strafaufgabe</button>
+  <header>
+    <div class="header-inner" style="display:flex; align-items:center; gap:1rem; padding: 0 1.5rem;">
+      <div class="logo">🔮</div>
+      <div class="title-group">
+        <h1 style="margin:0; font-weight:700; font-size:1.8rem;">Wahrheit oder Pflicht</h1>
+        <p class="subtitle" style="margin:0; opacity:0.85;">Wähle Wahrheit oder Pflicht und lass dich überraschen!</p>
       </div>
+      <div class="icon-right" style="margin-left:auto; font-size:1.6rem;">🤐</div>
     </div>
+  </header>
+  <main>
+    <div class="container">
 
-    <button id="backBtn" class="back-button" style="margin-top:2rem;">Zurück zur Startseite</button>
-  </div>
-</main>
+      <h2 id="choiceHeading" class="choice-heading fade-in">
+        <span id="currentPlayerName" class="current-player-name player-mixed"></span>
+        <span id="questionPromptText">Wahrheit oder Pflicht?</span>
+      </h2>
+
+      <div id="modeSelection" class="mode-selection fade-in" aria-live="polite">
+        <button id="truthBtn" type="button">Wahrheit</button>
+        <button id="dareBtn" type="button">Pflicht</button>
+      </div>
+
+      <div id="questionView" class="question-view fade-out" style="display:none;">
+        <div class="category-label" id="categoryLabel"></div>
+        <div id="penaltyHeading" class="straf-label mystery" style="display:none;">STRAFAUFGABE</div>
+        <div class="question-box" id="questionBox">Frage erscheint hier...</div>
+        <div class="action-buttons" style="margin-top:1rem; display:flex; justify-content:center; gap:1rem;">
+          <button id="doneBtn">Erledigt / Nächste Frage</button>
+          <button id="penaltyBtn" class="action-btn strafaufgabe">Strafaufgabe</button>
+        </div>
+      </div>
+
+      <button id="backBtn" class="back-button" style="margin-top:2rem;">Zurück zur Startseite</button>
+    </div>
+  </main>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
