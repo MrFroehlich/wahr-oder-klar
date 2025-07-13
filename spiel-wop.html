@@ -305,15 +305,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     wopPlayers = [];
   }
 
-  function showQuestionView() {
-    questionView.classList.add("show");
-  }
-
-  function hideQuestionView() {
-    questionView.classList.remove("show");
-    questionView.style.pointerEvents = "none";
-  }
-
   window.onerror = function(message, source, lineno, colno, error) {
     const errBox = document.createElement("div");
     errBox.style.position = "fixed";
@@ -452,7 +443,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!question) {
       updateChoiceHeading("Keine Fragen/Aufgaben mehr.");
       modeSelection.style.display = "none";
-      hideQuestionView();
+      questionView.style.display = "none";
       return;
     }
 
@@ -478,7 +469,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     modeSelection.style.pointerEvents = "none";
     setTimeout(() => {
       modeSelection.style.display = "none";
-      showQuestionView();
+      questionView.style.display = "flex";
+      questionView.classList.remove("fade-out");
+      questionView.classList.add("fade-in");
+      questionView.style.pointerEvents = "auto";
     }, 400);
   }
 
@@ -502,7 +496,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     choiceHeading.style.display = "flex";
 
     modeSelection.style.display = "none";
-    hideQuestionView();
+    questionView.style.display = "none";
 
     await new Promise(r => setTimeout(r, 800));
 
@@ -527,6 +521,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return chosenPlayer;
   }
 
+  // Daten laden & vorbereiten
   wopData = await loadQuestions();
   if (!wopData) return;
 
@@ -550,6 +545,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
+  // Los geht's
   refillQueue();
   let currentPlayer = await startNameSelection();
 
@@ -574,22 +570,57 @@ document.addEventListener("DOMContentLoaded", async () => {
       doneBtn.textContent = "Erledigt / Nächste Frage";
       questionBox.classList.remove("mystery");
 
-      hideQuestionView();
+      questionView.classList.add("fade-out");
+      questionView.style.pointerEvents = "none";
+
       setTimeout(async () => {
+        questionView.style.display = "none";
         currentPlayer = await startNameSelection();
-      }, 500);
+      }, 400);
       return;
     }
 
-    hideQuestionView();
+    questionView.classList.add("fade-out");
+    questionView.style.pointerEvents = "none";
+
     setTimeout(async () => {
+      questionView.style.display = "none";
       currentPlayer = await startNameSelection();
-    }, 500);
+    }, 400);
   });
 
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
   });
+});
+</script>
+
+<script>
+function applyCompactHeaderIfNeeded() {
+  const isTabletLandscape = window.innerWidth >= 768 && window.innerHeight <= 600;
+  const body = document.body;
+  const header = document.querySelector("header");
+
+  if (isTabletLandscape) {
+    body.classList.add("compact-header");
+    header.classList.remove("shrink-active");
+  } else {
+    if (body.classList.contains("compact-header")) {
+      header.classList.add("shrink-active");
+      setTimeout(() => {
+        body.classList.remove("compact-header");
+        header.classList.remove("shrink-active");
+      }, 400);
+    }
+  }
+}
+
+// Beim Laden prüfen
+window.addEventListener("load", applyCompactHeaderIfNeeded);
+// Bei jeder Größenänderung prüfen
+window.addEventListener("resize", () => {
+  clearTimeout(window.__resizeTimeout);
+  window.__resizeTimeout = setTimeout(applyCompactHeaderIfNeeded, 150);
 });
 </script>
   
