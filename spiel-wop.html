@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="style_spiel-wop.css" />
   <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
   <style>
-    :root {
+
+        :root {
       --btn-bg: #346bc2;
       --btn-bg-hover: #2959a8;
       --btn-text: #fff;
@@ -269,8 +270,8 @@ body:not(.compact-header) header.shrink-active {
   <div class="container">
 
     <h2 id="choiceHeading" class="choice-heading fade-in" style="flex-direction: column; text-align: center;">
-  <span id="currentPlayerName" class="current-player-name player-mixed"></span>
-  <span id="questionPromptText">Wahrheit oder Pflicht?</span>
+      <span id="currentPlayerName" class="current-player-name player-mixed"></span>
+      <span id="questionPromptText">Wahrheit oder Pflicht?</span>
     </h2>
 
     <div id="modeSelection" class="mode-selection fade-in" aria-live="polite">
@@ -316,16 +317,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   let playerQueue = [];
 
   function animateHeadingChange(newText) {
-  if (questionPromptText.textContent === newText) return; // Nichts ändern
+    if (questionPromptText.textContent === newText) return; // Nichts ändern
 
-  questionPromptText.classList.remove("prompt-text-anim-in", "prompt-text-anim-out");
-  questionPromptText.classList.add("prompt-text-anim-out");
-  setTimeout(() => {
-    questionPromptText.textContent = newText;
-    questionPromptText.classList.remove("prompt-text-anim-out");
-    questionPromptText.classList.add("prompt-text-anim-in");
-  }, 400);
-}
+    questionPromptText.classList.remove("prompt-text-anim-in", "prompt-text-anim-out");
+    questionPromptText.classList.add("prompt-text-anim-out");
+    setTimeout(() => {
+      questionPromptText.textContent = newText;
+      questionPromptText.classList.remove("prompt-text-anim-out");
+      questionPromptText.classList.add("prompt-text-anim-in");
+    }, 400);
+  }
 
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
@@ -347,7 +348,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     errBox.style.padding = "10px";
     errBox.style.fontSize = "14px";
     errBox.style.zIndex = 9999;
-    errBox.innerText = 💥 Fehler: ${message} (${lineno}:${colno});
+    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
     document.body.appendChild(errBox);
   };
 
@@ -471,8 +472,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayCurrentPlayer(player);
 
     const baseText = mode === "truth" ? question.frage : question.text;
-    const fullText = ${player.name}, ${baseText};
-    const labelText = ${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"};
+    const fullText = `${player.name}, ${baseText}`;
+    const labelText = `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`;
 
     categoryLabel.textContent = labelText;
     penaltyHeading.style.display = "none";
@@ -643,7 +644,6 @@ window.addEventListener("resize", () => {
   window.__resizeTimeout = setTimeout(applyCompactHeaderIfNeeded, 150);
 });
 </script>
-  
 
 </body>
 </html>
