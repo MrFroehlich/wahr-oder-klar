@@ -233,6 +233,35 @@ body:not(.compact-header) header.shrink-active {
     padding: 1rem;
   }
 }
+
+
+    .question-view {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    max-height 0.5s ease,
+    opacity 0.5s ease,
+    transform 0.5s ease;
+  pointer-events: none;
+}
+
+.question-view.show {
+  max-height: 600px;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+  .question-box {
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.question-box.mystery {
+  transform: scale(1.03);
+}
+    
     
   </style>
 </head>
