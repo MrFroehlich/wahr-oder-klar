@@ -146,6 +146,18 @@
     text-align: center;
   }
 
+  .choice-heading {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--choice-text-color-light);
+      white-space: nowrap;
+      margin: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
   .current-player-name {
     font-weight: 900;
     font-size: clamp(1.6rem, 4vw, 2.8rem);
@@ -426,35 +438,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    animateHeadingChange("Wer ist dran?");
-    displayCurrentPlayer(null);
-    currentPlayerNameSpan.style.transform = "scale(1)";
-    choiceHeading.style.display = "flex";
+  animateHeadingChange("Wer ist dran?");
+  displayCurrentPlayer(null);
+  currentPlayerNameSpan.style.transform = "scale(1)";
+  choiceHeading.style.display = "flex";
 
-    // Sichtbarkeit steuern
-    modeSelection.style.display = "none";
-    questionView.style.display = "none";
+  hideElement(modeSelection);
+  hideElement(questionView);
 
-    await new Promise(r => setTimeout(r, 800)); // kurze Pause vor Rattern
+  await new Promise(r => setTimeout(r, 800));
 
-    await nameRattern();
-    const chosenPlayer = getNextPlayer();
+  await nameRattern();
+  const chosenPlayer = getNextPlayer();
 
-    if (!chosenPlayer) {
-      alert("Keine Spieler:innen zum Auswählen vorhanden.");
-      return null;
-    }
-
-    displayCurrentPlayer(chosenPlayer);
-    await zoomInName();
-
-    animateHeadingChange("Wahrheit oder Pflicht?");
-    updateChoiceHeading(chosenPlayer);
-
-    modeSelection.style.display = "flex";
-
-    return chosenPlayer;
+  if (!chosenPlayer) {
+    alert("Keine Spieler:innen zum Auswählen vorhanden.");
+    return null;
   }
+
+  displayCurrentPlayer(chosenPlayer);
+  await zoomInName();
+
+  animateHeadingChange("Wahrheit oder Pflicht?");
+  updateChoiceHeading(chosenPlayer);
+
+  showElement(modeSelection); // <--- statt modeSelection.style.display = "flex"
+
+  return chosenPlayer;
+}
 
   function getRandomFromPool(pool) {
     if (!pool.length) return null;
