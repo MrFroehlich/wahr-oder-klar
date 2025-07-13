@@ -265,6 +265,27 @@
     animation: textWipeIn 0.4s ease forwards;
   }
 
+
+  @keyframes slideOutLeft {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-40px); }
+  }
+
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .slide-out-left {
+    animation: slideOutLeft 0.4s ease forwards;
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.4s ease forwards;
+  }
+
+  
+
   @media (prefers-color-scheme: dark) {
     .choice-heading {
       color: var(--choice-text-color-dark);
@@ -451,8 +472,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   currentPlayerNameSpan.style.transform = "scale(1)";
   choiceHeading.style.display = "flex";
 
-  hideElement(modeSelection);
-  hideElement(questionView);
+  // Slide-out modeSelection + questionView
+  modeSelection.style.display = "none";
+  questionView.style.display = "none";
 
   await new Promise(r => setTimeout(r, 800));
 
@@ -470,7 +492,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   animateHeadingChange("Wahrheit oder Pflicht?");
   updateChoiceHeading(chosenPlayer);
 
-  showElement(modeSelection); // <--- statt modeSelection.style.display = "flex"
+  // Slide-in modeSelection
+  modeSelection.classList.add("slide-in-right");
+  modeSelection.style.display = "flex";
+  setTimeout(() => {
+    modeSelection.classList.remove("slide-in-right");
+  }, 400);
+
+  // Slide-in choiceHeading
+  choiceHeading.classList.add("slide-in-right");
+  setTimeout(() => {
+    choiceHeading.classList.remove("slide-in-right");
+  }, 400);
 
   return chosenPlayer;
 }
@@ -613,22 +646,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     showPenalty();
   });
 
-  doneBtn.addEventListener("click", async () => {
-    if (penaltyHeading.style.display === "block") {
-      penaltyHeading.style.display = "none";
-      penaltyHeading.classList.remove("pulse");
-      penaltyBtn.style.display = "inline-block";
-      doneBtn.textContent = "Erledigt / Nächste Frage";
-      questionBox.classList.remove("mystery");
+doneBtn.addEventListener("click", async () => {
+  if (penaltyHeading.style.display === "block") {
+    penaltyHeading.style.display = "none";
+    penaltyHeading.classList.remove("pulse");
+    penaltyBtn.style.display = "inline-block";
+    doneBtn.textContent = "Erledigt / Nächste Frage";
+    questionBox.classList.remove("mystery");
 
-      hideElement(questionView);
+    questionView.classList.add("slide-out-left");
+    setTimeout(async () => {
+      questionView.style.display = "none";
+      questionView.classList.remove("slide-out-left");
       currentPlayer = await startNameSelection();
-      return;
-    }
+    }, 400);
+    return;
+  }
 
-    hideElement(questionView);
+  questionView.classList.add("slide-out-left");
+  setTimeout(async () => {
+    questionView.style.display = "none";
+    questionView.classList.remove("slide-out-left");
     currentPlayer = await startNameSelection();
-  });
+  }, 400);
+});
 
   backBtn.addEventListener("click", () => {
     window.location.href = "index.html";
