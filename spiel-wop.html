@@ -315,6 +315,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const backBtn = document.getElementById("backBtn");
   const choiceHeading = document.getElementById("choiceHeading");
   const currentPlayerNameSpan = document.getElementById("currentPlayerName");
+  const body = document.body;
 
   let wopData = {};
   let selectedCategories = [];
@@ -325,6 +326,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let wopPlayers = [];
   let playerQueue = [];
 
+  // Lade Spieler aus localStorage
   try {
     const storedPlayers = localStorage.getItem("wopPlayers");
     if (storedPlayers) {
@@ -333,30 +335,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch {
     wopPlayers = [];
   }
-
-  function showQuestionView() {
-    questionView.classList.add("show");
-  }
-
-  function hideQuestionView() {
-    questionView.classList.remove("show");
-    questionView.style.pointerEvents = "none";
-  }
-
-  window.onerror = function(message, source, lineno, colno, error) {
-    const errBox = document.createElement("div");
-    errBox.style.position = "fixed";
-    errBox.style.bottom = "0";
-    errBox.style.left = "0";
-    errBox.style.right = "0";
-    errBox.style.background = "darkred";
-    errBox.style.color = "white";
-    errBox.style.padding = "10px";
-    errBox.style.fontSize = "14px";
-    errBox.style.zIndex = 9999;
-    errBox.innerText = `💥 Fehler: ${message} (${lineno}:${colno})`;
-    document.body.appendChild(errBox);
-  };
 
   if (!wopPlayers.length) {
     alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
@@ -394,23 +372,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function updateChoiceHeading(player = null) {
-    const nameSpan = document.getElementById("currentPlayerName");
-    const textSpan = document.getElementById("questionPromptText");
-
     if (!player) {
-      nameSpan.textContent = "";
-      nameSpan.className = "current-player-name player-mixed";
-      textSpan.textContent = "Wer ist dran?";
+      currentPlayerNameSpan.textContent = "";
+      currentPlayerNameSpan.className = "current-player-name player-mixed";
+      document.getElementById("questionPromptText").textContent = "Wer ist dran?";
       return;
     }
-
-    nameSpan.textContent = player.name;
-    nameSpan.className = "current-player-name";
-    if (player.gender === "male") nameSpan.classList.add("player-male");
-    else if (player.gender === "female") nameSpan.classList.add("player-female");
-    else nameSpan.classList.add("player-mixed");
-
-    textSpan.textContent = "Wahrheit oder Pflicht?";
+    currentPlayerNameSpan.textContent = player.name;
+    currentPlayerNameSpan.className = "current-player-name";
+    if (player.gender === "male") currentPlayerNameSpan.classList.add("player-male");
+    else if (player.gender === "female") currentPlayerNameSpan.classList.add("player-female");
+    else currentPlayerNameSpan.classList.add("player-mixed");
+    document.getElementById("questionPromptText").textContent = "Wahrheit oder Pflicht?";
   }
 
   function nameRattern(duration = 2200, interval = 100) {
@@ -470,7 +443,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   function showQuestion(mode, player) {
     currentModeSelected = mode;
     let question = null;
-    let categoryKey = null;
 
     if (mode === "truth") {
       question = getRandomFromPool(wahrheitPool);
@@ -479,14 +451,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (!question) {
-      updateChoiceHeading("Keine Fragen/Aufgaben mehr.");
+      updateChoiceHeading(null);
       modeSelection.style.display = "none";
       hideQuestionView();
+      alert("Keine Fragen oder Aufgaben mehr in der Auswahl.");
       return;
     }
 
-    categoryKey = question._cat;
-
+    const categoryKey = question._cat;
     displayCurrentPlayer(player);
 
     const baseText = mode === "truth" ? question.frage : question.text;
@@ -498,23 +470,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     questionBox.textContent = fullText;
     questionBox.classList.remove("mystery");
 
-    penaltyBtn.style.display = "inline-block";
+    penaltyBtn.style.display = mode === "truth" ? "inline-block" : "none";
     doneBtn.textContent = "Erledigt / Nächste Frage";
 
     updateChoiceHeading(player);
 
+    // Header schrumpfen beim Frage anzeigen
+    body.classList.add("compact-header");
+
     modeSelection.classList.add("fade-out");
     modeSelection.style.pointerEvents = "none";
+
     setTimeout(() => {
       modeSelection.style.display = "none";
       showQuestionView();
     }, 400);
   }
 
+  function showQuestionView() {
+    questionView.classList.add("show");
+    questionView.style.pointerEvents = "auto";
+  }
+
+  function hideQuestionView() {
+    questionView.classList.remove("show");
+    questionView.style.pointerEvents = "none";
+    // Header wieder normal groß machen
+    body.classList.remove("compact-header");
+  }
+
   function showPenalty() {
     const alt = currentModeSelected === "truth"
       ? getRandomFromPool(pflichtPool)
       : getRandomFromPool(wahrheitPool);
+
     const text = alt ? (currentModeSelected === "truth" ? alt.text : alt.frage) : "Keine Strafaufgabe verfügbar.";
 
     penaltyHeading.style.display = "block";
@@ -525,8 +514,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    updateChoiceHeading("Wer ist dran?");
-    currentPlayerNameSpan.textContent = "";
+    updateChoiceHeading(null);
     currentPlayerNameSpan.style.transform = "scale(1)";
     choiceHeading.style.display = "flex";
 
@@ -535,7 +523,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await new Promise(r => setTimeout(r, 800));
 
-    const dummy = await nameRattern();
+    await nameRattern();
     const chosenPlayer = getNextPlayer();
 
     if (!chosenPlayer) {
@@ -559,6 +547,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   wopData = await loadQuestions();
   if (!wopData) return;
 
+  // Kategorien aus URL oder alle
   const urlParams = new URLSearchParams(window.location.search);
   const categoryParam = urlParams.get("categories");
 
@@ -598,8 +587,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   doneBtn.addEventListener("click", async () => {
     if (penaltyHeading.style.display === "block") {
+      // Strafaufgabe ist aktiv, zurück zur normalen Anzeige
       penaltyHeading.style.display = "none";
-      penaltyBtn.style.display = "inline-block";
+      penaltyBtn.style.display = currentModeSelected === "truth" ? "inline-block" : "none";
       doneBtn.textContent = "Erledigt / Nächste Frage";
       questionBox.classList.remove("mystery");
 
