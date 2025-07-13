@@ -31,10 +31,6 @@
       --choice-text-color-light: #356890;
       --choice-text-color-dark: rgba(255, 255, 255, 0.9);
     }
-
-    .choice-heading {
-      color: #e0e0e0;
-    }
     
   }
 
@@ -267,6 +263,12 @@
 
   .prompt-text-anim-in {
     animation: textWipeIn 0.4s ease forwards;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .choice-heading {
+      color: var(--choice-text-color-dark);
+    }
   }
   
 </style>
