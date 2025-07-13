@@ -451,8 +451,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     displayCurrentPlayer(player);
 
-    document.body.classList.add("compact-header");
-
     const baseText = mode === "truth" ? question.frage : question.text;
     const fullText = `${player.name}, ${baseText}`;
     const labelText = `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[categoryKey]?.label || "Unbekannt"}`;
@@ -492,7 +490,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-    document.body.classList.remove("compact-header");
     updateChoiceHeading("Wer ist dran?");
     currentPlayerNameSpan.textContent = "";
     currentPlayerNameSpan.style.transform = "scale(1)";
@@ -597,6 +594,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 </script>
+
+<script>
+function applyCompactHeaderIfNeeded() {
+  const isTabletLandscape = window.innerWidth >= 768 && window.innerHeight <= 600;
+  const body = document.body;
+  const header = document.querySelector("header");
+
+  if (isTabletLandscape) {
+    body.classList.add("compact-header");
+    header.classList.remove("shrink-active");
+  } else {
+    if (body.classList.contains("compact-header")) {
+      header.classList.add("shrink-active");
+      setTimeout(() => {
+        body.classList.remove("compact-header");
+        header.classList.remove("shrink-active");
+      }, 400);
+    }
+  }
+}
+
+// Beim Laden prüfen
+window.addEventListener("load", applyCompactHeaderIfNeeded);
+// Bei jeder Größenänderung prüfen
+window.addEventListener("resize", () => {
+  clearTimeout(window.__resizeTimeout);
+  window.__resizeTimeout = setTimeout(applyCompactHeaderIfNeeded, 150);
+});
+</script>
+  
 
 </body>
   </html>
