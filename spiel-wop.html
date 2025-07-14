@@ -314,6 +314,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
+  document.addEventListener("DOMContentLoaded", async () => {
   const modeSelection = document.getElementById("modeSelection");
   const questionView = document.getElementById("questionView");
   const categoryLabel = document.getElementById("categoryLabel");
@@ -325,6 +326,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const choiceHeading = document.getElementById("choiceHeading");
   const currentPlayerNameSpan = document.getElementById("currentPlayerName");
   const questionPromptText = document.getElementById("questionPromptText");
+  const container = document.querySelector(".container");
 
   let wopData = {};
   let selectedCategories = [];
@@ -446,34 +448,33 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function startNameSelection() {
-  animateHeadingChange("Wer ist dran?");
-  displayCurrentPlayer(null);
-  currentPlayerNameSpan.style.transform = "scale(1)";
-  choiceHeading.style.display = "flex";
+    animateHeadingChange("Wer ist dran?");
+    displayCurrentPlayer(null);
+    currentPlayerNameSpan.style.transform = "scale(1)";
+    choiceHeading.style.display = "flex";
 
-  hideElement(modeSelection);
-  hideElement(questionView);
+    hideElement(modeSelection);
+    hideElement(questionView);
+    **container.classList.remove("expanded");**
 
-  await new Promise(r => setTimeout(r, 800));
+    await new Promise(r => setTimeout(r, 800));
+    await nameRattern();
 
-  await nameRattern();
-  const chosenPlayer = getNextPlayer();
-
-  if (!chosenPlayer) {
-    alert("Keine Spieler:innen zum Auswählen vorhanden.");
-    return null;
-  }
+    const chosenPlayer = getNextPlayer();
+    if (!chosenPlayer) {
+      alert("Keine Spieler:innen zum Auswählen vorhanden.");
+      return null;
+    }
 
   displayCurrentPlayer(chosenPlayer);
-  await zoomInName();
+    await zoomInName();
 
-  animateHeadingChange("Wahrheit oder Pflicht?");
-  updateChoiceHeading(chosenPlayer);
+    animateHeadingChange("Wahrheit oder Pflicht?");
+    updateChoiceHeading(chosenPlayer);
+    showElement(modeSelection);
 
-  showElement(modeSelection); // <--- statt modeSelection.style.display = "flex"
-
-  return chosenPlayer;
-}
+    return chosenPlayer;
+  }
 
   function getRandomFromPool(pool) {
     if (!pool.length) return null;
@@ -513,6 +514,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     animateHeadingChange("Wahrheit oder Pflicht?");
     updateChoiceHeading(player);
 
+    container.classList.add("expanded");
     applyFadeTransition(modeSelection, questionView);
   }
 
@@ -531,6 +533,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     questionBox.classList.add("mystery");
     penaltyBtn.style.display = "none";
     doneBtn.textContent = "Zurück zur Auswahl";
+
+    container.classList.add("expanded");
   }
 
   async function loadQuestions() {
@@ -606,11 +610,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       questionBox.classList.remove("mystery");
 
       hideElement(questionView);
+      container.classList.remove("expanded");
       currentPlayer = await startNameSelection();
       return;
     }
 
     hideElement(questionView);
+    container.classList.remove("expanded");
     currentPlayer = await startNameSelection();
   });
 
