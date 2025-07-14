@@ -39,8 +39,6 @@ header h1 {
 
 .container {
   max-width: 800px;
-  min-height: 283px;
-  max-height: 283px; /* Startwert */
   margin: 3rem auto;
   background: white;
   padding: 2rem;
