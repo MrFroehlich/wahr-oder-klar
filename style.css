@@ -129,13 +129,9 @@ footer {
   padding: 2rem;
   max-width: 500px;
   width: 90%;
-  max-height: 60vh;
-  overflow-y: auto;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   position: relative;
   animation: fadeInScale 0.3s ease-in-out;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* für iOS */
   text-align: center; /* damit Überschrift & Inhalt zentriert sind */
 }
 
@@ -367,6 +363,22 @@ footer {
 
 
 
+#wopCategoryOptions {
+  max-height: 60vh; /* oder z. B. 50vh, wenn dir 60 noch zu hoch ist */
+  overflow-y: auto;
+  padding-right: 0.5rem; /* etwas Platz, damit Scrollbar nichts überlappt */
+}
+
+#wopCategoryOptions::-webkit-scrollbar {
+  width: 6px;
+}
+
+#wopCategoryOptions::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+
 
 /*_________________________________________________________________________*/
 
@@ -455,12 +467,8 @@ footer {
   border-radius: 1rem;
   max-width: 500px;
   width: 90%;
-  max-height: 60vh;
-  overflow-y: auto;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* für iOS */
 }
 
 .hidden {
