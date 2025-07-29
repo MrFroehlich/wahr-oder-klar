@@ -611,8 +611,6 @@ body.modal-open {
 }
 
 .player-row {
-  max-height: 35vh;
-  overflow-y: auto;
   display: flex;
   gap: 0.8rem;
   align-items: center;
@@ -634,6 +632,12 @@ body.modal-open {
 .player-name:focus {
   border-color: #3399ff;
   outline: none;
+}
+
+#playerList {
+  max-height: 35vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
 .gender-toggle {
