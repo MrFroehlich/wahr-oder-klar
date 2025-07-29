@@ -239,6 +239,7 @@ footer {
 /* Close Button Emoji */
 .close-modal {
   position: absolute;
+  color: white;
   top: 0.7rem;
   right: 1rem;
   font-size: 1.3rem;
@@ -556,6 +557,7 @@ footer {
 .close-modal {
   position: absolute;
   top: 1rem;
+  color: fff;
   right: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
