@@ -681,7 +681,6 @@ body.modal-open {
 #playerModal .close-modal {
   background: none;
   border: none;
-  color: #444;
   position: absolute;
   top: 0.7rem;
   right: 1rem;
@@ -692,7 +691,6 @@ body.modal-open {
 
 #playerModal .close-modal:hover {
   transform: scale(1.3);
-  color: #0077ff;
 }
 
 
@@ -727,14 +725,6 @@ body.modal-open {
 
   #startGameBtn:hover {
     background-color: #005fa3;
-  }
-
-  #playerModal .close-modal {
-    color: #ccc;
-  }
-
-  #playerModal .close-modal:hover {
-    color: crimson;
   }
    }
 
