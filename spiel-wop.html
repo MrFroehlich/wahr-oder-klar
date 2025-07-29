@@ -346,6 +346,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 400);
   }
 
+  function updateCompactHeader() {
+  const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
+  const heightThreshold = 750; // Anpassen je nach Bedarf
+
+  if (isTablet && window.innerHeight < heightThreshold) {
+    document.body.classList.add('compact-header');
+  } else {
+    document.body.classList.remove('compact-header');
+  }
+}
+
+  // Bei Seitenstart und bei Resize prüfen
+    window.addEventListener('resize', updateCompactHeader);
+    window.addEventListener('orientationchange', updateCompactHeader);
+    document.addEventListener('DOMContentLoaded', updateCompactHeader);
+
   function applyFadeTransition(outEl, inEl) {
     outEl.classList.remove("fade-slide-in");
     outEl.classList.add("fade-slide-out");
