@@ -2277,8 +2277,17 @@
       { "frage": "Hast du schon mal ein besonders mutiges Kleid oder Outfit getragen?", "gender": "female" },
       { "frage": "Was war die intensivste körperliche Erfahrung, die du je gemacht hast?", "gender": "all" },
       { "frage": "Wie wichtig ist dir körperliche Nähe in Freundschaften?", "gender": "all" },
-
+      { "frage": "Wie fühlst du dich, wenn du dich im Spiegel komplett nackt siehst?", "gender": "all" },
+      { "frage": "Was denkst du über deinen Körper – und was würdest du am liebsten verstecken?", "gender": "all" },
+      { "frage": "Hast du schon mal deine Tränen unterdrückt, weil du 'stark' wirken wolltest?", "gender": "male" },
+      { "frage": "Hast du schon mal deine Tränen unterdrückt, weil du 'stark' wirken wolltest?", "gender": "male" },
+      { "frage": "Hast du schon mal deine Tränen unterdrückt, weil du 'stark' wirken wolltest?", "gender": "male" },
+      { "frage": "Hast du schon mal deine Tränen unterdrückt, weil du 'stark' wirken wolltest?", "gender": "male" },
+      { "frage": "Was war der mutigste Moment, in dem du zu deiner Unsicherheit gestanden hast?", "gender": "all" },
+      { "frage": "Was hat dich zuletzt emotional so sehr berührt, dass du fast geweint hättest?", "gender": "male" },
+      { "frage": "Was hat dich zuletzt emotional so sehr berührt, dass du fast geweint hättest?", "gender": "male" }
     ],
+  
     "pflicht": [
       { "text": "Sag laut, was du normalerweise für dich behältst – ohne Filter." },
       { "text": "Ruf jemanden an und gestehe etwas, das du bisher verheimlicht hast." },
