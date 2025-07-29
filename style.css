@@ -364,7 +364,7 @@ footer {
 
 
 #wopCategoryOptions {
-  max-height: 60vh; /* oder z. B. 50vh, wenn dir 60 noch zu hoch ist */
+  max-height: 40vh; /* oder z. B. 50vh, wenn dir 60 noch zu hoch ist */
   overflow-y: auto;
   padding-right: 0.5rem; /* etwas Platz, damit Scrollbar nichts überlappt */
 }
