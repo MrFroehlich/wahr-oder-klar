@@ -611,6 +611,8 @@ body.modal-open {
 }
 
 .player-row {
+  max-height: 35vh;
+  overflow-y: auto;
   display: flex;
   gap: 0.8rem;
   align-items: center;
