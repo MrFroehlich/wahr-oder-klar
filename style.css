@@ -129,9 +129,13 @@ footer {
   padding: 2rem;
   max-width: 500px;
   width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   position: relative;
   animation: fadeInScale 0.3s ease-in-out;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* für iOS */
   text-align: center; /* damit Überschrift & Inhalt zentriert sind */
 }
 
@@ -451,8 +455,12 @@ footer {
   border-radius: 1rem;
   max-width: 500px;
   width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* für iOS */
 }
 
 .hidden {
