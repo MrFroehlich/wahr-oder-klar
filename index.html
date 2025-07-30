@@ -559,5 +559,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+
+<script>
+// Automatisches Scroll-Locking bei geöffnetem Modal
+const observer = new MutationObserver(() => {
+  const categoryModal = document.getElementById("categoryModal");
+  const playerModal = document.getElementById("playerModal");
+  const isAnyModalOpen = !categoryModal.classList.contains("hidden") || !playerModal.classList.contains("hidden");
+
+  document.body.classList.toggle("no-scroll", isAnyModalOpen);
+});
+
+["categoryModal", "playerModal"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    observer.observe(el, { attributes: true, attributeFilter: ["class"] });
+  }
+});
+</script>
+  
+
 </body>
 </html>
