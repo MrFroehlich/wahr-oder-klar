@@ -144,6 +144,28 @@
   </div>
 </div>
 
+  
+  <!-- Modal: Spieler:innen-Auswahl -->
+<div class="modal-overlay hidden" id="playerModal">
+  <div class="modal">
+    <button class="close-modal" id="closePlayerModal">❌</button>
+    <h2>Wer spielt mit?</h2>
+
+    <div id="playerList">
+      <div class="player-row">
+        <input type="text" placeholder="Name eingeben" class="player-name" />
+        <div class="gender-toggle" data-gender="mixed">
+          <button class="gender-option active" data-value="mixed">⚧</button>
+          <button class="gender-option" data-value="male">👦</button>
+          <button class="gender-option" data-value="female">👧</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="startGameBtn">Spiel starten</button>
+  </div>
+</div>
+
 <!-- Wer würde eher... Modal -->
 <div class="modal-overlay hidden" id="wdeModal" role="dialog" aria-modal="true" aria-labelledby="wdeModalTitle" tabindex="-1">
   <div class="modal">
@@ -300,26 +322,6 @@
   </div>
 </div>
 
-<!-- Modal: Spieler:innen-Auswahl -->
-<div class="modal-overlay hidden" id="playerModal">
-  <div class="modal">
-    <button class="close-modal" id="closePlayerModal">❌</button>
-    <h2>Wer spielt mit?</h2>
-
-    <div id="playerList">
-      <div class="player-row">
-        <input type="text" placeholder="Name eingeben" class="player-name" />
-        <div class="gender-toggle" data-gender="mixed">
-          <button class="gender-option active" data-value="mixed">⚧</button>
-          <button class="gender-option" data-value="male">👦</button>
-          <button class="gender-option" data-value="female">👧</button>
-        </div>
-      </div>
-    </div>
-
-    <button class="start-btn" id="startGameBtn">Spiel starten</button>
-  </div>
-</div>
 
 <!-- ========== SCRIPTS ========== -->
 <script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
@@ -332,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startGameBtn = document.getElementById("startGameBtn");
   const closePlayerModal = document.getElementById("closePlayerModal");
   const openCategoryBtn = document.getElementById("openCategoryBtn");
-  const categoryModal = document.getElementById("categoryModal");
+  const categoryModal = document.getElementById("wopModal"); // korrigiert auf wopModal
   const categoryNextBtn = document.getElementById("categoryNextBtn");
   const closeCategoryBtn = document.getElementById("closeCategoryModal");
   
@@ -422,11 +424,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Scroll-Lock bei Öffnen oder Schließen aktualisieren
-  document.getElementById('categoryModalOverlay')?.addEventListener('transitionend', updateScrollLock);
+  document.getElementById('wopModalOverlay')?.addEventListener('transitionend', updateScrollLock);
   document.getElementById('playerModalOverlay')?.addEventListener('transitionend', updateScrollLock);
 
   const observer = new MutationObserver(updateScrollLock);
-  ['categoryModalOverlay', 'playerModalOverlay'].forEach(id => {
+  ['wopModal', 'playerModal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
   });
@@ -491,18 +493,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.location.href = "spiel-wop.html" + query;
   });
+
 });
+
+// Hilfsfunktion zum Verstecken eines Modals (falls nicht schon definiert)
+function hideModal(modal) {
+  if (!modal) return;
+  modal.classList.add("hidden");
+  document.body.classList.remove("modal-open");
+}
 
 // Automatisches Scroll-Locking bei geöffnetem Modal
 const observer = new MutationObserver(() => {
-  const categoryModal = document.getElementById("categoryModal");
-  const playerModal = document.getElementById("playerModal");
-  const isAnyModalOpen = !categoryModal.classList.contains("hidden") || !playerModal.classList.contains("hidden");
+  const modalIds = ["wopModal", "playerModal"];
+  const isAnyModalOpen = modalIds.some(id => {
+    const modal = document.getElementById(id);
+    return modal && !modal.classList.contains("hidden");
+  });
 
   document.body.classList.toggle("no-scroll", isAnyModalOpen);
 });
 
-["categoryModal", "playerModal"].forEach(id => {
+["wopModal", "playerModal"].forEach(id => {
   const el = document.getElementById(id);
   if (el) {
     observer.observe(el, { attributes: true, attributeFilter: ["class"] });
