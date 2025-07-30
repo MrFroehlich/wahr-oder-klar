@@ -753,3 +753,71 @@ body.modal-open {
   border-radius: 6px;
   transition: 0.2s ease;
 }
+
+
+
+
+
+
+
+/* === WARNBOX STYLING === */
+.warning-box {
+   margin-top: 1.2rem;
+   padding: 0.9rem 1.2rem;
+   background: linear-gradient(to right, #ff4d4d, #ff9900);
+   color: #fff;
+   border-radius: 12px;
+   font-weight: 600;
+   text-align: center;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+   font-size: 1rem;
+   line-height: 1.5;
+   transition: all 0.35s ease;
+   position: relative;
+   z-index: 10;
+}
+
+/* Hidden state (für sanftes Ausblenden) */
+.warning-box.hidden {
+   opacity: 0;
+   transform: translateY(-12px);
+   pointer-events: none;
+   max-height: 0;
+   padding: 0;
+   margin: 0;
+   overflow: hidden;
+   transition: all 0.4s ease;
+}
+
+/* LIGHT MODE */
+@media (prefers-color-scheme: light) {
+   .warning-box {
+      background: linear-gradient(to right, #ff6b6b, #ffa94d);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.35);
+   }
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+   .warning-box {
+      background: linear-gradient(to right, #ff4d4d, #cc6600);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+   }
+}
+
+/* RESPONSIVE SCHRIFTGRÖSSE */
+@media (max-width: 600px) {
+   .warning-box {
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+   }
+}
+
+@media (max-width: 400px) {
+   .warning-box {
+      font-size: 0.85rem;
+   }
+}
