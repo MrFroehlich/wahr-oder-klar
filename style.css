@@ -238,6 +238,8 @@ footer {
 
 /* Close Button Emoji */
 .close-modal {
+  background: none !important;
+  border: none;
   position: absolute;
   color: white;
   top: 0.7rem;
@@ -555,6 +557,8 @@ footer {
    
 /* Modal Close Button */
 .close-modal {
+  background: none !important;
+  border: none;
   position: absolute;
   top: 1rem;
   color: fff;
@@ -565,7 +569,7 @@ footer {
 }
 
 .close-modal:hover {
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 
