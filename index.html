@@ -407,19 +407,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Scroll-Lock aktivieren/deaktivieren, je nachdem ob ein Modal sichtbar ist
 function updateScrollLock() {
-  const modals = [
-    document.getElementById('categoryModalOverlay'),
-    document.getElementById('playerModalOverlay')
-  ];
+  const body = document.body;
+  const categoryModal = document.getElementById("categoryModal");
+  const playerModal = document.getElementById("playerModal");
 
-  const isAnyModalVisible = modals.some(modal => {
-    if (!modal) return false;
-    const style = window.getComputedStyle(modal);
-    return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
-  });
+  const categoryVisible = categoryModal && !categoryModal.classList.contains("hidden");
+  const playerVisible = playerModal && !playerModal.classList.contains("hidden");
 
-  document.body.classList.toggle('modal-open', isAnyModalVisible);
-                                                               }
+  if (categoryVisible || playerVisible) {
+    body.classList.add("no-scroll");
+  } else {
+    body.classList.remove("no-scroll");
+  }
+}
 
 // Scroll-Lock bei Öffnen oder Schließen aktualisieren
 // Beim Öffnen
