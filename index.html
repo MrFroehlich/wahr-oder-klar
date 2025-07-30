@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startGameBtn = document.getElementById("startGameBtn");
   const closePlayerModal = document.getElementById("closePlayerModal");
   const openCategoryBtn = document.getElementById("openCategoryBtn");
-  const categoryModal = document.getElementById("wopModal"); // korrigiert auf wopModal
+  const categoryModal = document.getElementById("wopModal");
   const categoryNextBtn = document.getElementById("categoryNextBtn");
   const closeCategoryBtn = document.getElementById("closeCategoryModal");
   
@@ -408,9 +408,36 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.style.cursor = "not-allowed";
       }
     });
+
+    // **Automatisch zum neuen Eintrag scrollen**
+    row.scrollIntoView({ behavior: "smooth", block: "end" });
   }
 
-  // === 4. Scroll-Lock aktivieren/deaktivieren, je nachdem ob ein Modal sichtbar ist ===
+  // === 4. Eingabe im letzten Feld: neue Zeile hinzufügen + scrollen ===
+  playerList.addEventListener("input", () => {
+    const rows = playerList.querySelectorAll(".player-row");
+    if (rows.length === 0) return;
+
+    const lastRow = rows[rows.length - 1];
+    const nameInput = lastRow.querySelector("input.player-name");
+
+    if (nameInput && nameInput.value.trim() !== "") {
+      // Prüfen, ob schon eine leere Zeile existiert, um keine doppelten zu erzeugen
+      let emptyRowExists = false;
+      rows.forEach(row => {
+        const input = row.querySelector("input.player-name");
+        if (input && input.value.trim() === "" && row !== lastRow) {
+          emptyRowExists = true;
+        }
+      });
+
+      if (!emptyRowExists) {
+        addNewPlayerRow();
+      }
+    }
+  });
+
+  // === 5. Scroll-Lock aktivieren/deaktivieren, je nachdem ob ein Modal sichtbar ist ===
   function updateScrollLock() {
     const body = document.body;
     const categoryVisible = categoryModal && !categoryModal.classList.contains("hidden");
@@ -433,32 +460,32 @@ document.addEventListener("DOMContentLoaded", () => {
     if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
   });
 
-  // === 5. Klick auf "Spiel starten" (Kategorie-Modal öffnen) ===
+  // === 6. Klick auf "Spiel starten" (Kategorie-Modal öffnen) ===
   openCategoryBtn?.addEventListener("click", () => {
     categoryModal.classList.remove("hidden");
     document.body.classList.add("modal-open");
   });
 
-  // === 6. Klick auf "Weiter" (Spieler-Modal öffnen) ===
+  // === 7. Klick auf "Weiter" (Spieler-Modal öffnen) ===
   categoryNextBtn?.addEventListener("click", () => {
     hideModal(categoryModal);
     playerModal.classList.remove("hidden");
     document.body.classList.add("modal-open");
   });
 
-  // === 7. Klick auf ❌ bei Kategorie-Modal ===
+  // === 8. Klick auf ❌ bei Kategorie-Modal ===
   closeCategoryBtn?.addEventListener("click", () => {
     hideModal(categoryModal);
   });
 
-  // === 8. Klick auf ❌ bei Spieler-Modal ===
+  // === 9. Klick auf ❌ bei Spieler-Modal ===
   closePlayerModal?.addEventListener("click", () => {
     playerModal.classList.add("hidden");
     document.body.classList.remove("modal-open");
     playerList.innerHTML = "";
   });
 
-  // === 9. Geschlecht per Button auswählen ===
+  // === 10. Geschlecht per Button auswählen ===
   playerList.addEventListener("click", e => {
     if (e.target.classList.contains("gender-option") && !e.target.disabled) {
       const parent = e.target.closest(".gender-toggle");
@@ -468,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === 10. Spiel starten: Daten speichern & weiterleiten ===
+  // === 11. Spiel starten: Daten speichern & weiterleiten ===
   startGameBtn?.addEventListener("click", () => {
     const rows = playerList.querySelectorAll(".player-row");
     const players = [];
@@ -493,7 +520,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.location.href = "spiel-wop.html" + query;
   });
-
 });
 
 // Hilfsfunktion zum Verstecken eines Modals (falls nicht schon definiert)
