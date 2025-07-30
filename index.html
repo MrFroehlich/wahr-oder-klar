@@ -564,8 +564,14 @@ function hideModal(modal) {
 function showWarning(text) {
   const box = document.getElementById("playerWarning");
   if (!box) return;
+
   box.textContent = `⚠️ ${text}`;
   box.classList.remove("hidden");
+
+  // Animation zurücksetzen, um erneut abspielen zu können
+  box.classList.remove("shake");
+  void box.offsetWidth; // erzwingt Neuberechnung der Animation
+  box.classList.add("shake");
 }
 
 function hideWarning() {
