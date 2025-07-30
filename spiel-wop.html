@@ -346,46 +346,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 400);
   }
 
-    function updateCompactHeader() {
-  const isTablet = window.innerWidth >= 768 && window.innerWidth <= 1024;
-  const heightThreshold = 850; // Anpassen je nach Bedarf
 
-  if (isTablet && window.innerHeight < heightThreshold) {
-    document.body.classList.add('compact-header');
-  } else {
-    document.body.classList.remove('compact-header');
-  }
-}
-
-  // Bei Seitenstart und bei Resize prüfen
-    window.addEventListener('resize', updateCompactHeader);
-    window.addEventListener('orientationchange', updateCompactHeader);
-    document.addEventListener('DOMContentLoaded', updateCompactHeader);
-
-
-function updateHeaderBasedOnViewport() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  const isTablet = width >= 768 && width <= 1024 && height <= 850;
-
-  // Klasse setzen oder entfernen
-  document.body.classList.toggle("compact-header", isTablet);
-
-  // Debug-Anzeige
-  const debugEl = document.getElementById("viewportDebug");
-  if (debugEl) {
-    debugEl.textContent = `Viewport: ${width} × ${height} — ${
-      isTablet ? "Tablet-Modus aktiv" : "Normalmodus"
-    }`;
-  }
-}
-
-// Initial aufrufen
-updateHeaderBasedOnViewport();
-
-// Bei Resize ebenfalls prüfen
-window.addEventListener("resize", updateHeaderBasedOnViewport);
 
   function applyFadeTransition(outEl, inEl) {
     outEl.classList.remove("fade-slide-in");
