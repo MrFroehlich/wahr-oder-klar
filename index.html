@@ -377,10 +377,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryModal = document.getElementById("wopModal");
   const categoryNextBtn = document.getElementById("categoryNextBtn");
   const closeCategoryBtn = document.getElementById("closeCategoryModal");
-  
-  let lockedGender = null; // gemischt | male | female
 
-  // === 1. Geschlechterauswahl im ersten Modal ===
+  let lockedGender = null;
+
+  // === 1. Geschlechterauswahl ===
   genderButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       genderButtons.forEach(b => b.classList.remove("active"));
@@ -405,16 +405,15 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("wopMode", isCustom ? "custom" : "mixed");
     localStorage.setItem("wopCategories", JSON.stringify(selectedCategories));
 
-    // === 2a. Spieler-Modal vorbereiten ===
     lockedGender = (activeGender === "male" || activeGender === "female") ? activeGender : null;
-    playerList.innerHTML = ""; // Reset Namefelder
+    playerList.innerHTML = "";
     addNewPlayerRow();
 
     playerModal.classList.remove("hidden");
     document.body.classList.add("modal-open");
   });
 
-  // === 3. Dynamisch neue Spieler:innen-Reihe hinzufügen ===
+  // === 3. Neue Spieler:innen-Zeile ===
   function addNewPlayerRow() {
     const row = document.createElement("div");
     row.classList.add("player-row");
@@ -435,7 +434,6 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     playerList.appendChild(row);
 
-    // Gender-Buttons setzen
     const toggle = row.querySelector(".gender-toggle");
     toggle.querySelectorAll(".gender-option").forEach(btn => {
       if (btn.dataset.value === active) {
@@ -449,11 +447,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // **Automatisch zum neuen Eintrag scrollen**
     row.scrollIntoView({ behavior: "smooth", block: "end" });
   }
 
-  // === 4. Eingabe im letzten Feld: neue Zeile hinzufügen + scrollen ===
+  // === 4. Neue Zeile nur bei ausgefülltem letztem Feld ===
   playerList.addEventListener("input", () => {
     const rows = playerList.querySelectorAll(".player-row");
     if (rows.length === 0) return;
@@ -462,7 +459,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const nameInput = lastRow.querySelector("input.player-name");
 
     if (nameInput && nameInput.value.trim() !== "") {
-      // Prüfen, ob schon eine leere Zeile existiert, um keine doppelten zu erzeugen
       let emptyRowExists = false;
       rows.forEach(row => {
         const input = row.querySelector("input.player-name");
@@ -477,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === 5. Scroll-Lock aktivieren/deaktivieren, je nachdem ob ein Modal sichtbar ist ===
+  // === 5. Scroll-Lock ===
   function updateScrollLock() {
     const body = document.body;
     const categoryVisible = categoryModal && !categoryModal.classList.contains("hidden");
@@ -490,7 +486,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Scroll-Lock bei Öffnen oder Schließen aktualisieren
   document.getElementById('wopModalOverlay')?.addEventListener('transitionend', updateScrollLock);
   document.getElementById('playerModalOverlay')?.addEventListener('transitionend', updateScrollLock);
 
@@ -500,32 +495,32 @@ document.addEventListener("DOMContentLoaded", () => {
     if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
   });
 
-  // === 6. Klick auf "Spiel starten" (Kategorie-Modal öffnen) ===
+  // === 6. Kategorie-Modal öffnen ===
   openCategoryBtn?.addEventListener("click", () => {
     categoryModal.classList.remove("hidden");
     document.body.classList.add("modal-open");
   });
 
-  // === 7. Klick auf "Weiter" (Spieler-Modal öffnen) ===
+  // === 7. Kategorie -> Weiter ===
   categoryNextBtn?.addEventListener("click", () => {
     hideModal(categoryModal);
     playerModal.classList.remove("hidden");
     document.body.classList.add("modal-open");
   });
 
-  // === 8. Klick auf ❌ bei Kategorie-Modal ===
+  // === 8. Kategorie schließen ===
   closeCategoryBtn?.addEventListener("click", () => {
     hideModal(categoryModal);
   });
 
-  // === 9. Klick auf ❌ bei Spieler-Modal ===
+  // === 9. Spieler:innen schließen ===
   closePlayerModal?.addEventListener("click", () => {
     playerModal.classList.add("hidden");
     document.body.classList.remove("modal-open");
     playerList.innerHTML = "";
   });
 
-  // === 10. Geschlecht per Button auswählen ===
+  // === 10. Geschlecht auswählen ===
   playerList.addEventListener("click", e => {
     if (e.target.classList.contains("gender-option") && !e.target.disabled) {
       const parent = e.target.closest(".gender-toggle");
@@ -535,7 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === 11. Spiel starten: Daten speichern & weiterleiten ===
+  // === 11. Spiel starten ===
   startGameBtn?.addEventListener("click", () => {
     const rows = playerList.querySelectorAll(".player-row");
     const players = [];
@@ -546,10 +541,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (name) players.push({ name, gender });
     });
 
-    // Warnbox holen
     const warningBox = document.getElementById("playerWarning");
 
-    // === Validierung ===
     const names = players.map(p => p.name);
     const duplicateNames = names.filter((n, i) => names.indexOf(n) !== i);
 
@@ -563,7 +556,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Alles ok, Warnung ausblenden
     hideWarning();
 
     localStorage.setItem("wopPlayers", JSON.stringify(players));
@@ -575,9 +567,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.location.href = "spiel-wop.html" + query;
   });
+
+  // === 12. Tooltips (mobil vs. desktop) ===
+  const isMobile = window.matchMedia("(hover: none), (max-width: 768px)").matches;
+
+  if (isMobile) {
+    const tooltipTriggers = document.querySelectorAll(".tooltip-trigger.mobile");
+
+    tooltipTriggers.forEach(trigger => {
+      const container = trigger.closest(".tooltip-container");
+
+      trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeAllTooltips();
+        container.classList.toggle("show");
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      const openTooltip = document.querySelector(".tooltip-container.show");
+      if (openTooltip && !openTooltip.contains(e.target)) {
+        openTooltip.classList.remove("show");
+      }
+    });
+
+    function closeAllTooltips() {
+      document.querySelectorAll(".tooltip-container.show").forEach(el => el.classList.remove("show"));
+    }
+  }
 });
 
-// Hilfsfunktion zum Verstecken eines Modals (falls nicht schon definiert)
+// ========== Hilfsfunktionen global ==========
 function hideModal(modal) {
   if (!modal) return;
   modal.classList.add("hidden");
@@ -591,9 +611,8 @@ function showWarning(text) {
   box.textContent = `⚠️ ${text}`;
   box.classList.remove("hidden");
 
-  // Animation zurücksetzen, um erneut abspielen zu können
   box.classList.remove("shake");
-  void box.offsetWidth; // erzwingt Neuberechnung der Animation
+  void box.offsetWidth;
   box.classList.add("shake");
 }
 
