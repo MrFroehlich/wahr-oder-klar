@@ -512,33 +512,25 @@ document.addEventListener("DOMContentLoaded", () => {
       if (name) players.push({ name, gender });
     });
 
+    // Warnbox holen
     const warningBox = document.getElementById("playerWarning");
 
-  // === Validierung ===
+    // === Validierung ===
     const names = players.map(p => p.name);
     const duplicateNames = names.filter((n, i) => names.indexOf(n) !== i);
-    const uniqueNames = new Set(names);
 
-  // Weniger als zwei Spieler:innen
     if (players.length < 2) {
       showWarning("Mindestens zwei Spieler:innen müssen teilnehmen!");
-    return;
-}
-
-  // Doppelte Namen
-    if (duplicateNames.length > 0) {
-    showWarning(`Die Namen müssen einzigartig sein! Doppelt: ${[...new Set(duplicateNames)].join(", ")}`);
-    return;
+      return;
     }
 
- // Wenn alles ok:
+    if (duplicateNames.length > 0) {
+      showWarning(`Die Namen müssen einzigartig sein! Doppelt: ${[...new Set(duplicateNames)].join(", ")}`);
+      return;
+    }
+
+    // Alles ok, Warnung ausblenden
     hideWarning();
-    localStorage.setItem("wopPlayers", JSON.stringify(players));
-    const selectedCategories = JSON.parse(localStorage.getItem("wopCategories") || "[]");
-    const query = selectedCategories.length
-      ? "?categories=" + encodeURIComponent(selectedCategories.join(","))
-       : "";
-    window.location.href = "spiel-wop.html" + query;
 
     localStorage.setItem("wopPlayers", JSON.stringify(players));
 
@@ -558,7 +550,6 @@ function hideModal(modal) {
   document.body.classList.remove("modal-open");
 }
 
-
 function showWarning(text) {
   const box = document.getElementById("playerWarning");
   if (!box) return;
@@ -571,25 +562,6 @@ function hideWarning() {
   if (!box) return;
   box.classList.add("hidden");
 }
-  
-
-// Automatisches Scroll-Locking bei geöffnetem Modal
-const observer = new MutationObserver(() => {
-  const modalIds = ["wopModal", "playerModal"];
-  const isAnyModalOpen = modalIds.some(id => {
-    const modal = document.getElementById(id);
-    return modal && !modal.classList.contains("hidden");
-  });
-
-  document.body.classList.toggle("no-scroll", isAnyModalOpen);
-});
-
-["wopModal", "playerModal"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    observer.observe(el, { attributes: true, attributeFilter: ["class"] });
-  }
-});
 </script>
   
 
