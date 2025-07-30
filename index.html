@@ -324,257 +324,160 @@
 <!-- ========== SCRIPTS ========== -->
 <script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const genderButtons = document.querySelectorAll(".gender-btn");
-  const startBtn = document.getElementById("wopStartBtn");
-  const playerModal = document.getElementById("playerModal");
-  const playerList = document.getElementById("playerList");
-  const startGameBtn = document.getElementById("startGameBtn");
-  const closePlayerModal = document.getElementById("closePlayerModal");
-
-  let lockedGender = null; // gemischt | male | female
-
-  // === 1. Geschlechterauswahl im ersten Modal ===
-  genderButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      genderButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
-  });
-
-  // === 2. Spieler:innen-Modal öffnen ===
-  startBtn.addEventListener("click", () => {
-    const activeGender = document.querySelector(".gender-btn.active")?.dataset.value || "mixed";
-    const isCustom = document.getElementById("wopBtnCustom").classList.contains("active");
-
-    const checkedCategories = Array.from(document.querySelectorAll("#wopCategoryOptions input:checked")).map(cb => cb.value);
-    const selectedCategories = isCustom ? checkedCategories : ["funny", "daring", "mind", "deep", "bold", "taboo"];
-
-    if (isCustom && selectedCategories.length === 0) {
-      alert("Bitte wähle mindestens eine Kategorie aus!");
-      return;
-    }
-
-    localStorage.setItem("wopGender", activeGender);
-    localStorage.setItem("wopMode", isCustom ? "custom" : "mixed");
-    localStorage.setItem("wopCategories", JSON.stringify(selectedCategories));
-
-    // === 2a. Spieler-Modal vorbereiten ===
-    lockedGender = (activeGender === "male" || activeGender === "female") ? activeGender : null;
-    playerList.innerHTML = ""; // Reset Namefelder
-    addNewPlayerRow();
-
-    playerModal.classList.remove("hidden");
-    document.body.classList.add("modal-open");
-  });
-
-  // === 3. Dynamisch neue Spieler:innen-Reihe hinzufügen ===
-  function addNewPlayerRow() {
-    const row = document.createElement("div");
-    row.classList.add("player-row");
-
-    const genderButtonsHTML = `
-      <button class="gender-option" data-value="mixed">⚧</button>
-      <button class="gender-option" data-value="male">👦</button>
-      <button class="gender-option" data-value="female">👧</button>
-    `;
-
-    let active = lockedGender ?? "mixed";
-
-    row.innerHTML = `
-      <input type="text" placeholder="Name eingeben" class="player-name" />
-      <div class="gender-toggle" data-gender="${active}">
-        ${genderButtonsHTML}
-      </div>
-    `;
-    playerList.appendChild(row);
-
-    // Gender-Buttons setzen
-    const toggle = row.querySelector(".gender-toggle");
-    toggle.querySelectorAll(".gender-option").forEach(btn => {
-      if (btn.dataset.value === active) {
-        btn.classList.add("active");
-      }
-
-      if (lockedGender) {
-        btn.disabled = true;
-        btn.style.opacity = btn.dataset.value === lockedGender ? "1" : "0.4";
-        btn.style.cursor = "not-allowed";
-      }
-    });
-  }
-
-
-// Scroll-Lock aktivieren/deaktivieren, je nachdem ob ein Modal sichtbar ist
-function updateScrollLock() {
-  const body = document.body;
+document.addEventListener("DOMContentLoaded", async () => {
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const penaltyHeading = document.getElementById("penaltyHeading");
+  const questionBox = document.getElementById("questionBox");
+  const doneBtn = document.getElementById("doneBtn");
+  const truthBtn = document.getElementById("truthBtn");
+  const dareBtn = document.getElementById("dareBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
   const categoryModal = document.getElementById("categoryModal");
   const playerModal = document.getElementById("playerModal");
+  const playerNameElement = document.getElementById("playerName");
+  const categoryLabelBox = document.getElementById("categoryLabelBox");
+  const questionContainer = document.getElementById("questionContainer");
 
-  const categoryVisible = categoryModal && !categoryModal.classList.contains("hidden");
-  const playerVisible = playerModal && !playerModal.classList.contains("hidden");
+  let categories = [];
+  let allData = {};
+  let selectedPlayers = JSON.parse(localStorage.getItem("spielerListe")) || [];
+  let selectedGender = localStorage.getItem("ausgewaehltesGeschlecht") || "alle";
+  let usedQuestions = { wahrheit: [], pflicht: [], strafe: [] };
 
-  if (categoryVisible || playerVisible) {
-    body.classList.add("no-scroll");
-  } else {
-    body.classList.remove("no-scroll");
+  const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  async function loadJSON() {
+    const response = await fetch("wop.json");
+    allData = await response.json();
   }
-}
 
-// Scroll-Lock bei Öffnen oder Schließen aktualisieren
-// Beim Öffnen
-document.getElementById('categoryModalOverlay')?.addEventListener('transitionend', updateScrollLock);
-document.getElementById('playerModalOverlay')?.addEventListener('transitionend', updateScrollLock);
+  function getSelectedCategories() {
+    return Object.keys(allData).filter(k => localStorage.getItem("kat_" + k) === "true");
+  }
 
-// Und auch sofort bei Änderung der Sichtbarkeit (z. B. direkt nach toggle)
-const observer = new MutationObserver(updateScrollLock);
-['categoryModalOverlay', 'playerModalOverlay'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
-});
-  
+  function chooseRandomPlayer() {
+    if (!selectedPlayers.length) return "";
+    return selectedPlayers[Math.floor(Math.random() * selectedPlayers.length)];
+  }
 
-</script>
-
-  
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const genderButtons = document.querySelectorAll(".gender-btn");
-  const startBtn = document.getElementById("wopStartBtn");
-  const playerModal = document.getElementById("playerModal");
-  const playerList = document.getElementById("playerList");
-  const startGameBtn = document.getElementById("startGameBtn");
-  const closePlayerModal = document.getElementById("closePlayerModal");
-
-  let lockedGender = null;
-
-  // === 1. Geschlechter-Auswahl im ersten Modal ===
-  genderButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      genderButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+  function chooseRandomQuestion(type) {
+    const cat = categories[Math.floor(Math.random() * categories.length)];
+    const data = allData[cat][type];
+    const validData = data.filter(q => {
+      const text = type === "wahrheit" ? q.frage : q.text || q.gruppentext;
+      return !usedQuestions[type].includes(text) &&
+        (!q.geschlecht || q.geschlecht === selectedGender || selectedGender === "alle");
     });
-  });
 
-  // === 2. Start-Button → Spieler:innen-Modal öffnen ===
-  startBtn.addEventListener("click", () => {
-    const activeGender = document.querySelector(".gender-btn.active")?.dataset.value || "mixed";
-    const isCustom = document.getElementById("wopBtnCustom").classList.contains("active");
-
-    const checkedCategories = Array.from(document.querySelectorAll("#wopCategoryOptions input:checked")).map(cb => cb.value);
-    const selectedCategories = isCustom ? checkedCategories : ["funny", "daring", "mind", "deep", "bold", "taboo"];
-
-    if (isCustom && selectedCategories.length === 0) {
-      alert("Bitte wähle mindestens eine Kategorie aus!");
-      return;
+    if (!validData.length) {
+      usedQuestions[type] = [];
+      return chooseRandomQuestion(type); // retry
     }
 
-    localStorage.setItem("wopGender", activeGender);
-    localStorage.setItem("wopMode", isCustom ? "custom" : "mixed");
-    localStorage.setItem("wopCategories", JSON.stringify(selectedCategories));
+    const q = validData[Math.floor(Math.random() * validData.length)];
+    const text = type === "wahrheit" ? q.frage : q.text || q.gruppentext;
+    usedQuestions[type].push(text);
 
-    // Modal vorbereiten
-    playerList.innerHTML = "";
-    lockedGender = (activeGender === "male" || activeGender === "female") ? activeGender : null;
-    addNewPlayerRow();
-
-    playerModal.classList.remove("hidden");
-    document.body.classList.add("modal-open");
-  });
-
-  // === 3. Neue Spieler-Reihe hinzufügen ===
-  function addNewPlayerRow() {
-    const row = document.createElement("div");
-    row.classList.add("player-row");
-
-    row.innerHTML = `
-      <input type="text" placeholder="Name eingeben" class="player-name" />
-      <div class="gender-toggle" data-gender="${lockedGender || 'mixed'}">
-        <button class="gender-option${!lockedGender ? ' active' : lockedGender === 'mixed' ? ' active' : ''}" data-value="mixed"${lockedGender ? ' disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>⚧</button>
-        <button class="gender-option${lockedGender === 'male' ? ' active' : ''}" data-value="male"${lockedGender ? ' disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>👦</button>
-        <button class="gender-option${lockedGender === 'female' ? ' active' : ''}" data-value="female"${lockedGender ? ' disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>👧</button>
-      </div>
-    `;
-
-    playerList.appendChild(row);
+    return { text, label: allData[cat].label, isGroup: !!q.gruppentext };
   }
 
-  // === 4. Bei Texteingabe: neue Reihe erzeugen ===
-  playerList.addEventListener("input", () => {
-    const rows = playerList.querySelectorAll(".player-row");
-    const lastRow = rows[rows.length - 1];
-    const nameInput = lastRow.querySelector("input");
+  function animateQuestionBox(question, label, isPenalty = false, isGroup = false) {
+    categoryLabel.textContent = label;
+    questionBox.textContent = question;
 
-    if (nameInput && nameInput.value.trim() !== "") {
-      addNewPlayerRow();
+    if (isPenalty) {
+      penaltyHeading.style.display = "block";
+      categoryLabelBox.classList.add("mystic");
+    } else {
+      penaltyHeading.style.display = "none";
+      categoryLabelBox.classList.remove("mystic");
     }
-  });
 
-  // === 5. Geschlecht per Button auswählen (sofern nicht gelockt) ===
-  playerList.addEventListener("click", e => {
-    if (e.target.classList.contains("gender-option") && !e.target.disabled) {
-      const parent = e.target.closest(".gender-toggle");
-      parent.querySelectorAll(".gender-option").forEach(btn => btn.classList.remove("active"));
-      e.target.classList.add("active");
-      parent.dataset.gender = e.target.dataset.value;
+    if (isGroup) {
+      playerNameElement.textContent = "GRUPPE";
     }
-  });
 
-  // === 6. Spiel starten: Daten speichern & weiterleiten ===
-  startGameBtn.addEventListener("click", () => {
-  const rows = playerList.querySelectorAll(".player-row");
-  const players = [];
-
-  rows.forEach(row => {
-    const name = row.querySelector("input").value.trim();
-    const gender = lockedGender || row.querySelector(".gender-toggle").dataset.gender || "mixed";
-    if (name) players.push({ name, gender });
-  });
-
-  if (players.length === 0) {
-    alert("Bitte gib mindestens einen Namen ein.");
-    return;
+    questionView.classList.remove("hidden");
+    modeSelection.classList.add("slide-left-out");
+    await sleep(300);
+    modeSelection.classList.add("hidden");
+    questionView.classList.remove("slide-right-in");
   }
 
-  localStorage.setItem("wopPlayers", JSON.stringify(players));
+  function resetToStartView() {
+    questionView.classList.add("slide-left-out");
+    setTimeout(() => {
+      questionView.classList.add("hidden");
+      modeSelection.classList.remove("hidden");
+      modeSelection.classList.remove("slide-left-out");
+      modeSelection.classList.add("slide-right-in");
+    }, 300);
+  }
 
-  // NEU: Kategorien aus LocalStorage holen und in URL übergeben
-  const selectedCategories = JSON.parse(localStorage.getItem("wopCategories") || "[]");
-  const query = selectedCategories.length
-    ? "?categories=" + encodeURIComponent(selectedCategories.join(","))
-    : "";
+  async function showRandomPlayer() {
+    playerNameElement.textContent = "";
+    modeSelection.classList.add("hidden");
+    document.getElementById("werIstDran").classList.remove("hidden");
 
-  window.location.href = "spiel-wop.html" + query;
-});
+    await sleep(500); // kleine Pause vor dem Rattern
 
-  // === 7. ❌ Modal schließen ===
-  closePlayerModal.addEventListener("click", () => {
-    playerModal.classList.add("hidden");
-    document.body.classList.remove("modal-open");
-    playerList.innerHTML = "";
+    const duration = 1200;
+    const start = Date.now();
+    const interval = 75;
+
+    return new Promise((resolve) => {
+      const intervalId = setInterval(() => {
+        const random = chooseRandomPlayer();
+        if (!random) return;
+        playerNameElement.textContent = random;
+
+        if (Date.now() - start > duration) {
+          clearInterval(intervalId);
+          document.getElementById("werIstDran").classList.add("hidden");
+          modeSelection.classList.remove("hidden");
+          resolve();
+        }
+      }, interval);
+    });
+  }
+
+  truthBtn.addEventListener("click", async () => {
+    const { text, label } = chooseRandomQuestion("wahrheit");
+    await animateQuestionBox(text, label);
   });
 
-  // === 8. Beim Neuladen: Felder zurücksetzen ===
-  playerList.innerHTML = "";
-});
-</script>
+  dareBtn.addEventListener("click", async () => {
+    const { text, label, isGroup } = chooseRandomQuestion("pflicht");
+    await animateQuestionBox(text, label, false, isGroup);
+  });
 
+  penaltyBtn.addEventListener("click", async () => {
+    const { text, label } = chooseRandomQuestion("strafe");
+    await animateQuestionBox(text, label, true);
+  });
 
-<script>
-// Automatisches Scroll-Locking bei geöffnetem Modal
-const observer = new MutationObserver(() => {
-  const categoryModal = document.getElementById("categoryModal");
-  const playerModal = document.getElementById("playerModal");
-  const isAnyModalOpen = !categoryModal.classList.contains("hidden") || !playerModal.classList.contains("hidden");
+  doneBtn.addEventListener("click", resetToStartView);
 
-  document.body.classList.toggle("no-scroll", isAnyModalOpen);
-});
+  await loadJSON();
+  categories = getSelectedCategories();
+  await showRandomPlayer();
 
-["categoryModal", "playerModal"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    observer.observe(el, { attributes: true, attributeFilter: ["class"] });
+  // === SCROLL-LOCK ===
+  function toggleScrollLock(isLocked) {
+    document.body.classList.toggle("scroll-lock", isLocked);
   }
+
+  const observer = new MutationObserver(() => {
+    const isAnyModalVisible =
+      !categoryModal.classList.contains("hidden") ||
+      !playerModal.classList.contains("hidden");
+    toggleScrollLock(isAnyModalVisible);
+  });
+
+  observer.observe(categoryModal, { attributes: true, attributeFilter: ["class"] });
+  observer.observe(playerModal, { attributes: true, attributeFilter: ["class"] });
 });
 </script>
   
