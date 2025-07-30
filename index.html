@@ -147,6 +147,12 @@
   
   <!-- Modal: Spieler:innen-Auswahl -->
 <div class="modal-overlay hidden" id="playerModal">
+
+  <!-- WARNUNG: Wird per JS eingeblendet -->
+    <div id="playerWarning" class="warning-box hidden">
+        ⚠️ Etwas stimmt nicht …
+    </div>
+  
   <div class="modal">
     <button class="close-modal" id="closePlayerModal">❌</button>
     <h2>Wer spielt mit?</h2>
@@ -506,10 +512,33 @@ document.addEventListener("DOMContentLoaded", () => {
       if (name) players.push({ name, gender });
     });
 
-    if (players.length === 0) {
-      alert("Bitte gib mindestens einen Namen ein.");
-      return;
+    const warningBox = document.getElementById("playerWarning");
+
+  // === Validierung ===
+    const names = players.map(p => p.name);
+    const duplicateNames = names.filter((n, i) => names.indexOf(n) !== i);
+    const uniqueNames = new Set(names);
+
+  // Weniger als zwei Spieler:innen
+    if (players.length < 2) {
+      showWarning("Mindestens zwei Spieler:innen müssen teilnehmen!");
+    return;
+}
+
+  // Doppelte Namen
+    if (duplicateNames.length > 0) {
+    showWarning(`Die Namen müssen einzigartig sein! Doppelt: ${[...new Set(duplicateNames)].join(", ")}`);
+    return;
     }
+
+ // Wenn alles ok:
+    hideWarning();
+    localStorage.setItem("wopPlayers", JSON.stringify(players));
+    const selectedCategories = JSON.parse(localStorage.getItem("wopCategories") || "[]");
+    const query = selectedCategories.length
+      ? "?categories=" + encodeURIComponent(selectedCategories.join(","))
+       : "";
+    window.location.href = "spiel-wop.html" + query;
 
     localStorage.setItem("wopPlayers", JSON.stringify(players));
 
@@ -528,6 +557,21 @@ function hideModal(modal) {
   modal.classList.add("hidden");
   document.body.classList.remove("modal-open");
 }
+
+
+function showWarning(text) {
+  const box = document.getElementById("playerWarning");
+  if (!box) return;
+  box.textContent = `⚠️ ${text}`;
+  box.classList.remove("hidden");
+}
+
+function hideWarning() {
+  const box = document.getElementById("playerWarning");
+  if (!box) return;
+  box.classList.add("hidden");
+}
+  
 
 // Automatisches Scroll-Locking bei geöffnetem Modal
 const observer = new MutationObserver(() => {
