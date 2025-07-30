@@ -404,7 +404,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-<script src="JavaScript/modi-auswahl_dropdown.js" defer></script>
+
+// Scroll-Lock aktivieren/deaktivieren, je nachdem ob ein Modal sichtbar ist
+function updateScrollLock() {
+  const isAnyModalVisible = [
+    document.getElementById('categoryModalOverlay'),
+    document.getElementById('playerModalOverlay')
+  ].some(modal => modal && !modal.classList.contains('hidden'));
+
+  document.body.classList.toggle('modal-open', isAnyModalVisible);
+}
+
+// Scroll-Lock bei Öffnen oder Schließen aktualisieren
+// Beim Öffnen
+document.getElementById('categoryModalOverlay')?.addEventListener('transitionend', updateScrollLock);
+document.getElementById('playerModalOverlay')?.addEventListener('transitionend', updateScrollLock);
+
+// Und auch sofort bei Änderung der Sichtbarkeit (z. B. direkt nach toggle)
+const observer = new MutationObserver(updateScrollLock);
+['categoryModalOverlay', 'playerModalOverlay'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+});
+  
+
+</script>
+
+  
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const genderButtons = document.querySelectorAll(".gender-btn");
