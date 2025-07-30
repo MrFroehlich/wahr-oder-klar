@@ -828,3 +828,36 @@ body.modal-open {
         border-radius: 8px;
     }
 }
+
+
+
+/* Sanftes Einblenden */
+@keyframes warningFadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Dezentes Vibrationswackeln */
+@keyframes warningShake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-5px); }
+  40%  { transform: translateX(5px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.warning-box {
+  animation: warningFadeIn 0.4s ease-out;
+}
+
+/* Diese Klasse wird bei erneutem Fehler temporär hinzugefügt */
+.warning-box.shake {
+  animation: warningShake 0.4s ease;
+}
