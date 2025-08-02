@@ -988,10 +988,23 @@
   },
 
 
+
+
+
+    "real": {
+    "label": " 🪞 Ehrlich jetzt?",
+    "wahrheit": [
+    ],
+      
+    "pflicht": [
+    ]
+  },
+
+
   
 
 "mind": {
-  "label": " 🧠 Gedankenkarussell",
+  "label": " 🧠 Kopfsache",
   "wahrheit": [
       { "frage": "Was ist deine wildeste Fantasie, die du noch nie umgesetzt hast?", "gender": "all" },
       { "frage": "Hast du schon mal etwas geträumt, das dich danach den ganzen Tag beschäftigt hat?", "gender": "all" },
